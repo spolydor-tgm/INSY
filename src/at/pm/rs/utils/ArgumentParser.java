@@ -20,6 +20,7 @@ public class ArgumentParser {
 		outputDir = "";
 	}
 	
+	@SuppressWarnings("static-access")
 	public ConnectionArguments parseArguments(String... args){
 		Option hostname = OptionBuilder.hasArg().isRequired().withDescription("the hostname of the db ou want to connect with i.e. 192.168.0.22:2233").withArgName("hostname").create("h");
 		Option username = OptionBuilder.hasArg().isRequired().withDescription("the username needed to establish a connection").withArgName("username").create("u");
