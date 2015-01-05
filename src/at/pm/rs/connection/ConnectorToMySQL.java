@@ -7,7 +7,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 	ConnectionArguments data;
 	Connection conn;
 	
-	public public ConnectorToMySQL() {
+	public ConnectorToMySQL() {
 		// TODO Auto-generated constructor stub
 	}
 	
