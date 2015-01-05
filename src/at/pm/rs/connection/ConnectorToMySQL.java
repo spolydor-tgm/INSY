@@ -16,10 +16,10 @@ public class ConnectorToMySQL implements ConnectorTo{
 			md = conn.getMetaData();
 			ResultSet rs = md.getTables(null, null, "%", null);
 
-			ResultSetMetaData rsmd = rs.getMetaData();
+			// ResultSetMetaData rsmd = rs.getMetaData();
 
-			int columnsNumber = rsmd.getColumnCount();
-			System.out.println(columnsNumber);
+			// int columnsNumber = rsmd.getColumnCount();
+			// System.out.println(columnsNumber);
 			while (rs.next()) {
 				System.out.println(rs.getString(3));
 			}
