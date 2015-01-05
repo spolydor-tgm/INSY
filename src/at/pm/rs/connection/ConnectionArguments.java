@@ -9,13 +9,17 @@ import java.util.Map;
  * 
  * The Map stores all the arguments with their obvious names as keys.
  * 
- * keys: <li>hostname</li> <li>username</li> <li>password</li>
+ * keys: <li>hostname</li> 
+ * 	     <li>username</li> 
+ *       <li>password</li>
+ *       <li>dbname</li>
+ *       <li>dbms</li>
  * 
  * @author Patrick Malik
  * @version 141226
  *
  */
-public abstract class ConnectionArguments {
+public class ConnectionArguments {
 	Map<String, String> arguments;
 
 	// TODO dbname wird gebraucht?

@@ -1,5 +1,68 @@
 package at.pm.rs.utils;
 
-public class ArgumentParser {
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
+import at.pm.rs.connection.ConnectionArguments;
+
+public class ArgumentParser {
+	Options options;
+	String outputDir;
+	
+	public ArgumentParser(){
+		options = new Options();
+		outputDir = "";
+	}
+	
+	public ConnectionArguments parseArguments(String... args){
+		Option hostname = OptionBuilder.hasArg().isRequired().withDescription("the hostname of the db ou want to connect with i.e. 192.168.0.22:2233").withArgName("hostname").create("h");
+		Option username = OptionBuilder.hasArg().isRequired().withDescription("the username needed to establish a connection").withArgName("username").create("u");
+		Option password = OptionBuilder.hasArg().withDescription("the password needed to establish a connection").withArgName("password").create("p");
+		Option dbname = OptionBuilder.hasArg().isRequired().withDescription("the name of the database you want to work with").withArgName("databasename").create("d");
+		Option dbms = OptionBuilder.hasArg().isRequired().withDescription("The dbms on which the database runs").withArgName("dbms").create("D");
+		
+		options.addOption(hostname);
+		options.addOption(username);
+		options.addOption(password);
+		options.addOption(dbname);
+		options.addOption(dbms);
+		
+		CommandLineParser parser = new BasicParser();
+		CommandLine line = null;
+		try {
+			line = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.err.println("An Error occurred while parsing the arguments, check if all if your arguments are valid");
+			printHelp();
+		}
+		ConnectionArguments conargs = new ConnectionArguments(line.getOptionValue("h"), line.getOptionValue("u"), line.getOptionValue("p"), line.getOptionValue("d"), line.getOptionValue("D"));
+		return conargs;
+	}
+	
+	public void printHelp(){
+		HelpFormatter formatter = new HelpFormatter();
+		formatter.printHelp("Simulation der RoboterFabrik", options);
+	}
+	
+	public Options getOptions() {
+		return options;
+	}
+	public void setOptions(Options options) {
+		this.options = options;
+	}
+	public String getOutputDir() {
+		return outputDir;
+	}
+	public void setOutputDir(String outputDir) {
+		this.outputDir = outputDir;
+	}
+	
+	
+	
 }
