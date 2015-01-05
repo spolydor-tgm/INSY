@@ -2,7 +2,11 @@ package at.pm.rs.connection;
 
 import at.pm.rs.utils.ArgumentParser;
 
+import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class ConnectorToMySQL implements ConnectorTo{
 
@@ -26,6 +30,90 @@ public class ConnectorToMySQL implements ConnectorTo{
 			while (rs.next()) {
 				System.out.println(rs.getString(3));
 			}
+
+			ArrayList columnNames = new ArrayList();
+			ArrayList data = new ArrayList();
+
+
+			PreparedStatement st = conn.prepareStatement("Select * from test;");
+			ResultSet rss = st.executeQuery();
+			ResultSetMetaData rsmd = st.getMetaData();
+			int columns = rsmd.getColumnCount();
+			//  Get column names
+			for (int i = 1; i <= columns; i++) {
+				columnNames.add(rsmd.getColumnName(i));
+			}
+			//  Get row data
+			while (rss.next()) {
+				ArrayList row = new ArrayList(columns);
+				for (int i = 1; i <= columns; i++) {
+					row.add( rss.getObject(i) );
+				}
+				data.add( row );
+			}
+
+			/*
+			ArrayList colNames = new ArrayList();
+			ResultSet pkfk = md.getPrimaryKeys(null, null, "test");
+			ResultSetMetaData rssmd = pkfk.getMetaData();
+			for (int i = 1; i <= rssmd.getColumnCount(); i++) {
+				colNames.add(rssmd.getColumnName(i));
+				System.out.println(colNames.get(i-1));
+			}
+			*/
+			DatabaseMetaData meta=conn.getMetaData();
+			rs= meta.getTables(null, null, "test", new String[]{"TABLE"});
+			rs=meta.getPrimaryKeys(null, null, "test");
+			while(rs.next())
+				System.out.println("Primary Key :"+rs.getString(4));
+
+			DatabaseMetaData meta2=conn.getMetaData();
+			rs= meta2.getTables(null, null, "test", new String[]{"TABLE"});
+			rs=meta2.getExportedKeys(null, null, "test");
+			while(rs.next())
+				System.out.println("Foreign Key :"+rs.getString(4));
+
+			// Create Vectors and copy over elements from ArrayLists to them
+			// Vector is deprecated but I am using them in this example to keep
+			// things simple - the best practice would be to create a custom defined
+			// class which inherits from the AbstractTableModel class
+			Vector columnNamesVector = new Vector();
+			Vector dataVector = new Vector();
+
+			for (int i = 0; i < data.size(); i++) {
+				ArrayList subArray = (ArrayList)data.get(i);
+				Vector subVector = new Vector();
+				for (int j = 0; j < subArray.size(); j++) {
+					subVector.add(subArray.get(j));
+				}
+				dataVector.add(subVector);
+			}
+
+			for (int i = 0; i < columnNames.size(); i++ )
+				columnNamesVector.add(columnNames.get(i));
+
+			//  Create table with database data
+			JTable table = new JTable(dataVector, columnNamesVector) {
+				public Class getColumnClass(int column) {
+					for (int row = 0; row < getRowCount(); row++) {
+						Object o = getValueAt(row, column);
+
+						if (o != null) {
+							return o.getClass();
+						}
+					}
+
+					return Object.class;
+				}
+			};
+			JFrame jFrame = new JFrame();
+			JScrollPane scrollPane = new JScrollPane( table );
+			jFrame.getContentPane().add( scrollPane);
+
+			JPanel buttonPanel = new JPanel();
+			jFrame.getContentPane().add( buttonPanel, BorderLayout.SOUTH );
+			jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			jFrame.setVisible(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
