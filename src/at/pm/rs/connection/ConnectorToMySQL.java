@@ -1,11 +1,6 @@
 package at.pm.rs.connection;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ConnectorToMySQL implements ConnectorTo{
 
@@ -20,6 +15,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 		try {
 			md = conn.getMetaData();
 			ResultSet rs = md.getTables(null, null, "%", null);
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			int columnsNumber = rsmd.getColumnCount();
+			System.out.println(columnsNumber);
 			while (rs.next()) {
 				System.out.println(rs.getString(3));
 			}
@@ -35,13 +35,10 @@ public class ConnectorToMySQL implements ConnectorTo{
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Verbindung mit dem DBMS herstellen
-			String url = "jdbc:mysql://localhost";
+			String url = "jdbc:mysql://localhost/A05";
 			conn = DriverManager.getConnection(url, "insy5", "1234");
+
 			st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM A05.test");
-			if(res.next()){
-				System.out.println(res.getInt(3));
-			}
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
