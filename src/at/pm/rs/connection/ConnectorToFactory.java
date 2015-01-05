@@ -2,7 +2,7 @@ package at.pm.rs.connection;
 
 public class ConnectorToFactory {
 
-	public static ConnectorTo(ConnectionArguments args){
+	public static void ConnectorTo(ConnectionArguments args){
 		//TODO
 	}
 }
