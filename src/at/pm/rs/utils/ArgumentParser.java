@@ -18,14 +18,14 @@ public class ArgumentParser {
 		Option password = OptionBuilder.hasArg().withDescription("the password needed to establish a connection").withArgName("password").create("p");
 		Option dbname = OptionBuilder.hasArg().isRequired().withDescription("the name of the database you want to work with").withArgName("databasename").create("d");
 		Option dbms = OptionBuilder.hasArg().isRequired().withDescription("The dbms on which the database runs").withArgName("dbms").create("D");
-		//Option outDir = OptionBuilder.hasArg().isRequired().withDescription("The directory in which the files should be saved").withArgName("output directory").create("o");
+		Option outDir = OptionBuilder.hasArg().isRequired().withDescription("The directory in which the files should be saved").withArgName("output directory").create("o");
 		
 		options.addOption(hostname);
 		options.addOption(username);
 		options.addOption(password);
 		options.addOption(dbname);
 		options.addOption(dbms);
-		//options.addOption(outDir);
+		options.addOption(outDir);
 		
 		CommandLineParser parser = new BasicParser();
 		CommandLine line = null;
@@ -35,7 +35,7 @@ public class ArgumentParser {
 			System.err.println("An Error occurred while parsing the arguments, check if all if your arguments are valid");
 			printHelp();
 		}
-		//setOutputDir(line.getOptionValue("o"));
+		setOutputDir(line.getOptionValue("o"));
 		ConnectionArguments conargs = new ConnectionArguments(line.getOptionValue("h"), line.getOptionValue("u"), line.getOptionValue("p"), line.getOptionValue("d"), line.getOptionValue("D"));
 		return conargs;
 	}
