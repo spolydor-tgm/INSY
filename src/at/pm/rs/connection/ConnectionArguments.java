@@ -100,6 +100,8 @@ public class ConnectionArguments {
 	 * @return the value of key password
 	 */
 	public String getPwd() {
+		if (getArguments().get("password") == null)
+			return "";
 		return getArguments().get("password");
 	}
 

@@ -1,5 +1,7 @@
 package at.pm.rs.connection;
 
+import at.pm.rs.utils.ArgumentParser;
+
 import java.sql.*;
 
 public class ConnectorToMySQL implements ConnectorTo{
@@ -8,7 +10,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private Connection conn;
 	private Statement st;
 	
-	public ConnectorToMySQL() {
+	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
+		data = connectionArguments;
 		this.connect();
 
 		DatabaseMetaData md = null;
@@ -35,8 +38,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Verbindung mit dem DBMS herstellen
-			String url = "jdbc:mysql://localhost/A05";
-			conn = DriverManager.getConnection(url, "insy5", "1234");
+			String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
+			conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
 
 			st = conn.createStatement();
 
@@ -48,6 +51,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 	}
 
 	public static void main(String[] args) {
-		new ConnectorToMySQL();
+		ArgumentParser ap = new ArgumentParser();
+		new ConnectorToMySQL(ap.parseArguments());
 	}
 }
