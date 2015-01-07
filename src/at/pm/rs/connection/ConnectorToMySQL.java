@@ -2,11 +2,8 @@ package at.pm.rs.connection;
 
 import at.pm.rs.utils.ArgumentParser;
 
-import javax.swing.*;
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class ConnectorToMySQL implements ConnectorTo{
 
@@ -42,6 +39,9 @@ public class ConnectorToMySQL implements ConnectorTo{
 			//  Get column names
 			for (int i = 1; i <= columns; i++) {
 				columnNames.add(rsmd.getColumnName(i));
+				System.out.println(columnNames.get(i - 1) + ": " + rsmd.getColumnTypeName(i));
+				System.out.println(rsmd.isAutoIncrement(i));
+				System.out.println(rsmd.isNullable(i));
 			}
 			//  Get row data
 			while (rss.next()) {
@@ -67,12 +67,17 @@ public class ConnectorToMySQL implements ConnectorTo{
 			while(rs.next())
 				System.out.println("Primary Key :"+rs.getString(4));
 
-			DatabaseMetaData meta2=conn.getMetaData();
-			rs= meta2.getTables(null, null, "test", new String[]{"TABLE"});
-			rs=meta2.getExportedKeys(null, null, "test");
+			rs= meta.getTables(null, null, "test2", new String[]{"TABLE"});
+			rs=meta.getExportedKeys(null, null, "test2");
 			while(rs.next())
-				System.out.println("Foreign Key :"+rs.getString(4));
+				System.out.println("Foreign Key :" + rs.getString(4));
 
+			rs= meta.getTables(null, null, "test2", new String[]{"TABLE"});
+			rs=meta.getPrimaryKeys(null, null, "test2");
+			while(rs.next())
+				System.out.println("Primary Key :" + rs.getString(4));
+
+			/*
 			// Create Vectors and copy over elements from ArrayLists to them
 			// Vector is deprecated but I am using them in this example to keep
 			// things simple - the best practice would be to create a custom defined
@@ -106,6 +111,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 					return Object.class;
 				}
 			};
+			/*
 			JFrame jFrame = new JFrame();
 			JScrollPane scrollPane = new JScrollPane( table );
 			jFrame.getContentPane().add( scrollPane);
@@ -114,6 +120,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 			jFrame.getContentPane().add( buttonPanel, BorderLayout.SOUTH );
 			jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			jFrame.setVisible(true);
+			*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
