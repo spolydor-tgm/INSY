@@ -41,7 +41,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 				columnNames.add(rsmd.getColumnName(i));
 				System.out.println(columnNames.get(i - 1) + ": " + rsmd.getColumnTypeName(i));
 				System.out.println(rsmd.isAutoIncrement(i));
-				System.out.println(rsmd.isNullable(i));
+				System.out.println(rsmd.isNullable(i)); // Gibt 1 zurueck, wenn keine Nullwerte erlaubt sind
 			}
 			//  Get row data
 			while (rss.next()) {
