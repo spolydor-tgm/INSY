@@ -40,7 +40,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 			for (int i = 1; i <= columns; i++) {
 				columnNames.add(rsmd.getColumnName(i));
 				System.out.println(columnNames.get(i - 1) + ": " + rsmd.getColumnTypeName(i));
-				System.out.println(rsmd.isAutoIncrement(i));
+				System.out.println(rsmd.isAutoIncrement(i)); // true wenn ja und falls wenn nicht
 				System.out.println(rsmd.isNullable(i)); // Gibt 1 zurueck, wenn keine Nullwerte erlaubt sind
 			}
 			//  Get row data
@@ -121,6 +121,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 			jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			jFrame.setVisible(true);
 			*/
+
+			this.conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
