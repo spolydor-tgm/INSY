@@ -144,9 +144,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 			st = conn.createStatement(); // auslagern !!!!
 
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("Unnable to load teh class");
+			System.exit(0);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Unable to connect to the Database Management System");
+			System.exit(0);
 		}
 	}
 
