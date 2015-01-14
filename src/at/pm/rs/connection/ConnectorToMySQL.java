@@ -21,7 +21,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 		DatabaseMetaData md = null;
 		try {
 			md = conn.getMetaData();
-			ResultSet rs = md.getTables(null, null, "%", null);
+			ResultSet rs = md.getTables(null, null, "%", null); // Get all Tables
 
 			// ResultSetMetaData rsmd = rs.getMetaData();
 
