@@ -2,7 +2,11 @@ package at.pm.rs.connection;
 
 public class ConnectorToFactory {
 
-	public static void ConnectorTo(ConnectionArguments args){
-		//TODO
+	public  ConnectorTo ConnectorTo(ConnectionArguments args, String type){
+		switch (type.toLowerCase()) {
+			case "mysql":
+				return new ConnectorToMySQL(args);
+		}
+		return null;
 	}
 }

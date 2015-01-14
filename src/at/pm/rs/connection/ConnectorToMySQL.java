@@ -10,6 +10,9 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private ConnectionArguments data;
 	private Connection conn;
 	private Statement st;
+	private ResultSet rs;
+	private ResultSetMetaData rsmd;
+	private SetOfData setOfData;
 	
 	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
 		data = connectionArguments;
@@ -138,13 +141,25 @@ public class ConnectorToMySQL implements ConnectorTo{
 			String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
 			conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
 
-			st = conn.createStatement();
+			st = conn.createStatement(); // auslagern !!!!
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void readPkFk(int position) {
+
+	}
+
+	public void readExtraAttributes(int position) {
+
+	}
+
+	public void	readTable() {
+
 	}
 
 	public static void main(String[] args) {
