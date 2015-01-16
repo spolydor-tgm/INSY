@@ -44,7 +44,7 @@ public class Connection {
 		if (arguments[4] != null) {
 			selectStatementString += "order by " + arguments[4] + " ";
 			if (arguments[5] != null)
-				selectStatementString += "desc ";
+				selectStatementString += arguments[5] + " ";
 		}
 		selectStatementString += ";";
 
