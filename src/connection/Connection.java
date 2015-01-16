@@ -28,9 +28,9 @@ public class Connection {
 		if (arguments[1] != null)
 			user = arguments[1];
 		if (arguments[2] != null)
-			pwd	= arguments[3];
+			pwd	= arguments[2];
 
-		this.connect(dbms, arguments[4], user, pwd);
+		this.connect(dbms, arguments[3], user, pwd);
 
 		if (arguments[8].equals(".classpath"))
 			selectStatementString += "* from ";
@@ -47,6 +47,8 @@ public class Connection {
 				selectStatementString += "desc ";
 		}
 		selectStatementString += ";";
+
+		resultSet = conn.prepareStatement(selectStatementString).executeQuery();
 	}
 
 	public ResultSet getResultSet() {
