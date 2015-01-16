@@ -26,12 +26,13 @@ public class Process {
 
 	public ArrayList<String> readAllLines() {
 		try {
-			String build = null;
+			String build = "";
 			for (int x = 1; resultSet.next(); x++) {
+				build += resultSet.getObject(x) + trennzeichen + " ";
 				if (x % columns == 0) {
-
+					formattedOutput.add(build);
+					build = "";
 				}
-
 			}
 			return formattedOutput;
 		} catch (SQLException e) {}

@@ -35,7 +35,7 @@ public class FileWriterPersonal implements Writer {
 		try {
 			for (int x = 0; x < lines.size(); x++) {
 				fileWriter.write(lines.get(x));
-				fileWriter.write("\r");
+				fileWriter.write(System.lineSeparator()); // "\r"
 			}
 		} catch (IOException e) {
 			System.err.println("Unable to write the File"); // Outsourcing later !!!!!!!!!!!!!!!
