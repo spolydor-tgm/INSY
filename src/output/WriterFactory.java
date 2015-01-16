@@ -1,5 +1,7 @@
 package output;
 
+import java.io.IOException;
+
 /**
  * @author Stefan Polydor
  * @version 13.1.2015
@@ -12,7 +14,7 @@ public class WriterFactory {
 	 * @param filename if the choosen type needs a filename it must be given, else you can write null.
 	 * @return new Writer
 	 */
-	public Writer createWriter(String type, String filename) {
+	public Writer createWriter(String type, String filename) throws IOException {
 		switch (type) {
 			case "file":
 				return new FileWriterPersonal(filename);

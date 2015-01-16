@@ -4,7 +4,7 @@ package output;
  * @author Stefan Polydor
  * @version 13.1.2015
  */
-public class ConsoleWriter extends WriterFactory implements Writer {
+public class ConsoleWriter implements Writer {
 
 	/**
 	 * @see output.Writer#write(java.lang.String)

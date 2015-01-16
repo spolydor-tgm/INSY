@@ -8,13 +8,13 @@ import java.io.IOException;
  * @author Stefan Polydor
  * @version 13.1.2015
  */
-public class FileWriterPersonal extends WriterFactory implements Writer {
+public class FileWriterPersonal implements Writer {
 
 	private File file;
 
 	private FileWriter fileWriter;
 
-	public FileWriterPersonal(String filename) {
+	public FileWriterPersonal(String filename) throws IOException {
 		String filenameUendung = filename + ".txt";
 		file = new File(filenameUendung);
 		try {
@@ -30,7 +30,7 @@ public class FileWriterPersonal extends WriterFactory implements Writer {
 	 * Writes the line into the File
 	 *  
 	 */
-	public void write(String line) {
+	public void write(String line) throws IOException {
 		try {
 			fileWriter.write(line);
 			fileWriter.write("\r");
@@ -40,7 +40,7 @@ public class FileWriterPersonal extends WriterFactory implements Writer {
 		}
 	}
 
-	public void closeWriter() {
+	public void closeWriter() throws IOException {
 		try {
 			fileWriter.flush(); // Leeren des Streams
 			fileWriter.close(); // Writer Stream wird geschlossen

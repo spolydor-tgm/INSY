@@ -10,10 +10,12 @@ public class ArgumentParser {
 
 	public ArgumentParser(String[] args) {
 
+
+		System.out.println(System.getProperty("user.name")); // Username auslesen
 	}
 
 	public String[] getArguments() {
-		return null;
+		return arguments;
 	}
 
 }
