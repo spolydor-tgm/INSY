@@ -1,6 +1,7 @@
 package output;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Stefan Polydor
@@ -10,8 +11,8 @@ public interface Writer {
 
 	/**
 	 * Provides the write(...) method for the different Writers
-	 * @param line which will be written
+	 * @param lines which will be written
 	 */
-	public abstract void write(String line) throws IOException;
+	public abstract void write(ArrayList<String> lines) throws IOException;
 
 }

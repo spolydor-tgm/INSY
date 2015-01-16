@@ -1,5 +1,7 @@
 package output;
 
+import java.util.ArrayList;
+
 /**
  * @author Stefan Polydor
  * @version 13.1.2015
@@ -7,12 +9,13 @@ package output;
 public class ConsoleWriter implements Writer {
 
 	/**
-	 * @see output.Writer#write(java.lang.String)
-	 * Writes the line on the console
+	 * @see output.Writer#write(java.util.ArrayList)
+	 * Writes the lines on the console
 	 *  
 	 */
-	public void write(String line) {
-		System.out.println(line);
+	public void write(ArrayList<String> lines) {
+		for (int x = 0; x < lines.size(); x++)
+			System.out.println(lines.get(x));
 	}
 
 }

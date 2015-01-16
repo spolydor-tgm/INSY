@@ -3,6 +3,7 @@ package output;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Stefan Polydor
@@ -26,14 +27,16 @@ public class FileWriterPersonal implements Writer {
 	}
 
 	/**
-	 * @see output.Writer#write(java.lang.String)
+	 * @see output.Writer#write(java.util.ArrayList)
 	 * Writes the line into the File
 	 *  
 	 */
-	public void write(String line) throws IOException {
+	public void write(ArrayList<String> lines) throws IOException {
 		try {
-			fileWriter.write(line);
-			fileWriter.write("\r");
+			for (int x = 0; x < lines.size(); x++) {
+				fileWriter.write(lines.get(x));
+				fileWriter.write("\r");
+			}
 		} catch (IOException e) {
 			System.err.println("Unable to write the File"); // Outsourcing later !!!!!!!!!!!!!!!
 			System.exit(0);

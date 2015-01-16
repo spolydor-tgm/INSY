@@ -1,8 +1,6 @@
 package connection;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * @author Stefan Polydor
@@ -20,12 +18,14 @@ public class Connection {
 
 	private String dbms = "localhost";
 
+	private int columns;
+
 	private String selectStatementString = "Select ";
 
 	public Connection(String[] arguments) throws SQLException {
 		if (arguments[0] != null)
 			dbms = arguments[0];
-		if (arguments[1] != null)
+		if (arguments[1] != null)		// Auslagern !!!
 			user = arguments[1];
 		if (arguments[2] != null)
 			pwd	= arguments[2];
@@ -48,7 +48,10 @@ public class Connection {
 		}
 		selectStatementString += ";";
 
-		resultSet = conn.prepareStatement(selectStatementString).executeQuery();
+		PreparedStatement preparedStatement = conn.prepareStatement(selectStatementString);
+		resultSet = preparedStatement.executeQuery();
+		ResultSetMetaData rsmd = preparedStatement.getMetaData();
+		columns = rsmd.getColumnCount();
 	}
 
 	public ResultSet getResultSet() {
@@ -79,6 +82,10 @@ public class Connection {
 			System.err.println("Wrong hostname or DBname or username or pwd!!!");
 			System.exit(0);
 		}
+	}
+
+	public int getColumns() {
+		return columns;
 	}
 
 }
