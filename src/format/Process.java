@@ -36,12 +36,12 @@ public class Process {
 
 	/**
 	 * Reading all Data Rows from the executed SELECT Statement
-	 * @return
+	 * @return ArrayList(String) with all lines which were select
 	 */
 	public ArrayList<String> readAllLines() {
 		try {
 			String build = "";
-			for (int x = 1; resultSet.next(); x++) { // Row Count
+			while(resultSet.next()) { // Row Count
 				for (int y = 1; y <= columns; y++) // Column Count
 					build += resultSet.getObject(y) + trennzeichen + " ";
 				formattedOutput.add(build);

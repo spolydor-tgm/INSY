@@ -20,7 +20,7 @@ public class FileWriterPersonal implements Writer {
 	/**
 	 * Creates a new file with the given filename and is creating a FileWriter for this File
 	 * @param filename name of the File
-	 * @throws IOException
+	 * @throws IOException if the File cannot be created or written
 	 */
 	public FileWriterPersonal(String filename) throws IOException {
 		String filenameUendung = filename + ".txt";
@@ -32,7 +32,7 @@ public class FileWriterPersonal implements Writer {
 	/**
 	 * @see output.Writer#write(java.util.ArrayList)
 	 * Writes the line into the File
-	 *  
+	 * @throws java.io.IOException if the File cannot be created or written
 	 */
 	public void write(ArrayList<String> lines) throws IOException {
 		for (int x = 0; x < lines.size(); x++) { // Writing all Lines from lines into the File

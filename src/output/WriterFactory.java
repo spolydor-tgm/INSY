@@ -13,6 +13,7 @@ public class WriterFactory {
 	 * @param type of the Writer
 	 * @param filename if the choosen type needs a filename it must be given, else you can write null.
 	 * @return new Writer
+	 * @throws java.io.IOException if the File cannot be created or written
 	 */
 	public Writer createWriter(String type, String filename) throws IOException {
 		switch (type) {
