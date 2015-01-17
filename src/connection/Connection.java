@@ -44,10 +44,9 @@ public class Connection {
 		outputType = arguments[9]; // Saving the OutputType
 		trennzeichen = arguments[7]; // Saving the trennzeichen
 
-		PreparedStatement preparedStatement = conn.prepareStatement(selectStatementString);
-		System.out.println(preparedStatement.toString() + '\n'); // Testausgabe
-		resultSet = preparedStatement.executeQuery();
-		ResultSetMetaData rsmd = preparedStatement.getMetaData();
+		Statement statement = conn.createStatement();
+		resultSet = statement.executeQuery(selectStatementString);
+		ResultSetMetaData rsmd = resultSet.getMetaData();
 		columns = rsmd.getColumnCount();
 	}
 

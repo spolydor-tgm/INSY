@@ -28,14 +28,12 @@ public class Process {
 		try {
 			String build = "";
 			for (int x = 1; resultSet.next(); x++) {
-				build += resultSet.getObject(x) + trennzeichen + " ";
-				if (x % columns == 0) {
-					formattedOutput.add(build);
-					build = "";
-				}
+				for (int y = 1; y <= columns; y++)
+					build += resultSet.getObject(y) + trennzeichen + " ";
+				formattedOutput.add(build);
+				build = "";
 			}
-			return formattedOutput;
 		} catch (SQLException e) {}
-		return null;
+		return formattedOutput;
 	}
 }
