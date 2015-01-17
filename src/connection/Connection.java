@@ -12,27 +12,27 @@ public class Connection {
 
 	private ResultSet resultSet;
 
-	private String user = System.getProperty("user.name");
-
-	private String pwd = null;
-
-	private String dbms = "localhost";
-
 	private int columns;
+
+	private String outputType;
+
+	private String trennzeichen;
 
 	private String selectStatementString = "Select ";
 
 	public Connection(String[] arguments) throws SQLException {
 		this.connect(arguments[0], arguments[3], arguments[1], arguments[2]);
 
+		/*
 		if (arguments[8].equals(".classpath"))
 			selectStatementString += "* from ";
 		else
-			selectStatementString += arguments[8] + "from ";
+		*/
+		selectStatementString += arguments[8] + " from ";
 
 		selectStatementString += arguments[10] + " ";
 		if (arguments[6] != null)
-			selectStatementString += "where" + arguments[6] + " ";
+			selectStatementString += "where " + arguments[6] + " ";
 
 		if (arguments[4] != null) {
 			selectStatementString += "order by " + arguments[4] + " ";
@@ -41,7 +41,11 @@ public class Connection {
 		}
 		selectStatementString += ";";
 
+		outputType = arguments[9]; // Saving the OutputType
+		trennzeichen = arguments[7]; // Saving the trennzeichen
+
 		PreparedStatement preparedStatement = conn.prepareStatement(selectStatementString);
+		System.out.println(preparedStatement.toString() + '\n'); // Testausgabe
 		resultSet = preparedStatement.executeQuery();
 		ResultSetMetaData rsmd = preparedStatement.getMetaData();
 		columns = rsmd.getColumnCount();
@@ -51,10 +55,24 @@ public class Connection {
 		return resultSet;
 	}
 
+	public int getColumns() {
+		return columns;
+	}
+
+	public String getTrennzeichen() {
+		return trennzeichen;
+	}
+
+	public String getOutputType() {
+		if (outputType == null)
+			return null;
+		return outputType;
+	}
+
 	public void	closeConnection() {
 		try {
-			conn.close();
 			resultSet.close();
+			conn.close();
 		} catch (SQLException e) {
 			System.exit(0);
 		}
@@ -75,10 +93,6 @@ public class Connection {
 			System.err.println("Wrong hostname or DBname or username or pwd!!!");
 			System.exit(0);
 		}
-	}
-
-	public int getColumns() {
-		return columns;
 	}
 
 }

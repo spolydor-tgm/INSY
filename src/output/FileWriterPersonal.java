@@ -18,12 +18,8 @@ public class FileWriterPersonal implements Writer {
 	public FileWriterPersonal(String filename) throws IOException {
 		String filenameUendung = filename + ".txt";
 		file = new File(filenameUendung);
-		try {
-			fileWriter = new FileWriter(file, true);
-		} catch (IOException e) {
-			System.err.println("Unable to write into the File");
-			System.exit(0);
-		}
+
+		fileWriter = new FileWriter(file, true);
 	}
 
 	/**
@@ -32,24 +28,17 @@ public class FileWriterPersonal implements Writer {
 	 *  
 	 */
 	public void write(ArrayList<String> lines) throws IOException {
-		try {
-			for (int x = 0; x < lines.size(); x++) {
-				fileWriter.write(lines.get(x));
-				fileWriter.write(System.lineSeparator()); // "\r"
-			}
-		} catch (IOException e) {
-			System.err.println("Unable to write the File"); // Outsourcing later !!!!!!!!!!!!!!!
-			System.exit(0);
+		for (int x = 0; x < lines.size(); x++) {
+			fileWriter.write(lines.get(x));
+			fileWriter.write(System.lineSeparator()); // "\r"
 		}
+
+		this.closeWriter();
 	}
 
 	public void closeWriter() throws IOException {
-		try {
 			fileWriter.flush(); // Leeren des Streams
 			fileWriter.close(); // Writer Stream wird geschlossen
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

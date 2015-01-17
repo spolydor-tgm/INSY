@@ -1,7 +1,12 @@
 package execute;
 
+import cli.ArgumentParser;
 import connection.Connection;
+import format.Process;
+import output.Writer;
+import output.WriterFactory;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -10,12 +15,31 @@ import java.sql.SQLException;
  */
 public class execute {
 	public static void main(String[] args) {
-		// PreparedStatement preparedStatement = new PreparedStatement("Select * from ?");
-		String[] arg = new String[2];
+		ArgumentParser argumentParser = new ArgumentParser(args); // Parsing the arguments
+		Connection connection = null;
 		try {
-			Connection con = new Connection(arg);
+			connection = new Connection(argumentParser.getArguments()); // Connecting to the DBMS
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("One of your parameters for the Select-Statement is not correct");
+			System.exit(0);
 		}
+
+		WriterFactory writerFactory = new WriterFactory();
+		Writer writer = null;
+		try {
+			if (connection.getOutputType() == null)
+				writer = writerFactory.createWriter("console", null); // New ConsoleWriter
+			else
+				writer = writerFactory.createWriter("file", connection.getOutputType()); // New FileWriterPersonal
+
+			format.Process process = new Process(connection.getResultSet(), connection.getTrennzeichen(), connection.getColumns());
+			writer.write(process.readAllLines()); // Processing all data sets and writing them to the specified target
+
+		} catch (IOException ioe) {
+			System.err.println("Unable to write the File");
+			System.exit(0);
+		}
+
+		connection.closeConnection();
 	}
 }
