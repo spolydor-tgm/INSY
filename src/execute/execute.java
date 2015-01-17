@@ -26,11 +26,14 @@ public class execute {
 
 		WriterFactory writerFactory = new WriterFactory();
 		Writer writer = null;
-		try {
+		String specifiedWriter = null;
+		try { // Creating a Writer
 			if (connection.getOutputType() == null)
-				writer = writerFactory.createWriter("console", null); // New ConsoleWriter
+				specifiedWriter = "console";
 			else
-				writer = writerFactory.createWriter("file", connection.getOutputType()); // New FileWriterPersonal
+				specifiedWriter = "file";
+
+			writer = writerFactory.createWriter(specifiedWriter, connection.getOutputType()); // New ConsoleWriter
 
 			format.Process process = new Process(connection.getResultSet(), connection.getTrennzeichen(), connection.getColumns());
 			writer.write(process.readAllLines()); // Processing all data sets and writing them to the specified target
@@ -40,6 +43,6 @@ public class execute {
 			System.exit(0);
 		}
 
-		connection.closeConnection();
+		connection.closeConnection(); // Closing all open connections
 	}
 }
