@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Process {
 
-	private ArrayList<String> formattedOutput;
+	private ArrayList<String> formattedOutput = new ArrayList<>();
 
 	private ResultSet resultSet;
 

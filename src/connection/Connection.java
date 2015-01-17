@@ -23,14 +23,7 @@ public class Connection {
 	private String selectStatementString = "Select ";
 
 	public Connection(String[] arguments) throws SQLException {
-		if (arguments[0] != null)
-			dbms = arguments[0];
-		if (arguments[1] != null)		// Auslagern !!!
-			user = arguments[1];
-		if (arguments[2] != null)
-			pwd	= arguments[2];
-
-		this.connect(dbms, arguments[3], user, pwd);
+		this.connect(arguments[0], arguments[3], arguments[1], arguments[2]);
 
 		if (arguments[8].equals(".classpath"))
 			selectStatementString += "* from ";
