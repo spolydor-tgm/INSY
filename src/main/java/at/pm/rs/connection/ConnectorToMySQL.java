@@ -1,9 +1,6 @@
-package rs.at.pm.connection;
+package at.pm.rs.connection;
 
-import rs.at.pm.utils.ArgumentParser;
-
-import java.sql.*;
-import java.util.ArrayList;
+import at.pm.rs.utils.ArgumentParser;
 
 public class ConnectorToMySQL implements ConnectorTo{
 

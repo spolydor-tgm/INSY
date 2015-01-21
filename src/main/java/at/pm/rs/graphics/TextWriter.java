@@ -1,10 +1,10 @@
-package rs.at.pm.graphics;
-
-import rs.at.pm.connection.SetOfData;
+package at.pm.rs.graphics;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+
+import at.pm.rs.connection.SetOfData;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates

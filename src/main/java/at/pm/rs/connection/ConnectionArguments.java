@@ -1,7 +1,8 @@
-package rs.at.pm.connection;
+package at.pm.rs.connection;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * Cares about all the Arguments that are needed to establish a connection and

@@ -1,6 +1,6 @@
-package rs.at.pm.graphics;
+package at.pm.rs.graphics;
 
-import rs.at.pm.connection.SetOfData;
+import at.pm.rs.connection.SetOfData;
 
 /**
  * This class creates a Writer object that prints the given {@link rs.at.pm.connection.SetOfData}

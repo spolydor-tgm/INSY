@@ -1,4 +1,4 @@
-package rs.at.pm.connection;
+package at.pm.rs.connection;
 
 public class SetOfData {
 

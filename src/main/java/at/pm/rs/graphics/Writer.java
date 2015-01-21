@@ -1,6 +1,6 @@
-package rs.at.pm.graphics;
+package at.pm.rs.graphics;
 
-import rs.at.pm.connection.SetOfData;
+import at.pm.rs.connection.SetOfData;
 
 /**
  * This interface should be implemented by classes which want to print a
