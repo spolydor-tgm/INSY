@@ -1,0 +1,577 @@
+commit 49fa3299b5817f09cf9ca2fdd1b132d49215d865
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 21 08:47:02 2015 +0100
+
+    Fixed folder structure
+
+ .project                                           |   2 +-
+ Rueckwaertssalto-A05/.classpath                    |  10 --
+ Rueckwaertssalto-A05/.gitignore                    |   2 -
+ .../.gradle/2.1/taskArtifacts/cache.properties     |   1 -
+ .../2.1/taskArtifacts/cache.properties.lock        | Bin 17 -> 0 bytes
+ .../.gradle/2.1/taskArtifacts/fileHashes.bin       | Bin 20846 -> 0 bytes
+ .../.gradle/2.1/taskArtifacts/fileSnapshots.bin    | Bin 30716 -> 0 bytes
+ .../.gradle/2.1/taskArtifacts/outputFileStates.bin | Bin 18812 -> 0 bytes
+ .../.gradle/2.1/taskArtifacts/taskArtifacts.bin    | Bin 25326 -> 0 bytes
+ .../.gradle/2.2.1/taskArtifacts/cache.properties   |   1 -
+ .../2.2.1/taskArtifacts/cache.properties.lock      | Bin 17 -> 0 bytes
+ .../.gradle/2.2.1/taskArtifacts/fileHashes.bin     | Bin 19290 -> 0 bytes
+ .../.gradle/2.2.1/taskArtifacts/fileSnapshots.bin  | Bin 18900 -> 0 bytes
+ .../2.2.1/taskArtifacts/outputFileStates.bin       | Bin 18662 -> 0 bytes
+ .../.gradle/2.2.1/taskArtifacts/taskArtifacts.bin  | Bin 19050 -> 0 bytes
+ Rueckwaertssalto-A05/.project                      |  18 ---
+ .../org.springsource.ide.eclipse.gradle.core.prefs |   6 -
+ ...g.springsource.ide.eclipse.gradle.refresh.prefs |   9 --
+ .../.settings/org.eclipse.core.resources.prefs     |   2 -
+ .../.settings/org.eclipse.jdt.core.prefs           |  13 --
+ Rueckwaertssalto-A05/build.gradle                  |  28 ----
+ .../at/pm/rs/connection/ConnectionArguments.java   | 133 ----------------
+ .../main/java/at/pm/rs/connection/ConnectorTo.java |   5 -
+ .../at/pm/rs/connection/ConnectorToFactory.java    |  12 --
+ .../java/at/pm/rs/connection/ConnectorToMySQL.java | 176 ---------------------
+ .../main/java/at/pm/rs/connection/SetOfData.java   |  80 ----------
+ .../main/java/at/pm/rs/graphics/FileWriter.java    |  33 ----
+ .../main/java/at/pm/rs/graphics/GraphWriter.java   |  26 ---
+ .../main/java/at/pm/rs/graphics/TextWriter.java    |  54 -------
+ .../src/main/java/at/pm/rs/graphics/Writer.java    |  23 ---
+ .../main/java/at/pm/rs/utils/ArgumentParser.java   |  72 ---------
+ .../src/main/java/at/pm/rs/utils/Main.java         |   8 -
+ .../src/test/java/org/gradle/test.java             |  14 --
+ 33 files changed, 1 insertion(+), 727 deletions(-)
+
+commit 4b01fec0af5ae62208d88649f6532a9e0a21f305
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 21 08:42:31 2015 +0100
+
+    Now using gradle and fixed project
+
+ .classpath                                         |   6 -
+ .gitignore                                         |   2 -
+ .gradle/2.1/taskArtifacts/cache.properties         |   1 -
+ .gradle/2.1/taskArtifacts/cache.properties.lock    | Bin 17 -> 0 bytes
+ .gradle/2.1/taskArtifacts/fileHashes.bin           | Bin 18679 -> 0 bytes
+ .gradle/2.1/taskArtifacts/fileSnapshots.bin        | Bin 18828 -> 0 bytes
+ .gradle/2.1/taskArtifacts/outputFileStates.bin     | Bin 18602 -> 0 bytes
+ .gradle/2.1/taskArtifacts/taskArtifacts.bin        | Bin 18978 -> 0 bytes
+ .gradle/2.2.1/taskArtifacts/cache.properties       |   1 -
+ .gradle/2.2.1/taskArtifacts/cache.properties.lock  | Bin 17 -> 0 bytes
+ .gradle/2.2.1/taskArtifacts/fileHashes.bin         | Bin 19291 -> 0 bytes
+ .gradle/2.2.1/taskArtifacts/fileSnapshots.bin      | Bin 19144 -> 0 bytes
+ .gradle/2.2.1/taskArtifacts/outputFileStates.bin   | Bin 18662 -> 0 bytes
+ .gradle/2.2.1/taskArtifacts/taskArtifacts.bin      | Bin 19841 -> 0 bytes
+ .../org.springsource.ide.eclipse.gradle.core.prefs |   5 -
+ .settings/org.eclipse.jdt.core.prefs               |  13 --
+ Rueckwaertssalto-A05/.classpath                    |  10 ++
+ Rueckwaertssalto-A05/.gitignore                    |   2 +
+ .../.gradle/2.1/taskArtifacts/cache.properties     |   1 +
+ .../2.1/taskArtifacts/cache.properties.lock        | Bin 0 -> 17 bytes
+ .../.gradle/2.1/taskArtifacts/fileHashes.bin       | Bin 0 -> 20846 bytes
+ .../.gradle/2.1/taskArtifacts/fileSnapshots.bin    | Bin 0 -> 30716 bytes
+ .../.gradle/2.1/taskArtifacts/outputFileStates.bin | Bin 0 -> 18812 bytes
+ .../.gradle/2.1/taskArtifacts/taskArtifacts.bin    | Bin 0 -> 25326 bytes
+ .../.gradle/2.2.1/taskArtifacts/cache.properties   |   1 +
+ .../2.2.1/taskArtifacts/cache.properties.lock      | Bin 0 -> 17 bytes
+ .../.gradle/2.2.1/taskArtifacts/fileHashes.bin     | Bin 0 -> 19290 bytes
+ .../.gradle/2.2.1/taskArtifacts/fileSnapshots.bin  | Bin 0 -> 18900 bytes
+ .../2.2.1/taskArtifacts/outputFileStates.bin       | Bin 0 -> 18662 bytes
+ .../.gradle/2.2.1/taskArtifacts/taskArtifacts.bin  | Bin 0 -> 19050 bytes
+ Rueckwaertssalto-A05/.project                      |  18 +++
+ .../org.springsource.ide.eclipse.gradle.core.prefs |   6 +
+ ...g.springsource.ide.eclipse.gradle.refresh.prefs |   9 ++
+ .../.settings/org.eclipse.core.resources.prefs     |   2 +
+ .../.settings/org.eclipse.jdt.core.prefs           |  13 ++
+ Rueckwaertssalto-A05/build.gradle                  |  28 ++++
+ .../at/pm/rs/connection/ConnectionArguments.java   | 133 ++++++++++++++++
+ .../main/java/at/pm/rs/connection/ConnectorTo.java |   5 +
+ .../at/pm/rs/connection/ConnectorToFactory.java    |  12 ++
+ .../java/at/pm/rs/connection/ConnectorToMySQL.java | 176 +++++++++++++++++++++
+ .../main/java/at/pm/rs/connection/SetOfData.java   |  80 ++++++++++
+ .../main/java/at/pm/rs/graphics/FileWriter.java    |  33 ++++
+ .../main/java/at/pm/rs/graphics/GraphWriter.java   |  26 +++
+ .../main/java/at/pm/rs/graphics/TextWriter.java    |  54 +++++++
+ .../src/main/java/at/pm/rs/graphics/Writer.java    |  23 +++
+ .../main/java/at/pm/rs/utils/ArgumentParser.java   |  72 +++++++++
+ .../src/main/java/at/pm/rs/utils/Main.java         |   8 +
+ .../src/test/java/org/gradle/test.java             |  14 ++
+ bin/.gitignore                                     |   3 +
+ bin/Rueckwaertssalto-A05/.classpath                |  10 ++
+ bin/Rueckwaertssalto-A05/.gitignore                |   2 +
+ .../.gradle/2.1/taskArtifacts/cache.properties     |   1 +
+ .../2.1/taskArtifacts/cache.properties.lock        | Bin 0 -> 17 bytes
+ .../.gradle/2.1/taskArtifacts/fileHashes.bin       | Bin 0 -> 20846 bytes
+ .../.gradle/2.1/taskArtifacts/fileSnapshots.bin    | Bin 0 -> 30716 bytes
+ .../.gradle/2.1/taskArtifacts/outputFileStates.bin | Bin 0 -> 18812 bytes
+ .../.gradle/2.1/taskArtifacts/taskArtifacts.bin    | Bin 0 -> 25326 bytes
+ .../.gradle/2.2.1/taskArtifacts/cache.properties   |   1 +
+ .../2.2.1/taskArtifacts/cache.properties.lock      | Bin 0 -> 17 bytes
+ .../.gradle/2.2.1/taskArtifacts/fileHashes.bin     | Bin 0 -> 19290 bytes
+ .../.gradle/2.2.1/taskArtifacts/fileSnapshots.bin  | Bin 0 -> 18900 bytes
+ .../2.2.1/taskArtifacts/outputFileStates.bin       | Bin 0 -> 18662 bytes
+ .../.gradle/2.2.1/taskArtifacts/taskArtifacts.bin  | Bin 0 -> 19050 bytes
+ bin/Rueckwaertssalto-A05/.project                  |  18 +++
+ .../org.springsource.ide.eclipse.gradle.core.prefs |   6 +
+ ...g.springsource.ide.eclipse.gradle.refresh.prefs |   9 ++
+ .../.settings/org.eclipse.core.resources.prefs     |   2 +
+ .../.settings/org.eclipse.jdt.core.prefs           |  13 ++
+ bin/Rueckwaertssalto-A05/build.gradle              |  28 ++++
+ .../at/pm/rs/connection/ConnectionArguments.class  | Bin 0 -> 5822 bytes
+ .../java/at/pm/rs/connection/ConnectorTo.class     | Bin 0 -> 535 bytes
+ .../at/pm/rs/connection/ConnectorToFactory.class   | Bin 0 -> 1134 bytes
+ .../at/pm/rs/connection/ConnectorToMySQL.class     | Bin 0 -> 6640 bytes
+ .../main/java/at/pm/rs/connection/SetOfData.class  | Bin 0 -> 3257 bytes
+ .../main/java/at/pm/rs/graphics/FileWriter.class   | Bin 0 -> 1334 bytes
+ .../main/java/at/pm/rs/graphics/GraphWriter.class  | Bin 0 -> 1146 bytes
+ .../main/java/at/pm/rs/graphics/TextWriter.class   | Bin 0 -> 2144 bytes
+ .../src/main/java/at/pm/rs/graphics/Writer.class   | Bin 0 -> 649 bytes
+ .../main/java/at/pm/rs/utils/ArgumentParser.class  | Bin 0 -> 1465 bytes
+ .../src/main/java/at/pm/rs/utils/Main.class        | Bin 0 -> 1050 bytes
+ .../src/test/java/org/gradle/test.class            | Bin 0 -> 1187 bytes
+ 81 files changed, 819 insertions(+), 28 deletions(-)
+
+commit ad18257553d1c8045acec1702d23ede619b390c5
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 21 08:26:36 2015 +0100
+
+    Tried to clean up
+
+ .classpath                                         |   1 -
+ .gradle/2.1/taskArtifacts/cache.properties         |   1 +
+ .gradle/2.1/taskArtifacts/cache.properties.lock    | Bin 0 -> 17 bytes
+ .gradle/2.1/taskArtifacts/fileHashes.bin           | Bin 0 -> 18679 bytes
+ .gradle/2.1/taskArtifacts/fileSnapshots.bin        | Bin 0 -> 18828 bytes
+ .gradle/2.1/taskArtifacts/outputFileStates.bin     | Bin 0 -> 18602 bytes
+ .gradle/2.1/taskArtifacts/taskArtifacts.bin        | Bin 0 -> 18978 bytes
+ .gradle/2.2.1/taskArtifacts/cache.properties       |   1 +
+ .gradle/2.2.1/taskArtifacts/cache.properties.lock  | Bin 0 -> 17 bytes
+ .gradle/2.2.1/taskArtifacts/fileHashes.bin         | Bin 0 -> 19291 bytes
+ .gradle/2.2.1/taskArtifacts/fileSnapshots.bin      | Bin 0 -> 19144 bytes
+ .gradle/2.2.1/taskArtifacts/outputFileStates.bin   | Bin 0 -> 18662 bytes
+ .gradle/2.2.1/taskArtifacts/taskArtifacts.bin      | Bin 0 -> 19841 bytes
+ .../org.springsource.ide.eclipse.gradle.core.prefs |   5 +
+ .settings/org.eclipse.jdt.core.prefs               |  13 ++
+ README.md                                          |   2 -
+ doc/A05-Rueckwaertssalto.asta                      | Bin 23544 -> 0 bytes
+ doc/A05-Rueckwaertssalto.asta.bak                  | Bin 23507 -> 0 bytes
+ doc/Aufgabenstellung.docx                          | Bin 28206 -> 0 bytes
+ src/at/pm/rs/connection/ConnectionArguments.java   | 133 ----------------
+ src/at/pm/rs/connection/ConnectorTo.java           |   5 -
+ src/at/pm/rs/connection/ConnectorToFactory.java    |  12 --
+ src/at/pm/rs/connection/ConnectorToMySQL.java      | 176 ---------------------
+ src/at/pm/rs/connection/SetOfData.java             |  80 ----------
+ src/at/pm/rs/graphics/FileWriter.java              |  33 ----
+ src/at/pm/rs/graphics/GraphWriter.java             |  26 ---
+ src/at/pm/rs/graphics/TextWriter.java              |  54 -------
+ src/at/pm/rs/graphics/Writer.java                  |  23 ---
+ src/at/pm/rs/utils/ArgumentParser.java             |  73 ---------
+ 29 files changed, 20 insertions(+), 618 deletions(-)
+
+commit 613eb3658c8397019548f2cce234c978879a4c28
+Merge: eda30d6 a79e62c
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 21 08:24:01 2015 +0100
+
+    Merge branch 'A05-Rueckwaertssalto' of https://github.com/spolydor-tgm/INSY.git into A05-Rueckwaertssalto
+
+commit eda30d6d27b2f68d66f254a28614f8998e35e011
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 21 08:23:46 2015 +0100
+
+    merge try
+
+ .classpath                                    |   6 +--
+ .gitignore                                    |   1 +
+ .project                                      |   3 +-
+ doc/A05-Rueckwaertssalto.asta                 | Bin 23507 -> 23544 bytes
+ doc/A05-Rueckwaertssalto.asta.bak             | Bin 23514 -> 23507 bytes
+ src/at/pm/rs/connection/ConnectorToMySQL.java |   2 +-
+ src/at/pm/rs/graphics/TextWriter.java         |  18 ++++++--
+ src/at/pm/rs/utils/ArgumentParser.java        |  57 +++++++++++++++-----------
+ 8 files changed, 53 insertions(+), 34 deletions(-)
+
+commit a79e62cddd7ccd774ae6e467facbb5be00b29fd7
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 21 08:23:04 2015 +0100
+
+    last changes
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 17 +++++++++++------
+ src/at/pm/rs/connection/SetOfData.java        | 14 +++++++-------
+ 2 files changed, 18 insertions(+), 13 deletions(-)
+
+commit 58ce6f244b68b25c3a02dea204e87d92dcaaefe0
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Fri Jan 16 23:16:59 2015 +0100
+
+    edit connection
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e0bfadec4228d2a0a6763920b535dd1ddca085a2
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 14 09:42:36 2015 +0100
+
+    edit file
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6482fe44dec8594f28a3d17c9a5173c58f424bf9
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 14 09:28:28 2015 +0100
+
+    Added the Writers and commented
+
+ src/at/pm/rs/graphics/FileWriter.java  | 33 +++++++++++++++++++++++++
+ src/at/pm/rs/graphics/GraphWriter.java | 26 ++++++++++++++++++++
+ src/at/pm/rs/graphics/TextWriter.java  | 45 +++++++++++++++++++++++++---------
+ src/at/pm/rs/graphics/Writer.java      | 16 +++++++++++-
+ 4 files changed, 107 insertions(+), 13 deletions(-)
+
+commit 7cd4b97e7c359535cf241c6b58ec700d93344e2c
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 14 09:27:46 2015 +0100
+
+    update UML
+
+ doc/A05-Rueckwaertssalto.asta                 | Bin 23247 -> 23507 bytes
+ doc/A05-Rueckwaertssalto.asta.bak             | Bin 22734 -> 23514 bytes
+ src/at/pm/rs/connection/ConnectorToMySQL.java |   6 ++++--
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
+commit cbc5837c93be9bf9e7334446fffe6b13f829c6a4
+Merge: dd046df fc0a10a
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 14 09:18:21 2015 +0100
+
+    Merge remote-tracking branch 'origin/A05-Rueckwaertssalto' into A05-Rueckwaertssalto
+    
+    Conflicts:
+    	doc/A05-Rueckwaertssalto.asta
+    	doc/A05-Rueckwaertssalto.asta.bak
+
+commit dd046df640b86beead14bd1f051a0b5ec15f7076
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 14 09:17:46 2015 +0100
+
+    update UML
+
+ doc/A05-Rueckwaertssalto.asta                   | Bin 20460 -> 23247 bytes
+ doc/A05-Rueckwaertssalto.asta.bak               | Bin 20371 -> 22734 bytes
+ src/at/pm/rs/connection/ConnectorToFactory.java |   8 ++++++--
+ src/at/pm/rs/connection/ConnectorToMySQL.java   |  17 ++++++++++++++++-
+ 4 files changed, 22 insertions(+), 3 deletions(-)
+
+commit fc0a10a24b76a2f4f73bfb554036ba787c6e477f
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 14 08:59:41 2015 +0100
+
+    Added graphics classes and modified the UML
+
+ doc/A05-Rueckwaertssalto.asta         | Bin 20460 -> 22231 bytes
+ doc/A05-Rueckwaertssalto.asta.bak     | Bin 20371 -> 21844 bytes
+ src/at/pm/rs/graphics/Graphics.java   |   5 -----
+ src/at/pm/rs/graphics/TextWriter.java |  23 +++++++++++++++++++++++
+ src/at/pm/rs/graphics/Writer.java     |   9 +++++++++
+ 5 files changed, 32 insertions(+), 5 deletions(-)
+
+commit 210143f6abbd17214b530f5bb883bb34d20e7fb9
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 14 08:42:08 2015 +0100
+
+    edit UML
+
+ doc/A05-Rueckwaertssalto.asta     | Bin 20371 -> 20460 bytes
+ doc/A05-Rueckwaertssalto.asta.bak | Bin 13058 -> 20371 bytes
+ doc/Diagramm1.dia                 | Bin 2663 -> 0 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit be9df08ef82f0f11bcc9e8efcca1c9a2fda1e809
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Fri Jan 9 10:25:34 2015 +0100
+
+    update files
+
+ doc/jgraph-link.rtf | 7 -------
+ 1 file changed, 7 deletions(-)
+
+commit e4dc88f7d435e14a0b068cf1cf73d4b118ae3a30
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 7 10:10:45 2015 +0100
+
+    added uml.asta
+
+ doc/A05-Rueckwaertssalto.asta                 | Bin 0 -> 20371 bytes
+ doc/A05-Rueckwaertssalto.asta.bak             | Bin 0 -> 13058 bytes
+ src/at/pm/rs/connection/ConnectorToMySQL.java |   4 +++-
+ 3 files changed, 3 insertions(+), 1 deletion(-)
+
+commit c163139f12b86737bc52ff98427cf3a805307338
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 7 09:10:42 2015 +0100
+
+    Added doc folder, protocol and uml
+
+ doc/Aufgabenstellung.docx | Bin 0 -> 28206 bytes
+ doc/Diagramm1.dia         | Bin 0 -> 2663 bytes
+ doc/jgraph-link.rtf       |   7 +++++++
+ jgraph-link.rtf           |   7 -------
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+commit 4d525dda48ec90a5f922435061e46ee3032c35b0
+Merge: f2ecbb3 5590fed
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 7 08:45:51 2015 +0100
+
+    Merge branch 'A05-Rueckwaertssalto' of https://github.com/spolydor-tgm/INSY.git into A05-Rueckwaertssalto
+
+commit f2ecbb3b36f90d36095b3abbcaf6c5ebbc9813c6
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Wed Jan 7 08:45:33 2015 +0100
+
+    Added and implemented SetOfData
+
+ src/at/pm/rs/connection/SetOfData.java | 80 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+
+commit 5590fed35b3c0e08a07fb6baf89c758e8858f86a
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 7 08:40:33 2015 +0100
+
+    update column details
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8e83ccd913f0eba57ebd847c8c0f482c414105cf
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Wed Jan 7 08:39:19 2015 +0100
+
+    update get row type
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+commit 0b74599fec9b4c073a1c27dc3f5bf3175c1071bf
+Merge: c30bd64 a0954f0
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 17:38:38 2015 +0100
+
+    Merge remote-tracking branch 'origin/A05-Rueckwaertssalto' into A05-Rueckwaertssalto
+
+commit c30bd6479fcdb9c94d3e6f681d6b41b5cde70bb1
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 17:38:13 2015 +0100
+
+    update get colums and pks
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 88 +++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
+
+commit a0954f06e2590885caf45f06745a2632326ef8e4
+Merge: dcce8e3 5033c19
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 15:37:41 2015 +0100
+
+    Merge branch 'A05-Rueckwaertssalto' of
+    https://github.com/spolydor-tgm/INSY.git into A05-Rueckwaertssalto
+
+commit 5033c19fa765656614fd572d75a24ba35115bad2
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 15:37:22 2015 +0100
+
+    fix cli input
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 2 +-
+ src/at/pm/rs/utils/ArgumentParser.java        | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit dcce8e3e50ed84bb61561834568813470ae13515
+Merge: 74a94f8 613faad
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 15:32:49 2015 +0100
+
+    Merge branch 'A05-Rueckwaertssalto' of https://github.com/spolydor-tgm/INSY.git into A05-Rueckwaertssalto
+
+commit 74a94f8c1757d29f36221c697dedd5b927001ca0
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 15:32:38 2015 +0100
+
+    merger
+
+ src/at/pm/rs/utils/ArgumentParser.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 613faad1703cc22e106e6394fd0d35ad14f44b80
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 15:32:12 2015 +0100
+
+    edit Constructor
+
+ src/at/pm/rs/connection/ConnectionArguments.java |  2 ++
+ src/at/pm/rs/connection/ConnectorToMySQL.java    | 12 ++++++++----
+ src/at/pm/rs/utils/ArgumentParser.java           | 18 +++++-------------
+ 3 files changed, 15 insertions(+), 17 deletions(-)
+
+commit 16dce18406a31a275b9911f915161a6fe8c9ea9c
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 15:13:11 2015 +0100
+
+    Added outputdirectory to the argumentparser
+
+ src/at/pm/rs/utils/ArgumentParser.java | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit b2f40416cea2d9f78d8f62c79eb1f7538e9df353
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 15:09:57 2015 +0100
+
+    edit Constructor
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 755d2c161b139c89452fd08ec1103da1ca98edcc
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 15:05:28 2015 +0100
+
+    established connection
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
+
+commit 3eb63ea2d7bc9a82205d548e14b80b1aae047ad6
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 15:04:32 2015 +0100
+
+    Implemented the ArgumentParser
+
+ .classpath                                       |  2 +
+ src/at/pm/rs/connection/ConnectionArguments.java |  8 ++-
+ src/at/pm/rs/connection/ConnectorToMySQL.java    | 13 ++++-
+ src/at/pm/rs/utils/ArgumentParser.java           | 65 +++++++++++++++++++++++-
+ 4 files changed, 83 insertions(+), 5 deletions(-)
+
+commit 2b781f0a04d0172c3f323103b30dd6cf05fc9053
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 14:34:11 2015 +0100
+
+    edit connection
+
+ src/at/pm/rs/connection/ConnectorTo.java        |  4 +--
+ src/at/pm/rs/connection/ConnectorToFactory.java |  2 +-
+ src/at/pm/rs/connection/ConnectorToMySQL.java   | 40 +++++++++++++++++++++----
+ 3 files changed, 36 insertions(+), 10 deletions(-)
+
+commit 102e2bf7f97aaaf05b947c79ac3933e33cd22a58
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 14:01:13 2015 +0100
+
+    edit connectormysql
+
+ src/at/pm/rs/connection/ConnectorToMySQL.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c202028f3eb230a53250075c106466e6f2e86e30
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 13:23:26 2015 +0100
+
+    Implemented ConnectionArguments and did the setup for all the classes
+
+ src/at/pm/rs/connection/ConnectionArguments.java | 127 +++++++++++++++++++++++
+ src/at/pm/rs/connection/ConnectorTo.java         |   7 ++
+ src/at/pm/rs/connection/ConnectorToFactory.java  |   8 ++
+ src/at/pm/rs/connection/ConnectorToMySQL.java    |  19 ++++
+ src/at/pm/rs/graphics/Graphics.java              |   5 +
+ src/at/pm/rs/main/HelloWorld.java                |  40 -------
+ src/at/pm/rs/utils/ArgumentParser.java           |   5 +
+ 7 files changed, 171 insertions(+), 40 deletions(-)
+
+commit c89ee2ea635ec6582f3586f84d554c11b88fe67a
+Merge: 951b4cd 8450090
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 11:06:18 2015 +0100
+
+    Merge branch 'A05-Rueckwaertssalto' of
+    https://github.com/spolydor-tgm/INSY.git into A05-Rueckwaertssalto
+
+commit 951b4cd50b686ee241c56c75e9301f1e8ec639a8
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 11:05:05 2015 +0100
+
+    Added testfile for jgraph
+
+ .classpath                        |  1 +
+ src/at/pm/rs/main/HelloWorld.java | 40 +++++++++++++++++++++++++++++++++++++++
+ src/at/pm/rs/main/test.java       | 11 -----------
+ 3 files changed, 41 insertions(+), 11 deletions(-)
+
+commit 8450090e45e82356f14fd2a1157fde4896a9085b
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 11:01:42 2015 +0100
+
+    added file
+
+ jgraph-link.rtf | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 01233ca7ea45388916e742a90092455c0e2d40b1
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 10:59:46 2015 +0100
+
+    ^FIx
+
+ .classpath                                       |  6 ++++++
+ .gitignore                                       |  1 +
+ .project                                         | 17 +++++++++++++++++
+ A05-Rueckwaertssalto/.classpath                  |  6 ------
+ A05-Rueckwaertssalto/.gitignore                  |  1 -
+ A05-Rueckwaertssalto/.project                    | 17 -----------------
+ A05-Rueckwaertssalto/README.md                   |  2 --
+ A05-Rueckwaertssalto/src/at/pm/rs/main/test.java | 11 -----------
+ README.md                                        |  2 ++
+ src/at/pm/rs/main/test.java                      | 11 +++++++++++
+ 10 files changed, 37 insertions(+), 37 deletions(-)
+
+commit acd89f3ca6dece2e2f657cc6a976c2d3e88ea49d
+Author: Patrick Malik <austria.p@hotmail.com>
+Date:   Mon Jan 5 10:55:26 2015 +0100
+
+    first commit
+
+ A05-Rueckwaertssalto/.classpath                  |  6 ++++++
+ A05-Rueckwaertssalto/.gitignore                  |  1 +
+ A05-Rueckwaertssalto/.project                    | 17 +++++++++++++++++
+ A05-Rueckwaertssalto/README.md                   |  2 ++
+ A05-Rueckwaertssalto/src/at/pm/rs/main/test.java | 11 +++++++++++
+ README.md                                        |  2 --
+ src/test.java                                    |  6 ------
+ 7 files changed, 37 insertions(+), 8 deletions(-)
+
+commit 18500b709cfbffdd6dc62d8892aefd4b82e9de9a
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 10:40:08 2015 +0100
+
+    added src - folder
+
+ src/ad.java   | 6 ------
+ src/test.java | 6 ++++++
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 940e017c03ffe7b574225d66ed995dc0767f9069
+Author: spolydor-tgm <spolydor@student.tgm.ac.at>
+Date:   Mon Jan 5 10:38:54 2015 +0100
+
+    added src - folder
+
+ src/ad.java | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 9efc108da848bbfa84fd95c964f783668518d49d
+Author: spolydor-tgm <spolydor-tgm@users.noreply.github.com>
+Date:   Mon Jan 5 10:31:36 2015 +0100
+
+    Initial commit
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
