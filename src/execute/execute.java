@@ -21,7 +21,7 @@ public class execute {
 			connection = new Connection(argumentParser.getArguments()); // Connecting to the DBMS
 		} catch (SQLException e) {
 			System.err.println("One of your parameters for the Select-Statement is not correct");
-			System.exit(0);
+			System.exit(1);
 		}
 
 		WriterFactory writerFactory = new WriterFactory();
@@ -40,7 +40,7 @@ public class execute {
 
 		} catch (IOException ioe) {
 			System.err.println("Unable to write the File");
-			System.exit(0);
+			System.exit(1);
 		}
 
 		connection.closeConnection(); // Closing all open connections

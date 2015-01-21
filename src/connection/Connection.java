@@ -117,10 +117,10 @@ public class Connection {
 			conn = DriverManager.getConnection(url, username, pwd);
 		} catch (ClassNotFoundException e) {
 			System.err.println("Class not Found!!!");
-			System.exit(0);
+			System.exit(1);
 		} catch (SQLException e) {
 			System.err.println("Wrong hostname or DBname or username or pwd!!!");
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 
