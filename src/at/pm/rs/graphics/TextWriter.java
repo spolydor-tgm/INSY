@@ -26,17 +26,27 @@ public class TextWriter extends FileWriter {
 	public void print(SetOfData data) {
 		PrintWriter writer = null;
 		try {
-			writer = new PrintWriter("the-file-name.txt", "UTF-8");
+			writer = new PrintWriter(this.getOutputDir() + "/RM.html", "UTF-8");
 		} catch (FileNotFoundException e) {
-			//TODO logger error
+			// TODO logger error
+			writer.close();
 		} catch (UnsupportedEncodingException e) {
 			// TODO Logger error
+			writer.close();
 		}
-		writer.println("The first line");
-		writer.println("The second line");
+		writer.print(model(data));
 		writer.close();
 	}
 
+	/**
+	 * Creates html-code in a String out of the {@link SetOfData} given as
+	 * parameter.
+	 * 
+	 * @param data
+	 *            the given {@link SetOfData}
+	 * @return a html representation of the RM created from the
+	 *         {@link SetOfData}
+	 */
 	private String model(SetOfData data) {
 		
 		return null;

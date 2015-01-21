@@ -166,6 +166,6 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 	public static void main(String[] args) {
 		ArgumentParser ap = new ArgumentParser();
-		new ConnectorToMySQL(ap.parseArguments(args));
+		//new ConnectorToMySQL(ap.parseArguments(args));
 	}
 }
