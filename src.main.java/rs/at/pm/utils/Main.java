@@ -1,4 +1,4 @@
-package java.rs.at.pm.utils;
+package rs.at.pm.utils;
 
 public class Main {
 	

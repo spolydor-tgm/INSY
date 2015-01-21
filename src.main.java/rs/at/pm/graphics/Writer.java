@@ -1,6 +1,6 @@
-package java.rs.at.pm.graphics;
+package rs.at.pm.graphics;
 
-import java.rs.at.pm.connection.SetOfData;
+import rs.at.pm.connection.SetOfData;
 
 /**
  * This interface should be implemented by classes which want to print a

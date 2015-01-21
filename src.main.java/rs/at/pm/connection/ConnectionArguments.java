@@ -1,4 +1,4 @@
-package java.rs.at.pm.connection;
+package rs.at.pm.connection;
 
 import java.util.HashMap;
 import java.util.Map;

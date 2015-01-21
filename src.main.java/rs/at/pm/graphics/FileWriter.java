@@ -1,4 +1,4 @@
-package java.rs.at.pm.graphics;
+package rs.at.pm.graphics;
 
 /**
  * Implements the Writer interface. This class is the skelleton for every Writer

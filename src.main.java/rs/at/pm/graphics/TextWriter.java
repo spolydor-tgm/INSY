@@ -1,9 +1,10 @@
-package java.rs.at.pm.graphics;
+package rs.at.pm.graphics;
+
+import rs.at.pm.connection.SetOfData;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.rs.at.pm.connection.SetOfData;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates
@@ -17,7 +18,7 @@ public class TextWriter extends FileWriter {
 	/**
 	 * prints the given SetOfData as RM to a file.
 	 * 
-	 * @see Writer#print(java.rs.at.pm.connection.SetOfData)
+	 * @see Writer#print(rs.at.pm.connection.SetOfData)
 	 * @param data
 	 *            the SetOfData to be printed.
 	 */
