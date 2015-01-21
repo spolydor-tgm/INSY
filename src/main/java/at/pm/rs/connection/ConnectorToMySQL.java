@@ -1,5 +1,15 @@
 package at.pm.rs.connection;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 import at.pm.rs.utils.ArgumentParser;
 
 public class ConnectorToMySQL implements ConnectorTo{

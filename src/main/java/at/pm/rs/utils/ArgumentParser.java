@@ -1,5 +1,7 @@
 package at.pm.rs.utils;
 
+import org.kohsuke.args4j.Option;
+
 import at.pm.rs.connection.ConnectionArguments;
 
 public class ArgumentParser {
