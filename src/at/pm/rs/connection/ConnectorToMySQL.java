@@ -12,13 +12,14 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private Statement st;
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
+	private DatabaseMetaData md;
 	private SetOfData setOfData;
+	private ArrayList<String> tablenames = new ArrayList<>();
 	
 	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
 		data = connectionArguments;
 		this.connect();
 
-		DatabaseMetaData md = null;
 		try {
 			md = conn.getMetaData();
 			ResultSet rs = md.getTables(null, null, "%", null); // Get all Tables
@@ -152,16 +153,20 @@ public class ConnectorToMySQL implements ConnectorTo{
 		}
 	}
 
-	public void readPkFk(int position) {
+	public void readPkFk(int position) throws SQLException {
 
 	}
 
-	public void readExtraAttributes(int position) {
-
+	public void readExtraAttributes(int position) throws SQLException {
+		rsmd.isAutoIncrement(position);
+		rsmd.isNullable(position);
 	}
 
-	public void	readTable() {
-
+	public void	readAllTablenames() throws SQLException {
+		rs = md.getTables(null, null, "%", null); // Get all Tables
+		while (rs.next())
+			tablenames.add(rs.getString(3));
+		rs = null; // Cleaning the resultSet rs. The stored informations wouldn't be needed anymore.
 	}
 
 	public static void main(String[] args) {

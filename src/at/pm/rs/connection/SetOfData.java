@@ -2,13 +2,13 @@ package at.pm.rs.connection;
 
 public class SetOfData {
 
-	String type;
-	boolean pk;
-	String fk;
-	String tableName;
-	String name;
-	boolean autoincremet;
-	boolean notNull;
+	private String type;
+	private boolean pk;
+	private String fk;
+	private String tableName;
+	private String name;
+	private boolean autoincremet;
+	private boolean notNull;
 	
 	public SetOfData(String tableName, String name, String type, boolean pk, String fk, boolean notNull, boolean autoincrement){
 		this.tableName = tableName;
