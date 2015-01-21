@@ -1,7 +1,8 @@
-package at.pm.rs.utils;
+package java.rs.at.pm.utils;
 
-import at.pm.rs.connection.ConnectionArguments;
 import org.kohsuke.args4j.Option;
+
+import java.rs.at.pm.connection.ConnectionArguments;
 
 public class ArgumentParser {
 //	Options options;

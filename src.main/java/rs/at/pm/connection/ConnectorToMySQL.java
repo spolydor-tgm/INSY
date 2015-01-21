@@ -1,7 +1,6 @@
-package at.pm.rs.connection;
+package java.rs.at.pm.connection;
 
-import at.pm.rs.utils.ArgumentParser;
-
+import java.rs.at.pm.utils.ArgumentParser;
 import java.sql.*;
 import java.util.ArrayList;
 

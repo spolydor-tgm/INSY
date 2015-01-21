@@ -1,4 +1,4 @@
-package at.pm.rs.connection;
+package java.rs.at.pm.connection;
 
 public interface ConnectorTo {
 	public void connect();

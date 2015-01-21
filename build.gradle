@@ -9,7 +9,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Rueckwaertssalto', 
         'Implementation-Version': version,
-        'Main-Class':'at.pm.rs.utils.Main'
+        'Main-Class':'Main'
     }
 }
 
