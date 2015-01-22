@@ -1,72 +1,53 @@
 package at.pm.rs.utils;
 
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import at.pm.rs.connection.ConnectionArguments;
 
 public class ArgumentParser {
-//	Options options;
-	String outputDir;
+	
+	CmdLineParser parser;
 	
 	public ArgumentParser(){
-//		options = new Options();
 		outputDir = "";
+		parser = new CmdLineParser(this);
 	}
 	
-	@Option(name = "-h", usage = "the hostname used to establish a connection to the database")
+	@Option(name = "-h", usage = "the hostname used to establish a connection to the database, if there is no hostname given, it will use \"localhost\" as hostname!", required=false)
 	private String hostname = "localhost";
-	
-	@SuppressWarnings("static-access")
-	public ConnectionArguments parseArguments(String... args){
-//		Option hostname = OptionBuilder.hasArg().isRequired().withDescription("the hostname of the db ou want to connect with i.e. 192.168.0.22:2233").withArgName("hostname").create("h");
-//		Option username = OptionBuilder.hasArg().isRequired().withDescription("the username needed to establish a connection").withArgName("username").create("u");
-//		Option password = OptionBuilder.hasArg().withDescription("the password needed to establish a connection").withArgName("password").create("p");
-//		Option dbname = OptionBuilder.hasArg().isRequired().withDescription("the name of the database you want to work with").withArgName("databasename").create("d");
-//		Option dbms = OptionBuilder.hasArg().isRequired().withDescription("The dbms on which the database runs").withArgName("dbms").create("D");
-//		Option outDir = OptionBuilder.hasArg().isRequired().withDescription("The directory in which the files should be saved").withArgName("output directory").create("o");
-//		
-//		options.addOption(hostname);
-//		options.addOption(username);
-//		options.addOption(password);
-//		options.addOption(dbname);
-//		options.addOption(dbms);
-//		options.addOption(outDir);
-//		
-//		CommandLineParser parser = new BasicParser();
-//		CommandLine line = null;
-//		try {
-//			line = parser.parse(options, args);
-//		} catch (ParseException e) {
-//			System.err.println("An Error occurred while parsing the arguments, check if all if your arguments are valid");
-//			printHelp();
-//		}
-//		setOutputDir(line.getOptionValue("o"));
-//		ConnectionArguments conargs = new ConnectionArguments(line.getOptionValue("h"), line.getOptionValue("u"), line.getOptionValue("p"), line.getOptionValue("d"), line.getOptionValue("D"));
-//		return conargs;
-		
-		
-		return null;
 
+	@Option(name="-u", usage="the username needed to estblish a connection with the database, if there is no username given, it uses the name of the user that runs the application.", required=false)
+	private String username = System.getProperty("user.name");
+	
+	@Option(name="password", usage="the password needed to establish a connection to the database, as default there is no password used!", required=false)
+	private String password = "";
+	
+	@Option(name="dbname", usage="the name of the database you want to connect with.", required=true)
+	private String dbname;
+	
+	@Option(name="dbms", usage="the name of your dbms.  You can choose from:\tmysql", required=true)
+	private String dbms;
+	
+	@Option(name="outputDir", usage="the directory of the output files", required=true)
+	private String outputDir;
+	
+	
+	public ConnectionArguments parseArguments(String... args){
+		try {
+			parser.parseArgument(args);
+		} catch (CmdLineException e) {
+			parser.printUsage(System.out);
+		}
+		return new ConnectionArguments(hostname, username, password, dbname, dbms);
 	}
 	
-//	public void printHelp(){
-//		HelpFormatter formatter = new HelpFormatter();
-//		formatter.printHelp("DB", options);
-//	}
-//	
-//	public Options getOptions() {
-//		return options;
-//	}
-//	public void setOptions(Options options) {
-//		this.options = options;
-//	}
-//	public String getOutputDir() {
-//		return outputDir;
-//	}
-//	public void setOutputDir(String outputDir) {
-//		this.outputDir = outputDir;
-//	}
-	
-	
+	public String getOutputDir() {
+		return outputDir;
+	}
+	public void setOutputDir(String outputDir) {
+		this.outputDir = outputDir;
+	}
 	
 }
