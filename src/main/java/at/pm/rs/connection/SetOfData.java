@@ -1,47 +1,39 @@
 package at.pm.rs.connection;
 
+import java.util.ArrayList;
+
 public class SetOfData {
 
-	private String type;
-	private boolean pk;
-	private String fk;
+	private ArrayList<String> type = new ArrayList<>();
+	private ArrayList<Boolean> pk = new ArrayList<>();
+	private ArrayList<String> fk = new ArrayList<>();
 	private String tableName;
-	private String name;
-	private boolean autoincremet;
-	private boolean notNull;
-	
-	public SetOfData(String tableName, String name, String type, boolean pk, String fk, boolean notNull, boolean autoincrement){
-		this.tableName = tableName;
-		this.name = name;
-		this.type = type;
-		this.pk = pk;
-		this.fk = fk;
-		this.notNull = notNull;
-		this.autoincremet = autoincrement;
-	}
+	private ArrayList<String> name = new ArrayList<>();
+	private ArrayList<Boolean> autoincremet = new ArrayList<>();
+	private ArrayList<Boolean> notNull = new ArrayList<>();
 
-	public String getType() {
+	public ArrayList<String> getType() {
 		return type;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		this.type.add(type);
 	}
 
-	public boolean isPk() {
+	public ArrayList<Boolean> isPk() {
 		return pk;
 	}
 
-	public void setPk(boolean pk) {
-		this.pk = pk;
+	public void setPk(boolean pk, int position) {
+		this.pk.add(position, pk);
 	}
 
-	public String getFk() {
+	public ArrayList<String> getFk() {
 		return fk;
 	}
 
-	public void setFk(String fk) {
-		this.fk = fk;
+	public void setFk(String fk, int position) {
+		this.fk.add(position, fk);
 	}
 
 	public String getTableName() {
@@ -52,29 +44,33 @@ public class SetOfData {
 		this.tableName = tableName;
 	}
 
-	public String getName() {
+	public ArrayList<String> getName() {
 		return name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name.add(name);
 	}
 
-	public boolean isAutoincremet() {
+	public ArrayList<Boolean> isAutoincremet() {
 		return autoincremet;
 	}
 
 	public void setAutoincremet(boolean autoincremet) {
-		this.autoincremet = autoincremet;
+		this.autoincremet.add(autoincremet);
 	}
 
-	public boolean isNotNull() {
+	public ArrayList<Boolean> isNotNull() {
 		return notNull;
 	}
 
 	public void setNotNull(boolean notNull) {
-		this.notNull = notNull;
+		this.notNull.add(notNull);
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		for (int x = 0; x < type.size(); x++);
+		return "";
+	}
 }

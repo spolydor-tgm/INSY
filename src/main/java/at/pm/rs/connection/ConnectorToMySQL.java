@@ -1,16 +1,7 @@
 package at.pm.rs.connection;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-
-import at.pm.rs.utils.ArgumentParser;
 
 public class ConnectorToMySQL implements ConnectorTo{
 
@@ -20,21 +11,31 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	private DatabaseMetaData md;
-	private SetOfData setOfData;
+	private ArrayList<SetOfData> setOfData;
 	private ArrayList<String> tablenames = new ArrayList<>();
+	private final String query = "SELECT * from ";
+	private int columns;
+	private SetOfData setOfTableData;
+
 	
-	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
-		data = connectionArguments;
+	//public ConnectorToMySQL(ConnectionArguments connectionArguments) {
+	public ConnectorToMySQL() {
+		// data = connectionArguments;
 		this.connect();
 
 		try {
 			md = conn.getMetaData();
 			ResultSet rs = md.getTables(null, null, "%", null); // Get all Tables
 
+
+
+
+
 			// ResultSetMetaData rsmd = rs.getMetaData();
 
 			// int columnsNumber = rsmd.getColumnCount();
 			// System.out.println(columnsNumber);
+
 			while (rs.next()) {
 				System.out.println(rs.getString(3));
 			}
@@ -47,6 +48,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 			ResultSet rss = st.executeQuery();
 			ResultSetMetaData rsmd = st.getMetaData();
 			int columns = rsmd.getColumnCount();
+
+
 			//  Get column names
 			for (int i = 1; i <= columns; i++) {
 				columnNames.add(rsmd.getColumnName(i));
@@ -55,6 +58,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 				System.out.println(rsmd.isNullable(i)); // Gibt 1 zurueck, wenn keine Nullwerte erlaubt sind
 			}
 			//  Get row data
+			/*
 			while (rss.next()) {
 				ArrayList row = new ArrayList(columns);
 				for (int i = 1; i <= columns; i++) {
@@ -62,6 +66,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 				}
 				data.add( row );
 			}
+			*/
 
 			/*
 			ArrayList colNames = new ArrayList();
@@ -83,59 +88,15 @@ public class ConnectorToMySQL implements ConnectorTo{
 			while(rs.next())
 				System.out.println("Foreign Key :" + rs.getString(4));
 
-			rs= meta.getTables(null, null, "test2", new String[]{"TABLE"});
-			rs=meta.getPrimaryKeys(null, null, "test2");
+			rs= meta.getTables(null, null, "table3", new String[]{"TABLE"});
+			rs=meta.getPrimaryKeys(null, null, "table3");
 			while(rs.next())
 				System.out.println("Primary Key :" + rs.getString(4));
 
-			/*
-			// Create Vectors and copy over elements from ArrayLists to them
-			// Vector is deprecated but I am using them in this example to keep
-			// things simple - the best practice would be to create a custom defined
-			// class which inherits from the AbstractTableModel class
-			Vector columnNamesVector = new Vector();
-			Vector dataVector = new Vector();
-
-			for (int i = 0; i < data.size(); i++) {
-				ArrayList subArray = (ArrayList)data.get(i);
-				Vector subVector = new Vector();
-				for (int j = 0; j < subArray.size(); j++) {
-					subVector.add(subArray.get(j));
-				}
-				dataVector.add(subVector);
-			}
-
-			for (int i = 0; i < columnNames.size(); i++ )
-				columnNamesVector.add(columnNames.get(i));
-
-			//  Create table with database data
-			JTable table = new JTable(dataVector, columnNamesVector) {
-				public Class getColumnClass(int column) {
-					for (int row = 0; row < getRowCount(); row++) {
-						Object o = getValueAt(row, column);
-
-						if (o != null) {
-							return o.getClass();
-						}
-					}
-
-					return Object.class;
-				}
-			};
-			/*
-			JFrame jFrame = new JFrame();
-			JScrollPane scrollPane = new JScrollPane( table );
-			jFrame.getContentPane().add( scrollPane);
-
-			JPanel buttonPanel = new JPanel();
-			jFrame.getContentPane().add( buttonPanel, BorderLayout.SOUTH );
-			jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			jFrame.setVisible(true);
-			*/
-
-			this.conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Failed to connect to the DBMS!!!");
+			System.err.println("Wrong username/password/dmbs-Adress");
+			System.exit(1);
 		}
 	}
 	
@@ -146,8 +107,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Verbindung mit dem DBMS herstellen
-			String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
-			conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
+			//String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
+			//conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
+
+			// Wieder loeschen
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/A05", "root", "polydor");
 
 			st = conn.createStatement(); // auslagern !!!!
 
@@ -160,24 +124,84 @@ public class ConnectorToMySQL implements ConnectorTo{
 		}
 	}
 
-	public void readPkFk(int position) throws SQLException {
-
+	private void readPk(String tablename) throws SQLException {
+		rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
+		rs = md.getPrimaryKeys(null, null, tablename);
+		while(rs.next()) {
+			int x = 0;
+			while (!(rs.getString(4).equals(setOfTableData.getName().get(x))))
+				x++;
+			setOfTableData.setPk(true, x);
+		}
 	}
 
-	public void readExtraAttributes(int position) throws SQLException {
-		rsmd.isAutoIncrement(position);
-		rsmd.isNullable(position);
+	private void readFk(String tablename) throws SQLException {
+		rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
+		rs = md.getExportedKeys(null, null, tablename);
+		while(rs.next()) {
+			int x = 0;
+			while (!(rs.getString(4).equals(setOfTableData.getName().get(x))))
+				x++;
+			setOfTableData.setFk(rs.getString(4), x);
+		}
 	}
 
-	public void	readAllTablenames() throws SQLException {
+	private void readExtraAttributes() throws SQLException {
+		for (int i = 1; i <= columns; i++) {
+			setOfTableData.setName(rsmd.getColumnName(i));
+			setOfTableData.setAutoincremet(rsmd.isAutoIncrement(i)); // true wenn ja und falss wenn nicht
+			if (rsmd.isNullable(i) == 1) // returns 1, if there is no null-value allowed
+				setOfTableData.setNotNull(true); //
+			else
+				setOfTableData.setNotNull(false);
+			setOfTableData.setType(rsmd.getColumnTypeName(i));
+		}
+	}
+
+	private void readAllTablenames() throws SQLException {
 		rs = md.getTables(null, null, "%", null); // Get all Tables
 		while (rs.next())
 			tablenames.add(rs.getString(3));
+		rs.close();
 		rs = null; // Cleaning the resultSet rs. The stored informations wouldn't be needed anymore.
 	}
 
+	public ArrayList<SetOfData> readAllFromAllTables() throws SQLException {
+		this.readAllTablenames();
+		PreparedStatement st;
+		for (int x = 0; x < tablenames.size(); x++) {
+			setOfTableData = new SetOfData();
+			st = conn.prepareStatement(query + tablenames.get(x) + ";");
+			rs = st.executeQuery();
+			rsmd = st.getMetaData();
+			columns = rsmd.getColumnCount();
+
+			this.readExtraAttributes();
+			this.readPk(tablenames.get(x));
+			this.readFk(tablenames.get(x));
+
+			setOfData.add(setOfTableData);
+		}
+
+
+
+		return setOfData;
+	}
+
+	public ResultSet getResultSet() {
+		return rs;
+	}
+
+	public void closeConnections() throws SQLException {
+		rs.close();
+		conn.close();
+	}
+
 	public static void main(String[] args) {
-		ArgumentParser ap = new ArgumentParser();
+		//ArgumentParser ap = new ArgumentParser();
 		//new ConnectorToMySQL(ap.parseArguments(args));
+		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL();
+
+
 	}
 }
