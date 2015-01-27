@@ -11,7 +11,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	private DatabaseMetaData md;
-	private ArrayList<SetOfData> setOfData;
+	private ArrayList<SetOfData> setOfData = new ArrayList<>();
 	private ArrayList<String> tablenames = new ArrayList<>();
 	private final String query = "SELECT * from ";
 	private int columns;
@@ -25,73 +25,6 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 		try {
 			md = conn.getMetaData();
-			ResultSet rs = md.getTables(null, null, "%", null); // Get all Tables
-
-
-
-
-
-			// ResultSetMetaData rsmd = rs.getMetaData();
-
-			// int columnsNumber = rsmd.getColumnCount();
-			// System.out.println(columnsNumber);
-
-			while (rs.next()) {
-				System.out.println(rs.getString(3));
-			}
-
-			ArrayList columnNames = new ArrayList();
-			ArrayList data = new ArrayList();
-
-
-			PreparedStatement st = conn.prepareStatement("Select * from test;");
-			ResultSet rss = st.executeQuery();
-			ResultSetMetaData rsmd = st.getMetaData();
-			int columns = rsmd.getColumnCount();
-
-
-			//  Get column names
-			for (int i = 1; i <= columns; i++) {
-				columnNames.add(rsmd.getColumnName(i));
-				System.out.println(columnNames.get(i - 1) + ": " + rsmd.getColumnTypeName(i));
-				System.out.println(rsmd.isAutoIncrement(i)); // true wenn ja und falls wenn nicht
-				System.out.println(rsmd.isNullable(i)); // Gibt 1 zurueck, wenn keine Nullwerte erlaubt sind
-			}
-			//  Get row data
-			/*
-			while (rss.next()) {
-				ArrayList row = new ArrayList(columns);
-				for (int i = 1; i <= columns; i++) {
-					row.add( rss.getObject(i) );
-				}
-				data.add( row );
-			}
-			*/
-
-			/*
-			ArrayList colNames = new ArrayList();
-			ResultSet pkfk = md.getPrimaryKeys(null, null, "test");
-			ResultSetMetaData rssmd = pkfk.getMetaData();
-			for (int i = 1; i <= rssmd.getColumnCount(); i++) {
-				colNames.add(rssmd.getColumnName(i));
-				System.out.println(colNames.get(i-1));
-			}
-			*/
-			DatabaseMetaData meta=conn.getMetaData();
-			rs= meta.getTables(null, null, "test", new String[]{"TABLE"});
-			rs=meta.getPrimaryKeys(null, null, "test");
-			while(rs.next())
-				System.out.println("Primary Key :"+rs.getString(4));
-
-			rs= meta.getTables(null, null, "test2", new String[]{"TABLE"});
-			rs=meta.getExportedKeys(null, null, "test2");
-			while(rs.next())
-				System.out.println("Foreign Key :" + rs.getString(4));
-
-			rs= meta.getTables(null, null, "table3", new String[]{"TABLE"});
-			rs=meta.getPrimaryKeys(null, null, "table3");
-			while(rs.next())
-				System.out.println("Primary Key :" + rs.getString(4));
 
 		} catch (SQLException e) {
 			System.err.println("Failed to connect to the DBMS!!!");
@@ -129,7 +62,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 		rs = md.getPrimaryKeys(null, null, tablename);
 		while(rs.next()) {
 			int x = 0;
-			while (!(rs.getString(4).equals(setOfTableData.getName().get(x))))
+			while (!(rs.getString(4).equals(setOfTableData.getName()[x])))
 				x++;
 			setOfTableData.setPk(true, x);
 		}
@@ -140,7 +73,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 		rs = md.getExportedKeys(null, null, tablename);
 		while(rs.next()) {
 			int x = 0;
-			while (!(rs.getString(4).equals(setOfTableData.getName().get(x))))
+			while (!(rs.getString(4).equals(setOfTableData.getName()[x])))
 				x++;
 			setOfTableData.setFk(rs.getString(4), x);
 		}
@@ -148,13 +81,13 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 	private void readExtraAttributes() throws SQLException {
 		for (int i = 1; i <= columns; i++) {
-			setOfTableData.setName(rsmd.getColumnName(i));
-			setOfTableData.setAutoincremet(rsmd.isAutoIncrement(i)); // true wenn ja und falss wenn nicht
-			if (rsmd.isNullable(i) == 1) // returns 1, if there is no null-value allowed
-				setOfTableData.setNotNull(true); //
+			setOfTableData.setName(rsmd.getColumnName(i), i-1);
+			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i), i-1); // true wenn ja und falss wenn nicht
+			if (rsmd.isNullable(i) == 0) // returns 1, if there is no null-value allowed
+				setOfTableData.setNotNull(true, i-1); //
 			else
-				setOfTableData.setNotNull(false);
-			setOfTableData.setType(rsmd.getColumnTypeName(i));
+				setOfTableData.setNotNull(false, i-1);
+			setOfTableData.setType(rsmd.getColumnTypeName(i), i-1);
 		}
 	}
 
@@ -170,11 +103,12 @@ public class ConnectorToMySQL implements ConnectorTo{
 		this.readAllTablenames();
 		PreparedStatement st;
 		for (int x = 0; x < tablenames.size(); x++) {
-			setOfTableData = new SetOfData();
 			st = conn.prepareStatement(query + tablenames.get(x) + ";");
 			rs = st.executeQuery();
 			rsmd = st.getMetaData();
 			columns = rsmd.getColumnCount();
+			setOfTableData = new SetOfData(columns);
+			setOfTableData.setTableName(tablenames.get(x));
 
 			this.readExtraAttributes();
 			this.readPk(tablenames.get(x));
@@ -182,9 +116,6 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 			setOfData.add(setOfTableData);
 		}
-
-
-
 		return setOfData;
 	}
 
@@ -201,7 +132,15 @@ public class ConnectorToMySQL implements ConnectorTo{
 		//ArgumentParser ap = new ArgumentParser();
 		//new ConnectorToMySQL(ap.parseArguments(args));
 		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL();
-
-
+		try {
+			connectorToMySQL.readAllTablenames();
+			ArrayList<SetOfData> test = connectorToMySQL.readAllFromAllTables();
+			System.out.println(test.size());
+			for (SetOfData data : test)
+				System.out.println(data.toString());
+			connectorToMySQL.closeConnections();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

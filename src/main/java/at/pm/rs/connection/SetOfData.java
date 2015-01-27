@@ -1,39 +1,46 @@
 package at.pm.rs.connection;
 
-import java.util.ArrayList;
-
 public class SetOfData {
 
-	private ArrayList<String> type = new ArrayList<>();
-	private ArrayList<Boolean> pk = new ArrayList<>();
-	private ArrayList<String> fk = new ArrayList<>();
+	private String[] type;
+	private boolean[] pk;
+	private String[] fk;
 	private String tableName;
-	private ArrayList<String> name = new ArrayList<>();
-	private ArrayList<Boolean> autoincremet = new ArrayList<>();
-	private ArrayList<Boolean> notNull = new ArrayList<>();
+	private String[] name;
+	private boolean[] autoincrement;
+	private boolean[] notNull;
 
-	public ArrayList<String> getType() {
+	public SetOfData(int size) {
+		type = new String[size];
+		pk = new boolean[size];
+		fk = new String[size];
+		name = new String[size];
+		autoincrement = new boolean[size];
+		notNull = new boolean[size];
+	}
+
+	public String[] getType() {
 		return type;
 	}
 
-	public void setType(String type) {
-		this.type.add(type);
+	public void setType(String type, int position) {
+		this.type[position] = type;
 	}
 
-	public ArrayList<Boolean> isPk() {
+	public boolean[] isPk() {
 		return pk;
 	}
 
 	public void setPk(boolean pk, int position) {
-		this.pk.add(position, pk);
+		this.pk[position] = pk;
 	}
 
-	public ArrayList<String> getFk() {
+	public String[] getFk() {
 		return fk;
 	}
 
 	public void setFk(String fk, int position) {
-		this.fk.add(position, fk);
+		this.fk[position] = fk;
 	}
 
 	public String getTableName() {
@@ -44,33 +51,49 @@ public class SetOfData {
 		this.tableName = tableName;
 	}
 
-	public ArrayList<String> getName() {
+	public String[] getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name.add(name);
+	public void setName(String name, int position) {
+		this.name[position] = name;
 	}
 
-	public ArrayList<Boolean> isAutoincremet() {
-		return autoincremet;
+	public boolean[] isAutoincremet() {
+		return autoincrement;
 	}
 
-	public void setAutoincremet(boolean autoincremet) {
-		this.autoincremet.add(autoincremet);
+	public void setAutoincrement(boolean autoincrement, int position) {
+		this.autoincrement[position] = autoincrement;
 	}
 
-	public ArrayList<Boolean> isNotNull() {
+	public boolean[] isNotNull() {
 		return notNull;
 	}
 
-	public void setNotNull(boolean notNull) {
-		this.notNull.add(notNull);
+	public void setNotNull(boolean notNull, int position) {
+		this.notNull[position] = notNull;
 	}
 
 	@Override
 	public String toString() {
-		for (int x = 0; x < type.size(); x++);
-		return "";
+		String out = tableName + '\n';
+		for (int x = 0; x < type.length; x++) {
+			out += name[x] + ": " + type[x];
+			if (pk[x])
+				out += " PK= " + pk[x];
+
+			if (fk[x] != null)
+				out += " FK= " + fk[x];
+
+			if (autoincrement[x])
+				out += " autoincrement= " + autoincrement[x];
+
+			if (notNull[x])
+				out += " nullable= " + notNull[x];
+
+			out += '\n';
+		}
+		return out;
 	}
 }
