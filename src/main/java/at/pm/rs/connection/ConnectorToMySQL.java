@@ -133,7 +133,6 @@ public class ConnectorToMySQL implements ConnectorTo{
 		//new ConnectorToMySQL(ap.parseArguments(args));
 		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL();
 		try {
-			connectorToMySQL.readAllTablenames();
 			ArrayList<SetOfData> test = connectorToMySQL.readAllFromAllTables();
 			System.out.println(test.size());
 			for (SetOfData data : test)
