@@ -1,10 +1,9 @@
 package at.pm.rs.utils;
 
+import at.pm.rs.connection.ConnectionArguments;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
-
-import at.pm.rs.connection.ConnectionArguments;
 
 public class ArgumentParser {
 	
@@ -46,6 +45,7 @@ public class ArgumentParser {
 	public String getOutputDir() {
 		return outputDir;
 	}
+
 	public void setOutputDir(String outputDir) {
 		this.outputDir = outputDir;
 	}
