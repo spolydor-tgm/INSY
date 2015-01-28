@@ -20,16 +20,16 @@ public class ArgumentParser {
 	@Option(name="-u", usage="the username needed to estblish a connection with the database, if there is no username given, it uses the name of the user that runs the application.", required=false)
 	private String username = System.getProperty("user.name");
 	
-	@Option(name="password", usage="the password needed to establish a connection to the database, as default there is no password used!", required=false)
+	@Option(name="--password", usage="the password needed to establish a connection to the database, as default there is no password used!", required=false)
 	private String password = "";
 	
-	@Option(name="dbname", usage="the name of the database you want to connect with.", required=true)
+	@Option(name="--dbname", usage="the name of the database you want to connect with.", required=true)
 	private String dbname;
 	
-	@Option(name="dbms", usage="the name of your dbms.  You can choose from:\tmysql", required=true)
+	@Option(name="--dbms", usage="the name of your dbms.  You can choose from:\tmysql", required=true)
 	private String dbms;
 	
-	@Option(name="outputDir", usage="the directory of the output files", required=true)
+	@Option(name="--outputDir", usage="the directory of the output files") // required = true     !!!!
 	private String outputDir;
 	
 	
@@ -38,6 +38,7 @@ public class ArgumentParser {
 			parser.parseArgument(args);
 		} catch (CmdLineException e) {
 			parser.printUsage(System.out);
+			System.exit(1);
 		}
 		return new ConnectionArguments(hostname, username, password, dbname, dbms);
 	}

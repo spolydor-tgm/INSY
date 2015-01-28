@@ -1,5 +1,7 @@
 package at.pm.rs.connection;
 
+import at.pm.rs.utils.ArgumentParser;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -18,9 +20,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private SetOfData setOfTableData;
 
 	
-	//public ConnectorToMySQL(ConnectionArguments connectionArguments) {
-	public ConnectorToMySQL() {
-		// data = connectionArguments;
+	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
+		data = connectionArguments;
 		this.connect();
 
 		try {
@@ -40,11 +41,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Verbindung mit dem DBMS herstellen
-			//String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
-			//conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
-
-			// Wieder loeschen
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/A05", "root", "polydor");
+			String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
+			conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
 
 			st = conn.createStatement(); // auslagern !!!!
 
@@ -129,12 +127,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 	}
 
 	public static void main(String[] args) {
-		//ArgumentParser ap = new ArgumentParser();
+		ArgumentParser ap = new ArgumentParser();
 		//new ConnectorToMySQL(ap.parseArguments(args));
-		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL();
+		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 		try {
 			ArrayList<SetOfData> test = connectorToMySQL.readAllFromAllTables();
-			System.out.println(test.size());
 			for (SetOfData data : test)
 				System.out.println(data.toString());
 			connectorToMySQL.closeConnections();
