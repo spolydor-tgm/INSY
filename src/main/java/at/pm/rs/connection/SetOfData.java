@@ -1,14 +1,18 @@
 package at.pm.rs.connection;
 
+/**
+ * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
+ * @version 28.01.15
+ */
+
 public class SetOfData {
 
+	private String[] name;
 	private String[] type;
 	private boolean[] pk;
 	private String[] fk;
-	private String tableName;
-	private String[] name;
 	private boolean[] autoincrement;
-	private boolean[] notNull;
+	private boolean[] isNullable;
 
 	public SetOfData(int size) {
 		type = new String[size];
@@ -16,7 +20,7 @@ public class SetOfData {
 		fk = new String[size];
 		name = new String[size];
 		autoincrement = new boolean[size];
-		notNull = new boolean[size];
+		isNullable = new boolean[size];
 	}
 
 	public String[] getType() {
@@ -27,7 +31,7 @@ public class SetOfData {
 		this.type[position] = type;
 	}
 
-	public boolean[] isPk() {
+	public boolean[] getIsPk() {
 		return pk;
 	}
 
@@ -43,14 +47,6 @@ public class SetOfData {
 		this.fk[position] = fk;
 	}
 
-	public String getTableName() {
-		return tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
 	public String[] getName() {
 		return name;
 	}
@@ -59,7 +55,7 @@ public class SetOfData {
 		this.name[position] = name;
 	}
 
-	public boolean[] isAutoincremet() {
+	public boolean[] getIsAutoincremet() {
 		return autoincrement;
 	}
 
@@ -67,17 +63,17 @@ public class SetOfData {
 		this.autoincrement[position] = autoincrement;
 	}
 
-	public boolean[] isNotNull() {
-		return notNull;
+	public boolean[] getIsNullable() {
+		return isNullable;
 	}
 
-	public void setNotNull(boolean notNull, int position) {
-		this.notNull[position] = notNull;
+	public void setIsNullable(boolean notNull, int position) {
+		this.isNullable[position] = notNull;
 	}
 
 	@Override
 	public String toString() {
-		String out = tableName + '\n';
+		String out = "" + '\n';
 		for (int x = 0; x < type.length; x++) {
 			out += name[x] + ": " + type[x];
 			if (pk[x])
@@ -89,8 +85,8 @@ public class SetOfData {
 			if (autoincrement[x])
 				out += " autoincrement= " + autoincrement[x];
 
-			if (notNull[x])
-				out += " nullable= " + notNull[x];
+			if (isNullable[x])
+				out += " nullable= " + isNullable[x];
 
 			out += '\n';
 		}

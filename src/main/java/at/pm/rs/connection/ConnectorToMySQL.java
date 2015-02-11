@@ -5,6 +5,11 @@ import at.pm.rs.utils.ArgumentParser;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
+ * @version 28.01.15
+ */
+
 public class ConnectorToMySQL implements ConnectorTo{
 
 	private ConnectionArguments data;
@@ -80,11 +85,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private void readExtraAttributes() throws SQLException {
 		for (int i = 1; i <= columns; i++) {
 			setOfTableData.setName(rsmd.getColumnName(i), i-1);
-			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i), i-1); // true wenn ja und falss wenn nicht
-			if (rsmd.isNullable(i) == 0) // returns 1, if there is no null-value allowed
-				setOfTableData.setNotNull(true, i-1); //
+			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i), i-1); // true wenn ja und false wenn nicht
+			if (rsmd.isNullable(i) == 1) // returns 1, if there is no null-value allowed
+				setOfTableData.setIsNullable(false, i-1); //
 			else
-				setOfTableData.setNotNull(false, i-1);
+				setOfTableData.setIsNullable(true, i-1);
 			setOfTableData.setType(rsmd.getColumnTypeName(i), i-1);
 		}
 	}
@@ -106,7 +111,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 			rsmd = st.getMetaData();
 			columns = rsmd.getColumnCount();
 			setOfTableData = new SetOfData(columns);
-			setOfTableData.setTableName(tablenames.get(x));
+			// setOfTableData.setTableName(tablenames.get(x));
 
 			this.readExtraAttributes();
 			this.readPk(tablenames.get(x));
