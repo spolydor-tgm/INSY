@@ -48,7 +48,15 @@ public class TextWriter extends FileWriter {
 	 *         {@link SetOfData}
 	 */
 	private String model(SetOfData data) {
-		
-		return null;
 	}
+	
+	
+	private String tableBegin(String tableName){
+		return tableName+"(";
+	}
+	
+	private String tableEnd(){
+		return ")";
+	}
+	
 }
