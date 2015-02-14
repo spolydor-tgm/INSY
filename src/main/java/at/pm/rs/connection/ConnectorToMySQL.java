@@ -56,12 +56,12 @@ public class ConnectorToMySQL implements ConnectorTo{
 		String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
 		conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
 
-		st = conn.createStatement(); // auslagern !!!!
+		st = conn.createStatement();
 	}
 
 	/**
-	 *
-	 * @param tablename
+	 * Reads all the PK's from the given Table out and saves them into a SetOfData
+	 * @param tablename from which the Primary Keys, will be read out
 	 * @throws SQLException
 	 */
 	private void readPk(String tablename) throws SQLException {
@@ -76,8 +76,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 	}
 
 	/**
-	 *
-	 * @param tablename
+	 * Reads all the FK's from the given Table out and saves them into a SetOfData
+	 * @param tablename from which the Foreign Keys, will be read out
 	 * @throws SQLException
 	 */
 	private void readFk(String tablename) throws SQLException {
@@ -92,7 +92,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 	}
 
 	/**
-	 *
+	 * Reads all Extra Attributes (isNullabe, isAutoincrement, Columnname, Type) and saves them into a SetOfData
 	 * @throws SQLException
 	 */
 	private void readExtraAttributes() throws SQLException {
@@ -109,7 +109,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 	}
 
 	/**
-	 *
+	 * Reads All Tablenames from the connected DB and saves them into an String-ArrayList
 	 * @throws SQLException
 	 */
 	private void readAllTablenames() throws SQLException {
@@ -121,8 +121,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 	}
 
 	/**
-	 *
-	 * @return
+	 * Reads All from All Tables
+	 * @return TableOfData which stores all Informations from all tables
 	 * @throws SQLException
 	 */
 	public ArrayList<TableData> readAllFromAllTables() throws SQLException {
@@ -134,22 +134,18 @@ public class ConnectorToMySQL implements ConnectorTo{
 			rs = st.executeQuery();
 			rsmd = st.getMetaData();
 			columns = rsmd.getColumnCount();
-			setOfTableData = new SetOfData();
-			tableDatas.add(new TableData(tablenames.get(tableInProcessNumber)));
-			// setOfTableData.setTableName(tablenames.get(x));
+			setOfTableData = new SetOfData(); // Create new SetOfData
+			tableDatas.add(new TableData(tablenames.get(tableInProcessNumber))); // Set tablename
 
 			this.readExtraAttributes();
 			this.readPk(tablenames.get(tableInProcessNumber));
 			this.readFk(tablenames.get(tableInProcessNumber));
-
-			// tableDatas.get(tableInProcessNumber).addSetOfData(setOfTableData);
-			// setOfData.add(setOfTableData);
 		}
 		return tableDatas;
 	}
 
 	/**
-	 *
+	 * Closes all Connections (Resultset and Connection)
 	 * @throws SQLException
 	 */
 	public void closeConnections() throws SQLException {
