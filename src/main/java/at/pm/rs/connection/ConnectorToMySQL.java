@@ -18,10 +18,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	private DatabaseMetaData md;
-	private ArrayList<SetOfData> setOfData = new ArrayList<>();
+	private ArrayList<TableData> tableDatas = new ArrayList<>();
 	private ArrayList<String> tablenames = new ArrayList<>();
 	private final String query = "SELECT * from ";
 	private int columns;
+	private int tableInProcessNumber;
 	private SetOfData setOfTableData;
 
 	
@@ -65,9 +66,9 @@ public class ConnectorToMySQL implements ConnectorTo{
 		rs = md.getPrimaryKeys(null, null, tablename);
 		while(rs.next()) {
 			int x = 0;
-			while (!(rs.getString(4).equals(setOfTableData.getName()[x])))
+			while (!(rs.getString(4).equals(tableDatas.get(tableInProcessNumber).getSetOfData().get(x).getName())))
 				x++;
-			setOfTableData.setPk(true, x);
+			tableDatas.get(tableInProcessNumber).getSetOfData().get(x).setPk(true);
 		}
 	}
 
@@ -76,21 +77,22 @@ public class ConnectorToMySQL implements ConnectorTo{
 		rs = md.getExportedKeys(null, null, tablename);
 		while(rs.next()) {
 			int x = 0;
-			while (!(rs.getString(4).equals(setOfTableData.getName()[x])))
+			while (!(rs.getString("FKCOLUMN_NAME").equals(tableDatas.get(tableInProcessNumber).getSetOfData().get(x).getName())))
 				x++;
-			setOfTableData.setFk(rs.getString(4), x);
+			tableDatas.get(tableInProcessNumber).getSetOfData().get(x).setFk(rs.getString("FKTABLE_NAME") + "." + rs.getString("FKCOLUMN_NAME"));
 		}
 	}
 
 	private void readExtraAttributes() throws SQLException {
 		for (int i = 1; i <= columns; i++) {
-			setOfTableData.setName(rsmd.getColumnName(i), i-1);
-			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i), i-1); // true wenn ja und false wenn nicht
+			setOfTableData = new SetOfData();
+			setOfTableData.setName(rsmd.getColumnName(i));
+			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i)); // true wenn ja und false wenn nicht
 			if (rsmd.isNullable(i) == 1) // returns 1, if there is no null-value allowed
-				setOfTableData.setIsNullable(false, i-1); //
-			else
-				setOfTableData.setIsNullable(true, i-1);
-			setOfTableData.setType(rsmd.getColumnTypeName(i), i-1);
+				setOfTableData.setIsNullable(true);
+			setOfTableData.setType(rsmd.getColumnTypeName(i));
+
+			tableDatas.get(tableInProcessNumber).addSetOfData(setOfTableData);
 		}
 	}
 
@@ -102,24 +104,27 @@ public class ConnectorToMySQL implements ConnectorTo{
 		rs = null; // Cleaning the resultSet rs. The stored informations wouldn't be needed anymore.
 	}
 
-	public ArrayList<SetOfData> readAllFromAllTables() throws SQLException {
+	public ArrayList<TableData> readAllFromAllTables() throws SQLException {
 		this.readAllTablenames();
+
 		PreparedStatement st;
-		for (int x = 0; x < tablenames.size(); x++) {
-			st = conn.prepareStatement(query + tablenames.get(x) + ";");
+		for (tableInProcessNumber = 0; tableInProcessNumber < tablenames.size(); tableInProcessNumber++) {
+			st = conn.prepareStatement(query + tablenames.get(tableInProcessNumber) + ";");
 			rs = st.executeQuery();
 			rsmd = st.getMetaData();
 			columns = rsmd.getColumnCount();
-			setOfTableData = new SetOfData(columns);
+			setOfTableData = new SetOfData();
+			tableDatas.add(new TableData(tablenames.get(tableInProcessNumber)));
 			// setOfTableData.setTableName(tablenames.get(x));
 
 			this.readExtraAttributes();
-			this.readPk(tablenames.get(x));
-			this.readFk(tablenames.get(x));
+			this.readPk(tablenames.get(tableInProcessNumber));
+			this.readFk(tablenames.get(tableInProcessNumber));
 
-			setOfData.add(setOfTableData);
+			// tableDatas.get(tableInProcessNumber).addSetOfData(setOfTableData);
+			// setOfData.add(setOfTableData);
 		}
-		return setOfData;
+		return tableDatas;
 	}
 
 	public ResultSet getResultSet() {
@@ -136,9 +141,10 @@ public class ConnectorToMySQL implements ConnectorTo{
 		//new ConnectorToMySQL(ap.parseArguments(args));
 		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 		try {
-			ArrayList<SetOfData> test = connectorToMySQL.readAllFromAllTables();
-			for (SetOfData data : test)
-				System.out.println(data.toString());
+			ArrayList<TableData> test = connectorToMySQL.readAllFromAllTables();
+			for (TableData data : test)
+				System.out.println(data.getTableName() + data.getSetOfData().toString());
+				//System.out.print(data.getSetOfData().toString());
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {
 			e.printStackTrace();

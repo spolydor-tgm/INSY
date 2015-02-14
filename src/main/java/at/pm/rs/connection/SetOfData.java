@@ -7,89 +7,83 @@ package at.pm.rs.connection;
 
 public class SetOfData {
 
-	private String[] name;
-	private String[] type;
-	private boolean[] pk;
-	private String[] fk;
-	private boolean[] autoincrement;
-	private boolean[] isNullable;
+	private String name;
+	private String type;
+	private boolean pk;
+	private String fk;
+	private boolean autoincrement;
+	private boolean isNullable;
 
-	public SetOfData(int size) {
-		type = new String[size];
-		pk = new boolean[size];
-		fk = new String[size];
-		name = new String[size];
-		autoincrement = new boolean[size];
-		isNullable = new boolean[size];
+	public SetOfData() {
+		pk = false;
+		isNullable = false;
 	}
 
-	public String[] getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(String type, int position) {
-		this.type[position] = type;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public boolean[] getIsPk() {
+	public boolean getIsPk() {
 		return pk;
 	}
 
-	public void setPk(boolean pk, int position) {
-		this.pk[position] = pk;
+	public void setPk(boolean pk) {
+		this.pk = pk;
 	}
 
-	public String[] getFk() {
+	public String getFk() {
 		return fk;
 	}
 
-	public void setFk(String fk, int position) {
-		this.fk[position] = fk;
+	public void setFk(String fk) {
+		this.fk = fk;
 	}
 
-	public String[] getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name, int position) {
-		this.name[position] = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public boolean[] getIsAutoincremet() {
+	public boolean getIsAutoincremet() {
 		return autoincrement;
 	}
 
-	public void setAutoincrement(boolean autoincrement, int position) {
-		this.autoincrement[position] = autoincrement;
+	public void setAutoincrement(boolean autoincrement) {
+		this.autoincrement = autoincrement;
 	}
 
-	public boolean[] getIsNullable() {
+	public boolean getIsNullable() {
 		return isNullable;
 	}
 
-	public void setIsNullable(boolean notNull, int position) {
-		this.isNullable[position] = notNull;
+	public void setIsNullable(boolean notNull) {
+		this.isNullable = notNull;
 	}
 
 	@Override
 	public String toString() {
 		String out = "" + '\n';
-		for (int x = 0; x < type.length; x++) {
-			out += name[x] + ": " + type[x];
-			if (pk[x])
-				out += " PK= " + pk[x];
+		out += name + ": " + type;
+		if (pk)
+			out += " PK= " + pk;
 
-			if (fk[x] != null)
-				out += " FK= " + fk[x];
+		if (fk != null)
+			out += " FK= " + fk;
 
-			if (autoincrement[x])
-				out += " autoincrement= " + autoincrement[x];
+		if (autoincrement)
+			out += " autoincrement= " + autoincrement;
 
-			if (isNullable[x])
-				out += " nullable= " + isNullable[x];
+		if (isNullable)
+			out += " nullable= " + isNullable;
 
-			out += '\n';
-		}
+		out += '\n';
 		return out;
 	}
 }
