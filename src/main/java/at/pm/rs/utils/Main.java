@@ -1,5 +1,6 @@
 package at.pm.rs.utils;
 
+<<<<<<< HEAD
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -8,6 +9,16 @@ import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.FileWriter;
 import at.pm.rs.graphics.TextWriter;
+=======
+import at.pm.rs.connection.ConnectorToMySQL;
+import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
+import at.pm.rs.graphics.FileWriter;
+import at.pm.rs.graphics.TextWriter;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+>>>>>>> branch 'A05-Rueckwaertssalto' of https://github.com/spolydor-tgm/INSY.git
 
 /**
  * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
