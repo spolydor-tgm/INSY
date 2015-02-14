@@ -31,6 +31,7 @@ public class TextWriter extends FileWriter {
 		try {
 			writer = new PrintWriter(this.getOutputDir() + "/RM.html", "UTF-8");
 		} catch (FileNotFoundException e) {
+			System.out.println("asdasdasdsda");
 			// TODO logger error
 			writer.close();
 		} catch (UnsupportedEncodingException e) {
