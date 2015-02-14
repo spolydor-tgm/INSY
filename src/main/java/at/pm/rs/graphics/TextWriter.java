@@ -73,8 +73,8 @@ public class TextWriter extends FileWriter {
 
 		System.out.println("Während auslesen");
 		String body = model(data);
-		
-		System.out.println(content);
+
+		System.out.println(body);
 
 		content = content.replace("$title", "MyFancyRm");
 		content = content.replace("$body", body);
@@ -99,7 +99,7 @@ public class TextWriter extends FileWriter {
 		for (TableData data : dataSets) {
 
 			String set = "";
-
+			System.out.println(data.getSetOfData().get(0).getName());
 			set += tableBegin(data.getTableName());
 
 			for (SetOfData cur : data.getSetOfData()) {
@@ -112,13 +112,15 @@ public class TextWriter extends FileWriter {
 						attr = new ForeignKey(attr);
 					}
 				}
-
+				
+				
+				
 				if (cur.getIsPk())
 					attr = new PrimaryKey(attr);
 
 				set += attr.getTag() + ", ";
 			}
-			set = set.substring(0, set.lastIndexOf(",") - 1);
+			set = set.substring(0, set.lastIndexOf(","));
 			set += tableEnd();
 			tables += set + "\n";
 		}
@@ -127,11 +129,11 @@ public class TextWriter extends FileWriter {
 	}
 
 	private String tableBegin(String tableName) {
-		return tableName + "(";
+		return "<p>"+tableName + "(";
 	}
 
 	private String tableEnd() {
-		return ")";
+		return ")</p>";
 	}
 
 }

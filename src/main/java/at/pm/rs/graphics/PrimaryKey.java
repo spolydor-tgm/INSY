@@ -8,6 +8,6 @@ public class PrimaryKey extends HTMLDecorator {
 
 	@Override
 	public String getTag() {
-		return "<u>"+htmltag.tag+"</u>";
+		return "<u>"+htmltag.getTag()+"</u>";
 	}
 }
