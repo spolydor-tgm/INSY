@@ -43,6 +43,7 @@ public class TextWriter extends FileWriter {
 		String content = "";
 
 		try {
+			System.out.println("Während auslesen");
 			content = new Scanner(htmlTemplate).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
