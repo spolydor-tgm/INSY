@@ -8,7 +8,7 @@ public class ForeignKey extends HTMLDecorator {
 	
 	@Override
 	public String getTag() {		
-		return "<u class=\"dashed\">"+this.getTag()+"</u>";
+		return "<u class=\"dashed\">"+this.tag+"</u>";
 	}
 
 }

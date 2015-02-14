@@ -40,12 +40,12 @@ public class TextWriter extends FileWriter {
 			writer.close();
 		}
 
-//		File htmlTemplate = new File("");
+		// File htmlTemplate = new File("");
 		String content = "";
 
 		FileReader fileReader = null;
 		try {
-			fileReader = new FileReader("./template.html");
+			fileReader = new FileReader("template.html");
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -73,9 +73,11 @@ public class TextWriter extends FileWriter {
 
 		System.out.println("Während auslesen");
 		String body = model(data);
+		
+		System.out.println(content);
 
-		content.replace("$title", "MyFancyRm");
-		content.replace("$body", body);
+		content = content.replace("$title", "MyFancyRm");
+		content = content.replace("$body", body);
 
 		writer.print(content);
 		writer.close();
@@ -104,9 +106,11 @@ public class TextWriter extends FileWriter {
 				String name = cur.getName();
 				HTMLTag attr = new Element(name);
 
-				if (cur.getFk() != null || !cur.getFk().equals("")) {
-					attr.setTag(cur.getFk() + ":" + name);
-					attr = new ForeignKey(attr);
+				if (cur.getFk() != null) {
+					if (!cur.getFk().equals("")) {
+						attr.setTag(cur.getFk() + ":" + name);
+						attr = new ForeignKey(attr);
+					}
 				}
 
 				if (cur.getIsPk())
