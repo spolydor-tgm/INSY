@@ -43,13 +43,13 @@ public class TextWriter extends FileWriter {
 		String content = "";
 
 		try {
-			System.out.println("Während auslesen");
 			content = new Scanner(htmlTemplate).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		System.out.println("Während auslesen");
 		String body = model(data);
 
 		content.replace("$title", "MyFancyRm");
