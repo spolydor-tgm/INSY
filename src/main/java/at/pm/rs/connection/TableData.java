@@ -13,18 +13,34 @@ public class TableData {
 
 	private ArrayList<SetOfData> dataSet = new ArrayList<>();
 
+	/**
+	 *
+	 * @param tableName
+	 */
 	public TableData(String tableName) {
 		this.tableName = tableName;
 	}
 
+	/**
+	 *
+	 * @param setOfData
+	 */
 	public void addSetOfData(SetOfData setOfData) {
 		dataSet.add(setOfData);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public ArrayList<SetOfData> getSetOfData() {
 		return dataSet;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public String getTableName() {
 		return tableName;
 	}

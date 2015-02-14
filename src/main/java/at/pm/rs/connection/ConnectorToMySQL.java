@@ -1,5 +1,7 @@
 package at.pm.rs.connection;
 
+import at.pm.rs.graphics.FileWriter;
+import at.pm.rs.graphics.TextWriter;
 import at.pm.rs.utils.ArgumentParser;
 
 import java.sql.*;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
  * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
  * @version 28.01.15
  */
-
 public class ConnectorToMySQL implements ConnectorTo{
 
 	private ConnectionArguments data;
@@ -18,14 +19,17 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	private DatabaseMetaData md;
-	private ArrayList<TableData> tableDatas = new ArrayList<>();
-	private ArrayList<String> tablenames = new ArrayList<>();
-	private final String query = "SELECT * from ";
-	private int columns;
-	private int tableInProcessNumber;
-	private SetOfData setOfTableData;
+	private ArrayList<TableData> tableDatas = new ArrayList<>(); // Saving the datas from the existing tables
+	private ArrayList<String> tablenames = new ArrayList<>(); // Saving all tablenames
+	private final String query = "SELECT * from "; // Selects all from a given table
+	private int columns; // Columns of the table
+	private int tableInProcessNumber; // The number of the table which is in progess
+	private SetOfData setOfTableData; // SetOfData which stores the Information from a Table (only one attribute + extra information)
 
-	
+	/**
+	 *
+	 * @param connectionArguments
+	 */
 	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
 		data = connectionArguments;
 		this.connect();
@@ -39,9 +43,12 @@ public class ConnectorToMySQL implements ConnectorTo{
 			System.exit(1);
 		}
 	}
-	
+
+	/**
+	 * Establish a connection to the DBMS
+	 */
 	@Override
-	public void connect() {
+	public void connect(){
 		try {
 			// Treiber laden
 			Class.forName("com.mysql.jdbc.Driver");
@@ -54,13 +61,18 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Unnable to load the class");
-			System.exit(0);
+			System.exit(1);
 		} catch (SQLException e) {
 			System.err.println("Unable to connect to the Database Management System");
-			System.exit(0);
+			System.exit(1);
 		}
 	}
 
+	/**
+	 *
+	 * @param tablename
+	 * @throws SQLException
+	 */
 	private void readPk(String tablename) throws SQLException {
 		rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
 		rs = md.getPrimaryKeys(null, null, tablename);
@@ -72,6 +84,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 		}
 	}
 
+	/**
+	 *
+	 * @param tablename
+	 * @throws SQLException
+	 */
 	private void readFk(String tablename) throws SQLException {
 		rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
 		rs = md.getExportedKeys(null, null, tablename);
@@ -83,6 +100,10 @@ public class ConnectorToMySQL implements ConnectorTo{
 		}
 	}
 
+	/**
+	 *
+	 * @throws SQLException
+	 */
 	private void readExtraAttributes() throws SQLException {
 		for (int i = 1; i <= columns; i++) {
 			setOfTableData = new SetOfData();
@@ -96,6 +117,10 @@ public class ConnectorToMySQL implements ConnectorTo{
 		}
 	}
 
+	/**
+	 *
+	 * @throws SQLException
+	 */
 	private void readAllTablenames() throws SQLException {
 		rs = md.getTables(null, null, "%", null); // Get all Tables
 		while (rs.next())
@@ -104,6 +129,11 @@ public class ConnectorToMySQL implements ConnectorTo{
 		rs = null; // Cleaning the resultSet rs. The stored informations wouldn't be needed anymore.
 	}
 
+	/**
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<TableData> readAllFromAllTables() throws SQLException {
 		this.readAllTablenames();
 
@@ -127,10 +157,10 @@ public class ConnectorToMySQL implements ConnectorTo{
 		return tableDatas;
 	}
 
-	public ResultSet getResultSet() {
-		return rs;
-	}
-
+	/**
+	 *
+	 * @throws SQLException
+	 */
 	public void closeConnections() throws SQLException {
 		rs.close();
 		conn.close();
@@ -149,6 +179,13 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 				System.out.println("" + '\n');
 			}
+
+			FileWriter w = new TextWriter();
+			w.setOutputDir("src");
+			TableData[] te = new TableData[test.size()];
+			for (int x = 0; x < te.length; x++)
+				te[x] = test.get(x);
+			w.print(te);
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {
 			e.printStackTrace();
