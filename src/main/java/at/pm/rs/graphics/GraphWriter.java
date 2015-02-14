@@ -12,15 +12,6 @@ import at.pm.rs.connection.TableData;
  */
 public abstract class GraphWriter extends FileWriter {
 
-	/**
-	 * prints the given SetOfData as EER to a specified File
-	 * @see Writer#print(rs.at.pm.connection.SetOfData)
-	 * @param data the SetOfData to be printed
-	 */
 	// @Override
-	public void print(TableData data) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public void print(TableData[] data) {}
 }
