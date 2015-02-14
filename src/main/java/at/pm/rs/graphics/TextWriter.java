@@ -1,13 +1,13 @@
 package at.pm.rs.graphics;
 
+import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
-
-import at.pm.rs.connection.SetOfData;
-import at.pm.rs.connection.TableData;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates
@@ -38,7 +38,7 @@ public class TextWriter extends FileWriter {
 			writer.close();
 		}
 
-		File htmlTemplate = new File("ressources/template.html");
+		File htmlTemplate = new File("ressource/template.html");
 		String content = "";
 
 		try {

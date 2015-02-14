@@ -1,5 +1,7 @@
 package at.pm.rs.connection;
 
+import java.sql.SQLException;
+
 /**
  * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
  * @version 28.01.15
@@ -12,7 +14,7 @@ public class ConnectorToFactory {
 	 * @param type Which Connector should be created
 	 * @return ConnectorTo right Connector
 	 */
-	public  ConnectorTo ConnectorTo(ConnectionArguments args, String type){
+	public  ConnectorTo ConnectorTo(ConnectionArguments args, String type) throws SQLException, ClassNotFoundException{
 		switch (type.toLowerCase()) {
 			case "mysql":
 				return new ConnectorToMySQL(args);
