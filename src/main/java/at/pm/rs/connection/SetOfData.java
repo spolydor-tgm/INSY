@@ -82,8 +82,6 @@ public class SetOfData {
 
 		if (isNullable)
 			out += " nullable= " + isNullable;
-
-		out += '\n';
 		return out;
 	}
 }

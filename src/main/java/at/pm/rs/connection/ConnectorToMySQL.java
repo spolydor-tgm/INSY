@@ -142,9 +142,13 @@ public class ConnectorToMySQL implements ConnectorTo{
 		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 		try {
 			ArrayList<TableData> test = connectorToMySQL.readAllFromAllTables();
-			for (TableData data : test)
-				System.out.println(data.getTableName() + data.getSetOfData().toString());
-				//System.out.print(data.getSetOfData().toString());
+			for (TableData data : test) {
+				System.out.print(data.getTableName());
+				for (SetOfData setOfData : data.getSetOfData())
+				System.out.print(setOfData.toString());
+
+				System.out.println("" + '\n');
+			}
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {
 			e.printStackTrace();
