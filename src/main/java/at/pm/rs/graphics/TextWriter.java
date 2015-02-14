@@ -1,13 +1,14 @@
 package at.pm.rs.graphics;
 
-import at.pm.rs.connection.SetOfData;
-import at.pm.rs.connection.TableData;
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
+
+import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates
@@ -39,15 +40,36 @@ public class TextWriter extends FileWriter {
 			writer.close();
 		}
 
-		File htmlTemplate = new File("./template.html");
+//		File htmlTemplate = new File("");
 		String content = "";
 
+		FileReader fileReader = null;
 		try {
-			content = new Scanner(htmlTemplate).useDelimiter("\\Z").next();
-		} catch (FileNotFoundException e) {
+			fileReader = new FileReader("./template.html");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		int i;
+
+		try {
+			while ((i = fileReader.read()) != -1) {
+				char ch = (char) i;
+
+				content += ch;
+			}
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// try {
+		// content = new Scanner(htmlTemplate).useDelimiter("\\Z").next();
+		// } catch (FileNotFoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 		System.out.println("Während auslesen");
 		String body = model(data);
