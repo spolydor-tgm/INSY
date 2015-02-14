@@ -1,6 +1,6 @@
 package at.pm.rs.graphics;
 
-import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
 
 /**
  * This class creates a Writer object that prints the given {@link rs.at.pm.connection.SetOfData}
@@ -18,7 +18,7 @@ public class GraphWriter extends FileWriter {
 	 * @param data the SetOfData to be printed
 	 */
 	@Override
-	public void print(SetOfData data) {
+	public void print(TableData data) {
 		// TODO Auto-generated method stub
 
 	}

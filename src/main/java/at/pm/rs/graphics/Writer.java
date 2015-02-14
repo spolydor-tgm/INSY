@@ -1,6 +1,6 @@
 package at.pm.rs.graphics;
 
-import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
 
 /**
  * This interface should be implemented by classes which want to print a
@@ -18,6 +18,6 @@ public interface Writer {
 	 * @param data
 	 *            the SetOfData to be printed.
 	 */
-	public void print(SetOfData data);
+	public void print(TableData data[]);
 
 }

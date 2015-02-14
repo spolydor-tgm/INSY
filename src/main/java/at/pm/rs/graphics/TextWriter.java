@@ -1,10 +1,13 @@
 package at.pm.rs.graphics;
 
-import at.pm.rs.connection.SetOfData;
-
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
+
+import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates
@@ -23,7 +26,7 @@ public class TextWriter extends FileWriter {
 	 *            the SetOfData to be printed.
 	 */
 	@Override
-	public void print(SetOfData data) {
+	public void print(TableData data[]) {
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(this.getOutputDir() + "/RM.html", "UTF-8");
@@ -34,7 +37,23 @@ public class TextWriter extends FileWriter {
 			// TODO Logger error
 			writer.close();
 		}
-		writer.print(model(data));
+
+		File htmlTemplate = new File("ressources/template.html");
+		String content = "";
+
+		try {
+			content = new Scanner(htmlTemplate).useDelimiter("\\Z").next();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String body = model(data);
+
+		content.replace("$title", "MyFancyRm");
+		content.replace("$body", body);
+
+		writer.print(content);
 		writer.close();
 	}
 
@@ -47,17 +66,44 @@ public class TextWriter extends FileWriter {
 	 * @return a html representation of the RM created from the
 	 *         {@link SetOfData}
 	 */
-	private String model(SetOfData data) {
-		return "";
+	private String model(TableData dataSets[]) {
+
+		String tables = "";
+
+		for (TableData data : dataSets) {
+
+			String set = "";
+
+			set += tableBegin(data.getTableName());
+
+			for (SetOfData cur : data.getSetOfData()) {
+				String name = cur.getName();
+				HTMLTag attr = new Element(name);
+
+				if (cur.getFk() != null || !cur.getFk().equals("")) {
+					attr.setTag(cur.getFk() + ":" + name);
+					attr = new ForeignKey(attr);
+				}
+
+				if (cur.getIsPk())
+					attr = new PrimaryKey(attr);
+
+				set += attr.getTag() + ", ";
+			}
+			set = set.substring(0, set.lastIndexOf(",") - 1);
+			set += tableEnd();
+			tables += set + "\n";
+		}
+
+		return tables;
 	}
-	
-	
-	private String tableBegin(String tableName){
-		return tableName+"(";
+
+	private String tableBegin(String tableName) {
+		return tableName + "(";
 	}
-	
-	private String tableEnd(){
+
+	private String tableEnd() {
 		return ")";
 	}
-	
+
 }
