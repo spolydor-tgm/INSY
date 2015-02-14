@@ -38,7 +38,7 @@ public class TextWriter extends FileWriter {
 			writer.close();
 		}
 
-		File htmlTemplate = new File("ressource/template.html");
+		File htmlTemplate = new File("src/main/java/at/pm/rs/graphics/template.html");
 		String content = "";
 
 		try {
