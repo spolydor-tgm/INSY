@@ -27,45 +27,36 @@ public class ConnectorToMySQL implements ConnectorTo{
 	private SetOfData setOfTableData; // SetOfData which stores the Information from a Table (only one attribute + extra information)
 
 	/**
-	 *
+	 * Creates a new Connector for a MySQL DBMS
 	 * @param connectionArguments
 	 */
-	public ConnectorToMySQL(ConnectionArguments connectionArguments) {
+	public ConnectorToMySQL(ConnectionArguments connectionArguments) throws SQLException, ClassNotFoundException {
 		data = connectionArguments;
+
 		this.connect();
-
-		try {
-			md = conn.getMetaData();
-
-		} catch (SQLException e) {
+		md = conn.getMetaData();
+		/*
 			System.err.println("Failed to connect to the DBMS!!!");
 			System.err.println("Wrong username/password/dmbs-Adress");
 			System.exit(1);
-		}
+
+
+			System.out.println("Unnable to load the class");
+		 */
 	}
 
 	/**
-	 * Establish a connection to the DBMS
+	 * Establishes a connection to the DBMS
 	 */
-	@Override
-	public void connect(){
-		try {
-			// Treiber laden
-			Class.forName("com.mysql.jdbc.Driver");
+	public void connect() throws SQLException, ClassNotFoundException {
+		// Treiber laden
+		Class.forName("com.mysql.jdbc.Driver");
 
-			// Verbindung mit dem DBMS herstellen
-			String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
-			conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
+		// Verbindung mit dem DBMS herstellen
+		String url = "jdbc:mysql://" + data.getHostname() + "/" + data.getDBName();
+		conn = DriverManager.getConnection(url, data.getUsername(), data.getPwd());
 
-			st = conn.createStatement(); // auslagern !!!!
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("Unnable to load the class");
-			System.exit(1);
-		} catch (SQLException e) {
-			System.err.println("Unable to connect to the Database Management System");
-			System.exit(1);
-		}
+		st = conn.createStatement(); // auslagern !!!!
 	}
 
 	/**
@@ -169,13 +160,13 @@ public class ConnectorToMySQL implements ConnectorTo{
 	public static void main(String[] args) {
 		ArgumentParser ap = new ArgumentParser();
 		//new ConnectorToMySQL(ap.parseArguments(args));
-		ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 		try {
+			ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 			ArrayList<TableData> test = connectorToMySQL.readAllFromAllTables();
 			for (TableData data : test) {
 				System.out.print(data.getTableName());
 				for (SetOfData setOfData : data.getSetOfData())
-				System.out.print(setOfData.toString());
+					System.out.print(setOfData.toString());
 
 				System.out.println("" + '\n');
 			}
@@ -189,6 +180,8 @@ public class ConnectorToMySQL implements ConnectorTo{
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException ee) {
+			ee.printStackTrace();
 		}
 	}
 }
