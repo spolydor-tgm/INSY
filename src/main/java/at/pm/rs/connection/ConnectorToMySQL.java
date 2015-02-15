@@ -85,7 +85,6 @@ public class ConnectorToMySQL implements ConnectorTo{
 				x = 0;
 				while (x < tableDatas.size()) {
 					TableData tableData = tableDatas.get(x);
-					System.out.println(tableData.getTableName());
 					if (tableData.getTableName().equals(rs.getString("FKTABLE_NAME"))) {
 						for (int y = 0; y < tableData.getSetOfData().size(); y++) {
 							if (tableData.getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
