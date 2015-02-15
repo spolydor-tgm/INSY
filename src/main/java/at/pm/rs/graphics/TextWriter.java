@@ -1,6 +1,5 @@
 package at.pm.rs.graphics;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,7 +31,6 @@ public class TextWriter extends FileWriter {
 		try {
 			writer = new PrintWriter(this.getOutputDir() + "/RM.html", "UTF-8");
 		} catch (FileNotFoundException e) {
-			System.out.println("asdasdasdsda");
 			// TODO logger error
 			writer.close();
 		} catch (UnsupportedEncodingException e) {
@@ -99,26 +97,25 @@ public class TextWriter extends FileWriter {
 		for (TableData data : dataSets) {
 
 			String set = "";
-			System.out.println(data.getSetOfData().get(0).getName());
 			set += tableBegin(data.getTableName());
 
 			for (SetOfData cur : data.getSetOfData()) {
 				String name = cur.getName();
-				HTMLTag attr = new Element(name);
+				HTMLTag attr = new Element();
 
 				if (cur.getFk() != null) {
 					if (!cur.getFk().equals("")) {
-						attr.setTag(cur.getFk() + ":" + name);
+						name = cur.getFk() + ":" + name;
 						attr = new ForeignKey(attr);
 					}
 				}
-				
-				
-				
+
 				if (cur.getIsPk())
 					attr = new PrimaryKey(attr);
-
+				
+				System.out.println(name);
 				set += attr.getTag() + ", ";
+				set = set.replace("$tag", name);
 			}
 			set = set.substring(0, set.lastIndexOf(","));
 			set += tableEnd();
@@ -129,7 +126,7 @@ public class TextWriter extends FileWriter {
 	}
 
 	private String tableBegin(String tableName) {
-		return "<p>"+tableName + "(";
+		return "<p>" + tableName + "(";
 	}
 
 	private String tableEnd() {

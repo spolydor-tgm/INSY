@@ -12,5 +12,4 @@ public abstract class HTMLTag {
 		this.tag = tag;
 	}
 	
-	
 }

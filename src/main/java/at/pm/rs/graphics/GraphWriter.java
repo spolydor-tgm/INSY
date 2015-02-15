@@ -13,5 +13,7 @@ import at.pm.rs.connection.TableData;
 public abstract class GraphWriter extends FileWriter {
 
 	// @Override
-	public void print(TableData[] data) {}
+	public void print(TableData[] data) {
+		
+	}
 }
