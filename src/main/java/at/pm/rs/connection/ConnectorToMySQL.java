@@ -77,6 +77,28 @@ public class ConnectorToMySQL implements ConnectorTo{
 	 * @throws SQLException
 	 */
 	private void readFk(String tablename) throws SQLException {
+		for (int xx = 0; xx < tablenames.size(); xx++) {
+			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"});
+			rs = md.getExportedKeys(null, null, tablenames.get(xx));
+			int x;
+			while (rs.next()) {
+				x = 0;
+				while (x < tableDatas.size()) {
+					TableData tableData = tableDatas.get(x);
+					if (tableData.getTableName().equals(rs.getString("FKTABLE_NAME"))) {
+						for (int y = 0; y < tableData.getSetOfData().size(); y++) {
+							if (tableData.getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
+								tableData.getSetOfData().get(y).setFk(rs.getString("FKTABLE_NAME") + "." + rs.getString("FKCOLUMN_NAME"));
+								break;
+							}
+						}
+					}
+					x++;
+				}
+			}
+		}
+
+		/*
 		rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
 		rs = md.getExportedKeys(null, null, tablename);
 		while(rs.next()) {
@@ -85,6 +107,7 @@ public class ConnectorToMySQL implements ConnectorTo{
 				x++;
 			tableDatas.get(tableInProcessNumber).getSetOfData().get(x).setFk(rs.getString("FKTABLE_NAME") + "." + rs.getString("FKCOLUMN_NAME"));
 		}
+		*/
 	}
 
 	/**
@@ -135,8 +158,9 @@ public class ConnectorToMySQL implements ConnectorTo{
 
 			this.readExtraAttributes();
 			this.readPk(tablenames.get(tableInProcessNumber));
-			this.readFk(tablenames.get(tableInProcessNumber));
+			// this.readFk(tablenames.get(tableInProcessNumber));
 		}
+		this.readFk(""); //
 		return tableDatas;
 	}
 
