@@ -92,10 +92,13 @@ public class TextWriter extends FileWriter {
 	 */
 	private String model(TableData dataSets[]) {
 
+		System.out.println("asdasdasdasndhasdnask");
+		
 		String tables = "";
 
 		for (TableData data : dataSets) {
 
+			
 			String set = "";
 			set += tableBegin(data.getTableName());
 
@@ -120,6 +123,7 @@ public class TextWriter extends FileWriter {
 			set = set.substring(0, set.lastIndexOf(","));
 			set += tableEnd();
 			tables += set + "\n";
+			System.out.println(set);
 		}
 
 		return tables;
