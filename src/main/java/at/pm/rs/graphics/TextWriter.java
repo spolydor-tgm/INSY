@@ -1,5 +1,6 @@
 package at.pm.rs.graphics;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -28,8 +29,9 @@ public class TextWriter extends FileWriter {
 	@Override
 	public void print(TableData data[]) {
 		PrintWriter writer = null;
+		File output = new File(this.getOutputDir() + "/RM.html");
 		try {
-			writer = new PrintWriter(this.getOutputDir() + "/RM.html", "UTF-8");
+			writer = new PrintWriter(output, "UTF-8");
 		} catch (FileNotFoundException e) {
 			// TODO logger error
 			writer.close();
@@ -69,10 +71,7 @@ public class TextWriter extends FileWriter {
 		// e.printStackTrace();
 		// }
 
-		System.out.println("Während auslesen");
 		String body = model(data);
-
-		System.out.println(body);
 
 		content = content.replace("$title", "MyFancyRm");
 		content = content.replace("$body", body);
@@ -90,10 +89,8 @@ public class TextWriter extends FileWriter {
 	 * @return a html representation of the RM created from the
 	 *         {@link SetOfData}
 	 */
-	private String model(TableData dataSets[]) {
+	public String model(TableData dataSets[]) {
 
-		System.out.println("asdasdasdasndhasdnask");
-		
 		String tables = "";
 
 		for (TableData data : dataSets) {

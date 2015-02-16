@@ -1,5 +1,7 @@
 package at.pm.rs.graphics;
 
+import at.pm.rs.connection.TableData;
+
 /**
  * Implements the Writer interface. This class is the skelleton for every Writer
  * that wants to print to a File.
@@ -29,5 +31,7 @@ public abstract class FileWriter implements Writer {
 	public void setOutputDir(String outputDir) {
 		this.outputDir = outputDir;
 	}
-
+	
+	public abstract void print(TableData data[]);
+	public abstract String model(TableData datasets[]);
 }
