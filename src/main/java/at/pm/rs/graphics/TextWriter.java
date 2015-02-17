@@ -93,11 +93,11 @@ public class TextWriter extends FileWriter {
 	 * @return a html representation of the RM created from the
 	 *         {@link SetOfData}
 	 */
-	public String model(TableData dataSets[]) {
+	public String model(TableData datasets[]) {
 
 		String tables = "";
 
-		for (TableData data : dataSets) {
+		for (TableData data : datasets) {
 
 			
 			String set = "";
