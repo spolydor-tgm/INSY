@@ -9,6 +9,10 @@ import java.io.UnsupportedEncodingException;
 
 import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
+import at.pm.rs.graphics.html.Element;
+import at.pm.rs.graphics.html.ForeignKey;
+import at.pm.rs.graphics.html.HTMLTag;
+import at.pm.rs.graphics.html.PrimaryKey;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates

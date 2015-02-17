@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import at.pm.rs.connection.TableData;
+import at.pm.rs.graphics.dot.DOTNode;
 
 /**
  * This class creates a Writer object that prints the given

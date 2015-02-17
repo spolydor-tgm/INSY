@@ -1,4 +1,5 @@
-package at.pm.rs.graphics;
+package at.pm.rs.graphics.dot;
+
 
 public abstract class DOTDecorator extends DOTNode{
 

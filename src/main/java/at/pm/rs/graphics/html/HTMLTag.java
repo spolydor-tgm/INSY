@@ -1,4 +1,4 @@
-package at.pm.rs.graphics;
+package at.pm.rs.graphics.html;
 
 public abstract class HTMLTag {
 

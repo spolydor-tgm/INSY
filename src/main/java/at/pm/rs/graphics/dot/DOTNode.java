@@ -1,4 +1,4 @@
-package at.pm.rs.graphics;
+package at.pm.rs.graphics.dot;
 
 import java.io.File;
 import java.io.FileWriter;

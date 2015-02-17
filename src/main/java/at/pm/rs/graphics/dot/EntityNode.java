@@ -1,4 +1,5 @@
-package at.pm.rs.graphics;
+package at.pm.rs.graphics.dot;
+
 
 public class EntityNode extends DOTDecorator{
 	
