@@ -10,7 +10,7 @@ public class SetOfData {
 	private String name;
 	private String type;
 	private boolean pk;
-	private String fk;
+	private ForeignKey fk;
 	private boolean autoincrement;
 	private boolean isNullable;
 
@@ -60,7 +60,7 @@ public class SetOfData {
 	 *
 	 * @return String if the attribute is a Foreign Key. example: Tablename.Columnname
 	 */
-	public String getFk() {
+	public ForeignKey getFk() {
 		return fk;
 	}
 
@@ -68,7 +68,7 @@ public class SetOfData {
 	 *
 	 * @param fk Sets the Tablename.Columnname for the Foreign Key
 	 */
-	public void setFk(String fk) {
+	public void setFk(ForeignKey fk) {
 		this.fk = fk;
 	}
 
