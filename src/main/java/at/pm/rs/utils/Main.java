@@ -22,13 +22,13 @@ public class Main {
 		try {
 			ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 			ArrayList<TableData> test = connectorToMySQL.readAllFromAllTables();
-			for (TableData data : test) {
-				System.out.print(data.getTableName());
-				for (SetOfData setOfData : data.getSetOfData())
-					System.out.print(setOfData.toString());
-
-				System.out.println("" + '\n');
-			}
+//			for (TableData data : test) {
+//				System.out.print(data.getTableName());
+//				for (SetOfData setOfData : data.getSetOfData())
+//					System.out.print(setOfData.toString());
+//
+//				System.out.println("" + '\n');
+//			}
 			
 			FileWriter w = new GraphWriter();
 			w.setOutputDir("src");

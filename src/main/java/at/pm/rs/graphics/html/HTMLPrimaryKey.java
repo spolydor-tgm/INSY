@@ -1,9 +1,9 @@
 package at.pm.rs.graphics.html;
 
 
-public class PrimaryKey extends HTMLDecorator {
+public class HTMLPrimaryKey extends HTMLDecorator {
 
-	public PrimaryKey(HTMLTag htmltag) {
+	public HTMLPrimaryKey(HTMLTag htmltag) {
 		this.htmltag = htmltag;
 	}
 

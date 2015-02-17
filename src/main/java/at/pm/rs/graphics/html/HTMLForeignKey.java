@@ -1,9 +1,9 @@
 package at.pm.rs.graphics.html;
 
 
-public class ForeignKey extends HTMLDecorator {
+public class HTMLForeignKey extends HTMLDecorator {
 	
-	public ForeignKey(HTMLTag htmltag) {
+	public HTMLForeignKey(HTMLTag htmltag) {
 		this.htmltag = htmltag;
 	}
 	

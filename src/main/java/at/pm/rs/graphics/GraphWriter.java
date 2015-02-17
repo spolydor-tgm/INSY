@@ -11,6 +11,11 @@ import java.util.Map.Entry;
 
 import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
+import at.pm.rs.graphics.dot.DOTDecorator;
+import at.pm.rs.graphics.dot.DOTIsAutoIncrement;
+import at.pm.rs.graphics.dot.DOTIsNotNull;
+import at.pm.rs.graphics.dot.DOTNode;
+import at.pm.rs.graphics.dot.DOTPrimaryKey;
 import at.pm.rs.graphics.dot.Node;
 
 /**
@@ -28,7 +33,7 @@ public class GraphWriter extends FileWriter {
 	public void print(TableData[] data) {
 		PrintWriter writer = null;
 		File output = new File(this.getOutputDir() + "/ER.dot");
-		System.out.println(output.getAbsolutePath());
+		// System.out.println(output.getAbsolutePath());
 		try {
 			writer = new PrintWriter(output, "UTF-8");
 		} catch (FileNotFoundException e) {
@@ -53,7 +58,7 @@ public class GraphWriter extends FileWriter {
 		// The relations between the entities or attributes get mapped in this
 		// map
 		HashMap<String, String> rel = new HashMap<>();
-		HashMap<String, ArrayList<Node>> duplicates = new HashMap<>();
+		HashMap<String, ArrayList<DOTNode>> duplicates = new HashMap<>();
 
 		content += "graph ER {\n";
 
@@ -79,7 +84,22 @@ public class GraphWriter extends FileWriter {
 				if (!duplicates.containsKey(cur.getName()))
 					duplicates.put(cur.getName(), new ArrayList<>());
 
-				duplicates.get(cur.getName()).add(new Node(cur.getName() + i, cur));
+				DOTNode n = new Node(cur, cur.getName(), cur.getName() + i);
+
+				if (cur.getIsPk()) {
+					n = new DOTPrimaryKey(n);
+				} else {
+
+					if (!cur.getIsNullable())
+						n = new DOTIsNotNull(n);
+
+				}
+
+				if (cur.getIsAutoincrement())
+					n = new DOTIsAutoIncrement(n);
+
+				duplicates.get(cur.getName()).add(n);
+
 				rel.put(cur.getName() + i, curTableName);
 
 				i++;
@@ -95,17 +115,16 @@ public class GraphWriter extends FileWriter {
 
 		content += "\nnode [shape=ellipse];";
 
-		for (Entry<String, ArrayList<Node>> entry : duplicates.entrySet()) {
-			ArrayList<Node> values = entry.getValue();
+		for (Entry<String, ArrayList<DOTNode>> entry : duplicates.entrySet()) {
+			ArrayList<DOTNode> values = entry.getValue();
 
 			String doub = "{node [label=\"" + entry.getKey() + "\" decorate=\"true\"] ";
 
-			for (Node val : values) {
-				doub += val.getName();
-
-				if (val.getParent().getIsPk())
-					doub += " [label=<<u>" + entry.getKey() + "</u>>]";
-
+			for (DOTNode val : values) {
+				doub += val.getSpecname();
+				if (val instanceof DOTDecorator)
+					doub += " [label=<" + val.getName() + ">]";
+				// val.setName(val.getName().replace("$name",entry.getKey()));
 				doub += ";";
 			}
 
@@ -117,14 +136,14 @@ public class GraphWriter extends FileWriter {
 		// content += s + ";";
 		// }
 
-		System.out.println(rel.toString());
+		// System.out.println(rel.toString());
 
 		for (Map.Entry<String, String> entry : rel.entrySet()) {
 			content += "\n" + entry.getKey() + " -- " + entry.getValue();
 		}
 
 		content += "\n}";
-		System.out.println(content);
+		// System.out.println(content);
 		return content;
 	}
 }

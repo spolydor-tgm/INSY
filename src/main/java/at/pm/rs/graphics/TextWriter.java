@@ -10,9 +10,9 @@ import java.io.UnsupportedEncodingException;
 import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.html.Element;
-import at.pm.rs.graphics.html.ForeignKey;
+import at.pm.rs.graphics.html.HTMLForeignKey;
 import at.pm.rs.graphics.html.HTMLTag;
-import at.pm.rs.graphics.html.PrimaryKey;
+import at.pm.rs.graphics.html.HTMLPrimaryKey;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates
@@ -110,12 +110,12 @@ public class TextWriter extends FileWriter {
 				if (cur.getFk() != null) {
 					if (!cur.getFk().equals("")) {
 						name = cur.getFk() + ":" + name;
-						attr = new ForeignKey(attr);
+						attr = new HTMLForeignKey(attr);
 					}
 				}
 
 				if (cur.getIsPk())
-					attr = new PrimaryKey(attr);
+					attr = new HTMLPrimaryKey(attr);
 				
 				System.out.println(name);
 				set += attr.getTag() + ", ";

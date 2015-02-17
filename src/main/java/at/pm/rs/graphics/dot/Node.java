@@ -2,14 +2,12 @@ package at.pm.rs.graphics.dot;
 
 import at.pm.rs.connection.SetOfData;
 
-public class Node {
+public class Node extends DOTNode {
 
-	String name;
-	SetOfData parent;
-	
-	public Node(String name, SetOfData parent) {
+	public Node(SetOfData parent,  String name, String specname) {
 		this.name = name;
 		this.parent = parent;
+		this.specname = specname;
 	}
 
 	public String getName() {
@@ -27,6 +25,5 @@ public class Node {
 	public void setParent(SetOfData parent) {
 		this.parent = parent;
 	}
-	
-	
+
 }
