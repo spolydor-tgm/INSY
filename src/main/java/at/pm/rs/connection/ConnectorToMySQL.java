@@ -1,13 +1,6 @@
 package at.pm.rs.connection;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -22,21 +15,12 @@ public class ConnectorToMySQL implements ConnectorTo {
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	private DatabaseMetaData md;
-	private ArrayList<TableData> tableDatas = new ArrayList<>(); // Saving the
-																	// datas
-																	// from the
-																	// existing
-																	// tables
-	private ArrayList<String> tablenames = new ArrayList<>(); // Saving all
-																// tablenames
-	private final String query = "SELECT * from "; // Selects all from a given
-													// table
+	private ArrayList<TableData> tableDatas = new ArrayList<>(); // Saving the datas from the existing tables
+	private ArrayList<String> tablenames = new ArrayList<>(); // Saving all tablenames
+	private final String query = "SELECT * from "; // Selects all from a given table
 	private int columns; // Columns of the table
-	private int tableInProcessNumber; // The number of the table which is in
-										// progess
-	private SetOfData setOfTableData; // SetOfData which stores the Information
-										// from a Table (only one attribute +
-										// extra information)
+	private int tableInProcessNumber; // The number of the table which is in progess
+	private SetOfData setOfTableData; // SetOfData which stores the Information from a Table (only one attribute + extra information)
 
 	/**
 	 * Creates a new Connector for a MySQL DBMS
@@ -76,8 +60,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * Reads all the PK's from the given Table out and saves them into a
 	 * SetOfData
 	 * 
-	 * @param tablename
-	 *            from which the Primary Keys, will be read out
+	 * @param tablename from which the Primary Keys, will be read out
 	 * @throws SQLException
 	 */
 	private void readPk(String tablename) throws SQLException {
@@ -95,8 +78,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * Reads all the FK's from the given Table out and saves them into a
 	 * SetOfData
 	 * 
-	 * @param tablename
-	 *            from which the Foreign Keys, will be read out
+	 * @param tablename from which the Foreign Keys, will be read out
 	 * @throws SQLException
 	 */
 	private void readFk(String tablename) throws SQLException {
@@ -106,36 +88,13 @@ public class ConnectorToMySQL implements ConnectorTo {
 			int x;
 			while (rs.next()) {
 				x = 0;
-				while (x < tableDatas.size()) {
-					TableData tableData = tableDatas.get(x);
-					if (tableData.getTableName().equals(rs.getString("FKTABLE_NAME"))) {
-						for (int y = 0; y < tableData.getSetOfData().size(); y++) {
-							if (tableData.getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
-								// tableData.getSetOfData().get(y).setFk(rs.getString("FKTABLE_NAME")
-								// + "." + rs.getString("FKCOLUMN_NAME"));
-								// System.out.println(tablenames.get(xx)+" : "+rs.getString("FKCOLUMN_NAME"));
-								tableData.getSetOfData().get(y).setFk(new ForeignKey(tablenames.get(xx), rs.getString("FKCOLUMN_NAME")));
-								// tableData.getSetOfData().get(y).setFk(new
-								// ForeignKey(rs.getString("FKTABLE_NAME"),
-								// rs.getString("FKCOLUMN_NAME")));
-								break;
-							}
-						}
-					}
-					x++;
+				for (int y = 0; y < tableDatas.get(x).getSetOfData().size(); y++) {
+					if (tableDatas.get(x).getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME")))
+						tableDatas.get(x).getSetOfData().get(y).setFk(new ForeignKey(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME")));
 				}
+				x++;
 			}
 		}
-
-		/*
-		 * rs = md.getTables(null, null, tablename, new String[]{"TABLE"}); rs =
-		 * md.getExportedKeys(null, null, tablename); while(rs.next()) { int x =
-		 * 0; while (!(rs.getString("FKCOLUMN_NAME").equals(tableDatas.get(
-		 * tableInProcessNumber).getSetOfData().get(x).getName()))) x++;
-		 * tableDatas
-		 * .get(tableInProcessNumber).getSetOfData().get(x).setFk(rs.getString
-		 * ("FKTABLE_NAME") + "." + rs.getString("FKCOLUMN_NAME")); }
-		 */
 	}
 
 	/**
@@ -148,15 +107,8 @@ public class ConnectorToMySQL implements ConnectorTo {
 		for (int i = 1; i <= columns; i++) {
 			setOfTableData = new SetOfData();
 			setOfTableData.setName(rsmd.getColumnName(i));
-			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i)); // true
-																		// wenn
-																		// ja
-																		// und
-																		// false
-																		// wenn
-																		// nicht
-			if (rsmd.isNullable(i) == 1) // returns 1, if there is no null-value
-											// allowed
+			setOfTableData.setAutoincrement(rsmd.isAutoIncrement(i)); // true wenn ja und false wenn nicht
+			if (rsmd.isNullable(i) == 1) // returns 1, if there is no null-value allowed
 				setOfTableData.setIsNullable(true);
 			setOfTableData.setType(rsmd.getColumnTypeName(i));
 
@@ -175,8 +127,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 		while (rs.next())
 			tablenames.add(rs.getString(3));
 		rs.close();
-		rs = null; // Cleaning the resultSet rs. The stored informations
-					// wouldn't be needed anymore.
+		rs = null; // Cleaning the resultSet rs. The stored informations wouldn't be needed anymore.
 	}
 
 	/**
@@ -195,8 +146,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 			rsmd = st.getMetaData();
 			columns = rsmd.getColumnCount();
 			setOfTableData = new SetOfData(); // Create new SetOfData
-			tableDatas.add(new TableData(tablenames.get(tableInProcessNumber))); // Set
-																					// tablename
+			tableDatas.add(new TableData(tablenames.get(tableInProcessNumber))); // Set tablename
 
 			this.readExtraAttributes();
 			this.readPk(tablenames.get(tableInProcessNumber));

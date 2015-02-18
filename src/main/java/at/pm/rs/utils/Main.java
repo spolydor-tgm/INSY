@@ -1,13 +1,11 @@
 package at.pm.rs.utils;
 
+import at.pm.rs.connection.ConnectorToMySQL;
+import at.pm.rs.connection.SetOfData;
+import at.pm.rs.connection.TableData;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import at.pm.rs.connection.ConnectorToMySQL;
-import at.pm.rs.connection.TableData;
-import at.pm.rs.graphics.FileWriter;
-import at.pm.rs.graphics.GraphWriter;
-import at.pm.rs.graphics.TextWriter;
 
 /**
  * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
@@ -29,13 +27,22 @@ public class Main {
 //
 //				System.out.println("" + '\n');
 //			}
-			
+
+			for (TableData data : test) {
+				System.out.print(data.getTableName());
+				for (SetOfData setOfData : data.getSetOfData())
+					System.out.print(setOfData.toString());
+
+				System.out.println("" + '\n');
+			}
+			/*
 			FileWriter w = new TextWriter();
 			w.setOutputDir("src");
 			TableData[] te = new TableData[test.size()];
 			for (int x = 0; x < te.length; x++)
 				te[x] = test.get(x);
 			w.print(te);
+			*/
 			
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {
