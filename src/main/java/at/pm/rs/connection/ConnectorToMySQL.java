@@ -77,11 +77,10 @@ public class ConnectorToMySQL implements ConnectorTo {
 	/**
 	 * Reads all the FK's from the given Table out and saves them into a
 	 * SetOfData
-	 * 
-	 * @param tablename from which the Foreign Keys, will be read out
+	 *
 	 * @throws SQLException
 	 */
-	private void readFk(String tablename) throws SQLException {
+	private void readFk() throws SQLException {
 		for (int xx = 0; xx < tablenames.size(); xx++) {
 			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"});
 			rs = md.getExportedKeys(null, null, tablenames.get(xx));
@@ -152,7 +151,16 @@ public class ConnectorToMySQL implements ConnectorTo {
 			this.readPk(tablenames.get(tableInProcessNumber));
 			// this.readFk(tablenames.get(tableInProcessNumber));
 		}
-		this.readFk(""); //
+		this.readFk();
+
+/*
+		for (int xx = 0; xx < tablenames.size(); xx++) {
+			ResultSet rss = md.getIndexInfo(null, null, tablenames.get(xx), true, true);
+			while (rss.next()) {
+				System.out.println(rss.getString("COLUMN_NAME"));
+			}
+		}
+*/
 		return tableDatas;
 	}
 
