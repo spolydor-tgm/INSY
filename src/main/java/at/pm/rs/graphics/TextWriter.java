@@ -109,7 +109,7 @@ public class TextWriter extends FileWriter {
 
 				if (cur.getFk() != null) {
 					if (!cur.getFk().equals("")) {
-						name = cur.getFk() + ":" + name;
+						name = cur.getFk().toString() + ":" + name;
 						attr = new HTMLForeignKey(attr);
 					}
 				}

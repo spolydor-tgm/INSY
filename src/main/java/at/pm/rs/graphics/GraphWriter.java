@@ -16,6 +16,7 @@ import at.pm.rs.graphics.dot.DOTIsAutoIncrement;
 import at.pm.rs.graphics.dot.DOTIsNotNull;
 import at.pm.rs.graphics.dot.DOTNode;
 import at.pm.rs.graphics.dot.DOTPrimaryKey;
+import at.pm.rs.graphics.dot.EntityConnection;
 import at.pm.rs.graphics.dot.Node;
 
 /**
@@ -60,6 +61,8 @@ public class GraphWriter extends FileWriter {
 		HashMap<String, String> rel = new HashMap<>();
 		HashMap<String, ArrayList<DOTNode>> duplicates = new HashMap<>();
 
+		ArrayList<EntityConnection> cons = new ArrayList<>();
+
 		content += "graph ER {\n";
 
 		int i = 0;
@@ -67,19 +70,8 @@ public class GraphWriter extends FileWriter {
 		for (TableData data : datasets) {
 			String curTableName = data.getTableName();
 			tables.add(curTableName);
-			// ArrayList<String> values = new ArrayList<>();
 
 			for (SetOfData cur : data.getSetOfData()) {
-				// if(attributes.contains(cur.getName())){
-				// String rn = cur.getName()+1;
-				// attributes.add(rn);
-				// rel.put(rn, curTableName);
-				// duplicates.put(cur.getName(), );
-				// i++;
-				// }else{
-				// attributes.add(cur.getName());
-				// rel.put(cur.getName(), curTableName);
-				// }
 
 				if (!duplicates.containsKey(cur.getName()))
 					duplicates.put(cur.getName(), new ArrayList<>());
@@ -102,12 +94,55 @@ public class GraphWriter extends FileWriter {
 
 				rel.put(cur.getName() + i, curTableName);
 
+				
+
+				if (cur.getFk() != null) {
+					char c1 = 'z';
+					char c2 = 'z';
+					if (cur.getIsPk()) {
+						for (TableData td : datasets) {
+							if (td.getTableName().equals(cur.getFk().getRefTable())) {
+								for (SetOfData sod : td.getSetOfData()) {
+									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
+										if (sod.getIsPk()) {
+											c1 = '1';
+											c2 = '1';
+										}
+										//can't really happen
+//										}else if (sod.getFk().getRefTable().equals(data.getTableName()) && sod.getFk().getRefAttribute().equals(cur.getName())) {
+//											c1 = '1';
+//											c2 = 'n';
+//										}
+
+									}
+								}
+							}
+						}
+
+					} else {
+						for (TableData td : datasets) {
+							if (td.getTableName().equals(cur.getFk().getRefTable())) {
+								for (SetOfData sod : td.getSetOfData()) {
+									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
+										if (sod.getIsPk()) {
+											c1 = 'n';
+											c2 = '1';
+										}
+									}
+								}
+							}
+						}
+					}
+					cons.add(new EntityConnection(""+i, data.getTableName(), cur.getFk().getRefTable(), c1, c2));
+				}
+
 				i++;
 
 			}
 
 		}
 
+		
 		content += "node [shape=box];";
 
 		for (String s : tables)
@@ -131,6 +166,10 @@ public class GraphWriter extends FileWriter {
 			doub += "}";
 			content += doub + "\n";
 		}
+		
+		content += "node [shape=diamond, label=\"\"];";
+		for(EntityConnection s: cons)
+			content += s.getName()+";";
 
 		// for (String s : attributes){
 		// content += s + ";";
@@ -138,12 +177,17 @@ public class GraphWriter extends FileWriter {
 
 		// System.out.println(rel.toString());
 
-		for (Map.Entry<String, String> entry : rel.entrySet()) {
+		for (Map.Entry<String, String> entry : rel.entrySet())
 			content += "\n" + entry.getKey() + " -- " + entry.getValue();
-		}
+		
+		content += "\n";
+		
+		for(EntityConnection ec : cons)
+			content += "\n"+ec.toString();
+			
 
 		content += "\n}";
-		// System.out.println(content);
+		System.out.println(content);
 		return content;
 	}
 }
