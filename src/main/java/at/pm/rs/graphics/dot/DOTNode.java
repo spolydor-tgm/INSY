@@ -2,6 +2,23 @@ package at.pm.rs.graphics.dot;
 
 import at.pm.rs.connection.SetOfData;
 
+/**
+ * The abstract class providing the basic functions of a DOTNode
+ * 
+ * The name to be displayed is saved in the String attribute name. This is the
+ * name that will be decorated.
+ * 
+ * The attribute parent saves the {@link SetOfData} pendant of the Node. This is
+ * necessary to gather extra information.
+ * 
+ * The attribute specname is used to prevent duplicates, this name is not to be
+ * displayed, it should be only used for identifying purposes. (Either a name
+ * with a number, just a number or something else similar)
+ * 
+ * @author Patrick Malik
+ * @version 20150218
+ *
+ */
 public abstract class DOTNode {
 
 	String name;
