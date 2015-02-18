@@ -84,14 +84,13 @@ public class ConnectorToMySQL implements ConnectorTo {
 		for (int xx = 0; xx < tablenames.size(); xx++) {
 			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"});
 			rs = md.getExportedKeys(null, null, tablenames.get(xx));
-			int x;
 			while (rs.next()) {
-				x = 0;
-				for (int y = 0; y < tableDatas.get(x).getSetOfData().size(); y++) {
-					if (tableDatas.get(x).getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME")))
-						tableDatas.get(x).getSetOfData().get(y).setFk(new ForeignKey(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME")));
+				for (int y = 0; y < tableDatas.get(xx).getSetOfData().size(); y++) {
+					if (tableDatas.get(xx).getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
+						tableDatas.get(xx).getSetOfData().get(y).setFk(new ForeignKey(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME")));
+						break;
+					}
 				}
-				x++;
 			}
 		}
 	}
@@ -152,16 +151,27 @@ public class ConnectorToMySQL implements ConnectorTo {
 			// this.readFk(tablenames.get(tableInProcessNumber));
 		}
 		this.readFk();
+		this.readUnique();
 
-/*
+		return tableDatas;
+	}
+
+	/**
+	 *
+	 * @throws SQLException
+	 */
+	private void readUnique() throws SQLException{
 		for (int xx = 0; xx < tablenames.size(); xx++) {
 			ResultSet rss = md.getIndexInfo(null, null, tablenames.get(xx), true, true);
 			while (rss.next()) {
-				System.out.println(rss.getString("COLUMN_NAME"));
+				for (int y = 0; y < tableDatas.get(xx).getSetOfData().size(); y++) {
+					if (tableDatas.get(xx).getSetOfData().get(y).getName().equals(rss.getString("COLUMN_NAME"))) {
+						tableDatas.get(xx).getSetOfData().get(y).setUnique(true);
+						break;
+					}
+				}
 			}
 		}
-*/
-		return tableDatas;
 	}
 
 	/**

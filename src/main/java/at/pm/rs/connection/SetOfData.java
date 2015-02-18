@@ -13,6 +13,7 @@ public class SetOfData {
 	private ForeignKey fk;
 	private boolean autoincrement;
 	private boolean isNullable;
+	private boolean isUnique;
 
 	/**
 	 * Is Saving all neccessary informations
@@ -22,6 +23,7 @@ public class SetOfData {
 	public SetOfData() {
 		pk = false;
 		isNullable = false;
+		isUnique = false;
 	}
 
 	/**
@@ -42,7 +44,23 @@ public class SetOfData {
 
 	/**
 	 *
-	 * @return boolean if the attribute is a primary Key
+	 * @param unique which should be saved from the db (true if is unique and false if it is not)
+	 */
+	public void setUnique(boolean unique) {
+		this.isUnique = unique;
+	}
+
+	/**
+	 *
+	 * @return boolean true, if the attribute is a primary Key
+	 */
+	public boolean getIsUnique() {
+		return isUnique;
+	}
+
+	/**
+	 *
+	 * @return boolean true, if the attribute is a primary Key
 	 */
 	public boolean getIsPk() {
 		return pk;
@@ -58,7 +76,7 @@ public class SetOfData {
 
 	/**
 	 *
-	 * @return String if the attribute is a Foreign Key. example: Tablename.Columnname
+	 * @return ForeignKey if the attribute is a Foreign Key. example: Tablename.Columnname
 	 */
 	public ForeignKey getFk() {
 		return fk;
@@ -90,7 +108,7 @@ public class SetOfData {
 
 	/**
 	 *
-	 * @return boolean if the attribute is autoincrement
+	 * @return boolean true if the attribute is autoincrement
 	 */
 	public boolean getIsAutoincrement() {
 		return autoincrement;
@@ -106,7 +124,7 @@ public class SetOfData {
 
 	/**
 	 *
-	 * @return boolean if the attribute can be NULL
+	 * @return boolean true, if the attribute can be NULL
 	 */
 	public boolean getIsNullable() {
 		return isNullable;
@@ -135,6 +153,10 @@ public class SetOfData {
 
 		if (isNullable)
 			out += " nullable= " + isNullable;
+
+		if (isUnique)
+			out += " unique= " + isUnique;
+
 		return out;
 	}
 }
