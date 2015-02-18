@@ -85,9 +85,9 @@ public class ConnectorToMySQL implements ConnectorTo {
 			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"});
 			rs = md.getExportedKeys(null, null, tablenames.get(xx));
 			while (rs.next()) {
-				for (int y = 0; y < tableDatas.get(xx).getSetOfData().size(); y++) {
-					if (tableDatas.get(xx).getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
-						tableDatas.get(xx).getSetOfData().get(y).setFk(new ForeignKey(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME")));
+				for (int y = 0; y < tableDatas.get(xx -1).getSetOfData().size(); y++) { // keine Ahnung warum xx -1 bei unique funktionierts ohne ...
+					if (tableDatas.get(xx-1).getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
+						tableDatas.get(xx-1).getSetOfData().get(y).setFk(new ForeignKey(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME")));
 						break;
 					}
 				}
