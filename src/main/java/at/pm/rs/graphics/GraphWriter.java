@@ -96,27 +96,17 @@ public class GraphWriter extends FileWriter {
 				if (cur.getFk() != null) {
 					char c1 = 'z';
 					char c2 = 'z';
-					if (cur.getIsPk()) { 					//Later also with Unique
+					if (cur.getIsPk()||cur.getIsUnique()) {
 						c1 = '1';
 						for (TableData td : datasets) {
 							if (td.getTableName().equals(cur.getFk().getRefTable())) {
 								for (SetOfData sod : td.getSetOfData()) {
 									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
-										if (sod.getIsPk()) { //Or  unique
+										if (sod.getIsPk()||cur.getIsUnique()) {
 											c2 = '1';
 										}else{
 											c2 = 'n';
 										}
-										// can't really happen
-										// }else if
-										// (sod.getFk().getRefTable().equals(data.getTableName())
-										// &&
-										// sod.getFk().getRefAttribute().equals(cur.getName()))
-										// {
-										// c1 = '1';
-										// c2 = 'n';
-										// }
-
 									}
 								}
 							}
@@ -188,7 +178,7 @@ public class GraphWriter extends FileWriter {
 			content += "\n" + ec.toString();
 
 		content += "\n}";
-		System.out.println(content);
+		//System.out.println(content);
 		return content;
 	}
 }

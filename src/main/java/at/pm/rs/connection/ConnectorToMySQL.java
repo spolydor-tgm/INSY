@@ -82,8 +82,9 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 */
 	private void readFk() throws SQLException {
 		for (int xx = 0; xx < tablenames.size(); xx++) {
-			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"});
-			rs = md.getExportedKeys(null, null, tablenames.get(xx));
+			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"}); //TODO despite it was commented out it worked as well as with the line in it... I just wondered wh this one is right there
+//			rs = md.getExportedKeys(null, null, tablenames.get(xx));
+			rs = md.getImportedKeys(null, null, tablenames.get(xx));
 			while (rs.next()) {
 				for (int y = 0; y < tableDatas.get(xx).getSetOfData().size(); y++) { // keine Ahnung warum xx -1 bei unique funktionierts ohne ...
 					if (tableDatas.get(xx).getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {

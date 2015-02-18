@@ -124,7 +124,7 @@ public class TextWriter extends FileWriter {
 			set = set.substring(0, set.lastIndexOf(","));
 			set += tableEnd();
 			tables += set + "\n";
-			System.out.println(set);
+//			System.out.println(set);
 		}
 
 		return tables;
