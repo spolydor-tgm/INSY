@@ -1,6 +1,13 @@
 package at.pm.rs.connection;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -106,8 +113,11 @@ public class ConnectorToMySQL implements ConnectorTo {
 							if (tableData.getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
 								// tableData.getSetOfData().get(y).setFk(rs.getString("FKTABLE_NAME")
 								// + "." + rs.getString("FKCOLUMN_NAME"));
-//								System.out.println(tablenames.get(xx)+" : "+rs.getString("FKCOLUMN_NAME"));
+								// System.out.println(tablenames.get(xx)+" : "+rs.getString("FKCOLUMN_NAME"));
 								tableData.getSetOfData().get(y).setFk(new ForeignKey(tablenames.get(xx), rs.getString("FKCOLUMN_NAME")));
+								// tableData.getSetOfData().get(y).setFk(new
+								// ForeignKey(rs.getString("FKTABLE_NAME"),
+								// rs.getString("FKCOLUMN_NAME")));
 								break;
 							}
 						}

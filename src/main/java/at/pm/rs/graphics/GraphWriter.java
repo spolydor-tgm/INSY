@@ -94,25 +94,29 @@ public class GraphWriter extends FileWriter {
 
 				rel.put(cur.getName() + i, curTableName);
 
-				
-
 				if (cur.getFk() != null) {
 					char c1 = 'z';
 					char c2 = 'z';
-					if (cur.getIsPk()) {
+					if (cur.getIsPk()) { 					//Later also with Unique
+						c1 = '1';
 						for (TableData td : datasets) {
 							if (td.getTableName().equals(cur.getFk().getRefTable())) {
 								for (SetOfData sod : td.getSetOfData()) {
 									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
-										if (sod.getIsPk()) {
-											c1 = '1';
+										if (sod.getIsPk()) { //Or  unique
 											c2 = '1';
+										}else{
+											c2 = 'n';
 										}
-										//can't really happen
-//										}else if (sod.getFk().getRefTable().equals(data.getTableName()) && sod.getFk().getRefAttribute().equals(cur.getName())) {
-//											c1 = '1';
-//											c2 = 'n';
-//										}
+										// can't really happen
+										// }else if
+										// (sod.getFk().getRefTable().equals(data.getTableName())
+										// &&
+										// sod.getFk().getRefAttribute().equals(cur.getName()))
+										// {
+										// c1 = '1';
+										// c2 = 'n';
+										// }
 
 									}
 								}
@@ -120,12 +124,12 @@ public class GraphWriter extends FileWriter {
 						}
 
 					} else {
+						c1 = 'n';
 						for (TableData td : datasets) {
 							if (td.getTableName().equals(cur.getFk().getRefTable())) {
 								for (SetOfData sod : td.getSetOfData()) {
 									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
-										if (sod.getIsPk()) {
-											c1 = 'n';
+										if (sod.getIsPk()) { //Or unique
 											c2 = '1';
 										}
 									}
@@ -133,7 +137,7 @@ public class GraphWriter extends FileWriter {
 							}
 						}
 					}
-					cons.add(new EntityConnection(""+i, data.getTableName(), cur.getFk().getRefTable(), c1, c2));
+					cons.add(new EntityConnection("" + i, data.getTableName(), cur.getFk().getRefTable(), c1, c2));
 				}
 
 				i++;
@@ -142,7 +146,6 @@ public class GraphWriter extends FileWriter {
 
 		}
 
-		
 		content += "node [shape=box];";
 
 		for (String s : tables)
@@ -166,10 +169,10 @@ public class GraphWriter extends FileWriter {
 			doub += "}";
 			content += doub + "\n";
 		}
-		
+
 		content += "node [shape=diamond, label=\"\"];";
-		for(EntityConnection s: cons)
-			content += s.getName()+";";
+		for (EntityConnection s : cons)
+			content += s.getName() + ";";
 
 		// for (String s : attributes){
 		// content += s + ";";
@@ -179,12 +182,11 @@ public class GraphWriter extends FileWriter {
 
 		for (Map.Entry<String, String> entry : rel.entrySet())
 			content += "\n" + entry.getKey() + " -- " + entry.getValue();
-		
+
 		content += "\n";
-		
-		for(EntityConnection ec : cons)
-			content += "\n"+ec.toString();
-			
+
+		for (EntityConnection ec : cons)
+			content += "\n" + ec.toString();
 
 		content += "\n}";
 		System.out.println(content);

@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import at.pm.rs.connection.ConnectorToMySQL;
-import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.FileWriter;
 import at.pm.rs.graphics.GraphWriter;
+import at.pm.rs.graphics.TextWriter;
 
 /**
  * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
@@ -30,7 +30,7 @@ public class Main {
 //				System.out.println("" + '\n');
 //			}
 			
-			FileWriter w = new GraphWriter();
+			FileWriter w = new TextWriter();
 			w.setOutputDir("src");
 			TableData[] te = new TableData[test.size()];
 			for (int x = 0; x < te.length; x++)
