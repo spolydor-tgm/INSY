@@ -106,6 +106,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 							if (tableData.getSetOfData().get(y).getName().equals(rs.getString("FKCOLUMN_NAME"))) {
 								// tableData.getSetOfData().get(y).setFk(rs.getString("FKTABLE_NAME")
 								// + "." + rs.getString("FKCOLUMN_NAME"));
+//								System.out.println(tablenames.get(xx)+" : "+rs.getString("FKCOLUMN_NAME"));
 								tableData.getSetOfData().get(y).setFk(new ForeignKey(tablenames.get(xx), rs.getString("FKCOLUMN_NAME")));
 								break;
 							}
