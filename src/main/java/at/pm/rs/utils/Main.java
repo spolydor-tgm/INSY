@@ -10,7 +10,10 @@ import at.pm.rs.graphics.FileWriter;
 import at.pm.rs.graphics.GraphWriter;
 
 /**
+ * 
+ * 
  * @author Stefan Polydor &lt;spolydor@student.tgm.ac.at&gt;
+ * @author Patrick Malik
  * @version 28.01.15
  */
 
@@ -30,6 +33,9 @@ public class Main {
 //				System.out.println("" + '\n');
 //			}
 
+			/*
+			 * "C:\Program Files (x86)\Graphviz2.38\bin\dot" -Tpng src\ER.DOT -o outfile.png
+			 */
 			for (TableData data : test) {
 				System.out.print(data.getTableName());
 				for (SetOfData setOfData : data.getSetOfData())

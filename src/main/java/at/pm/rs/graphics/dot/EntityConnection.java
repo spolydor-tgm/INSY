@@ -40,6 +40,11 @@ public class EntityConnection implements Comparable<EntityConnection> {
 		this.rightCard = rightCard;
 	}
 
+	/**
+	 * This toString() method returns a String that can be used for a .dot file in a graph (not digraph!) it connects the two nodes
+	 * 
+	 * @return the to dot formatted String representation
+	 */
 	public String toString() {
 		return leftNode + " -- " + this.name + "[label=\"" + this.leftCard + "\"];\n" + this.name + " -- " + rightNode + "[label=\"" + this.rightCard + "\"];";
 	}

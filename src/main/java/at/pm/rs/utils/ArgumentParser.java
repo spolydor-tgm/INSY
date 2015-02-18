@@ -5,10 +5,20 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
+/**
+ * The argument parser for "Rueckwaertssalto", receives all the expected arguments and handles them
+ * 
+ * @author Patrick Malik
+ * @version 20150218
+ *
+ */
 public class ArgumentParser {
 	
 	CmdLineParser parser;
 	
+	/**
+	 * Creates an ArgumentParser without big presets.
+	 */
 	public ArgumentParser(){
 		outputDir = "";
 		parser = new CmdLineParser(this);
@@ -29,10 +39,19 @@ public class ArgumentParser {
 	@Option(name="--dbms", usage="the name of your dbms.  You can choose from:\tmysql", required=true)
 	private String dbms;
 	
-	@Option(name="--outputDir", usage="the directory of the output files") // required = true     !!!!
+	@Option(name="--outputDir", usage="the directory of the output files", required=true)
 	private String outputDir;
 	
+	@Option(name="--dotDir", usage="the directory of the dot executable (probably in the bin folder of Graphviz",  required=true)
+	private String dotDir;
 	
+	
+	/**
+	 * Parses all the given arguments
+	 * 
+	 * @param args the arguments to parse
+	 * @return ConnectionArguments object with the received and parsed data
+	 */
 	public ConnectionArguments parseArguments(String... args){
 		try {
 			parser.parseArgument(args);
@@ -49,6 +68,14 @@ public class ArgumentParser {
 
 	public void setOutputDir(String outputDir) {
 		this.outputDir = outputDir;
+	}
+
+	public String getDotDir() {
+		return dotDir;
+	}
+
+	public void setDotDir(String dotDir) {
+		this.dotDir = dotDir;
 	}
 	
 }
