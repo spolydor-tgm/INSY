@@ -9,7 +9,7 @@ package at.pm.rs.graphics.dot;
  * @version 20150218
  *
  */
-public class EntityConnection {
+public class EntityConnection implements Comparable<EntityConnection> {
 
 	String name;
 
@@ -82,6 +82,20 @@ public class EntityConnection {
 
 	public void setRightCard(char rightCard) {
 		this.rightCard = rightCard;
+	}
+
+	/**
+	 * This method compares two EntityConnection objects and returns 0 if they
+	 * are equal, if they are not, -1 is returned, this compareTo method is used
+	 * as equals
+	 */
+	@Override
+	public int compareTo(EntityConnection o) {
+
+		if (this.getLeftCard() == o.getLeftCard() && this.getRightCard() == o.getRightCard() && this.getLeftNode().equals(o.getLeftNode()) && this.getRightNode().equals(o.getRightNode()))
+			return 0;
+
+		return -1;
 	}
 
 }

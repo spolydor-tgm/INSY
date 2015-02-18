@@ -16,6 +16,7 @@ import at.pm.rs.graphics.dot.DOTIsAutoIncrement;
 import at.pm.rs.graphics.dot.DOTIsNotNull;
 import at.pm.rs.graphics.dot.DOTNode;
 import at.pm.rs.graphics.dot.DOTPrimaryKey;
+import at.pm.rs.graphics.dot.DOTUnique;
 import at.pm.rs.graphics.dot.EntityConnection;
 import at.pm.rs.graphics.dot.Node;
 
@@ -83,6 +84,9 @@ public class GraphWriter extends FileWriter {
 
 					if (!cur.getIsNullable())
 						n = new DOTIsNotNull(n);
+					
+					if(cur.getIsUnique())
+						n = new DOTUnique(n);
 
 				}
 
@@ -96,15 +100,15 @@ public class GraphWriter extends FileWriter {
 				if (cur.getFk() != null) {
 					char c1 = 'z';
 					char c2 = 'z';
-					if (cur.getIsPk()||cur.getIsUnique()) {
+					if (cur.getIsPk() || cur.getIsUnique()) {
 						c1 = '1';
 						for (TableData td : datasets) {
 							if (td.getTableName().equals(cur.getFk().getRefTable())) {
 								for (SetOfData sod : td.getSetOfData()) {
 									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
-										if (sod.getIsPk()||cur.getIsUnique()) {
+										if (sod.getIsPk() || cur.getIsUnique()) {
 											c2 = '1';
-										}else{
+										} else {
 											c2 = 'n';
 										}
 									}
@@ -118,7 +122,7 @@ public class GraphWriter extends FileWriter {
 							if (td.getTableName().equals(cur.getFk().getRefTable())) {
 								for (SetOfData sod : td.getSetOfData()) {
 									if (sod.getName().equals(cur.getFk().getRefAttribute())) {
-										if (sod.getIsPk()) { //Or unique
+										if (sod.getIsPk()) { // Or unique
 											c2 = '1';
 										}
 									}
@@ -126,7 +130,16 @@ public class GraphWriter extends FileWriter {
 							}
 						}
 					}
-					cons.add(new EntityConnection("" + i, data.getTableName(), cur.getFk().getRefTable(), c1, c2));
+					EntityConnection ec = new EntityConnection("" + i, data.getTableName(), cur.getFk().getRefTable(), c1, c2);
+
+					boolean existing = false;
+
+					for (EntityConnection con : cons)
+						if (con.compareTo(ec) == 0)
+							existing = true;
+
+					if (!existing)
+						cons.add(ec);
 				}
 
 				i++;
@@ -178,7 +191,7 @@ public class GraphWriter extends FileWriter {
 			content += "\n" + ec.toString();
 
 		content += "\n}";
-		//System.out.println(content);
+		// System.out.println(content);
 		return content;
 	}
 }
