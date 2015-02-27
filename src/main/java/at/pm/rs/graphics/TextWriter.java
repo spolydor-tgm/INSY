@@ -11,8 +11,8 @@ import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.html.Element;
 import at.pm.rs.graphics.html.HTMLForeignKey;
-import at.pm.rs.graphics.html.HTMLTag;
 import at.pm.rs.graphics.html.HTMLPrimaryKey;
+import at.pm.rs.graphics.html.HTMLTag;
 
 /**
  * This class creates a Writer object that prints text to a file. It generates
@@ -37,11 +37,11 @@ public class TextWriter extends FileWriter {
 		try {
 			writer = new PrintWriter(output, "UTF-8");
 		} catch (FileNotFoundException e) {
-			// TODO logger error
-			writer.close();
+			// TODO Logger error
+			return;
 		} catch (UnsupportedEncodingException e) {
 			// TODO Logger error
-			writer.close();
+			return;
 		}
 
 		// File htmlTemplate = new File("");
@@ -99,7 +99,6 @@ public class TextWriter extends FileWriter {
 
 		for (TableData data : datasets) {
 
-			
 			String set = "";
 			set += tableBegin(data.getTableName());
 
@@ -116,7 +115,7 @@ public class TextWriter extends FileWriter {
 
 				if (cur.getIsPk())
 					attr = new HTMLPrimaryKey(attr);
-				
+
 				System.out.println(name);
 				set += attr.getTag() + ", ";
 				set = set.replace("$tag", name);
@@ -124,7 +123,7 @@ public class TextWriter extends FileWriter {
 			set = set.substring(0, set.lastIndexOf(","));
 			set += tableEnd();
 			tables += set + "\n";
-//			System.out.println(set);
+			// System.out.println(set);
 		}
 
 		return tables;

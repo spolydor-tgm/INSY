@@ -7,7 +7,7 @@ import at.pm.rs.connection.ConnectorToMySQL;
 import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.FileWriter;
-import at.pm.rs.graphics.GraphWriter;
+import at.pm.rs.graphics.TextWriter;
 
 /**
  * 
@@ -44,8 +44,9 @@ public class Main {
 				System.out.println("" + '\n');
 			}
 			
-			FileWriter w = new GraphWriter();
-			w.setOutputDir("src");
+			FileWriter w = new TextWriter();
+			System.out.println("asdasdasd:"+ap.getOutputDir());
+			w.setOutputDir(ap.getOutputDir());
 			TableData[] te = new TableData[test.size()];
 			for (int x = 0; x < te.length; x++)
 				te[x] = test.get(x);

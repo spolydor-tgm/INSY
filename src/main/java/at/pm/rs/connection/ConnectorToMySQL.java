@@ -64,7 +64,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * @throws SQLException
 	 */
 	private void readPk(String tablename) throws SQLException {
-		rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
+		//rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
 		rs = md.getPrimaryKeys(null, null, tablename);
 		while (rs.next()) {
 			int x = 0;
@@ -82,7 +82,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 */
 	private void readFk() throws SQLException {
 		for (int xx = 0; xx < tablenames.size(); xx++) {
-			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"}); //TODO despite it was commented out it worked as well as with the line in it... I just wondered wh this one is right there
+//			rs = md.getTables(null, null, tablenames.get(xx), new String[]{"TABLE"}); //TODO despite it was commented out it worked as well as with the line in it... I just wondered wh this one is right there
 //			rs = md.getExportedKeys(null, null, tablenames.get(xx));
 			rs = md.getImportedKeys(null, null, tablenames.get(xx));
 			while (rs.next()) {

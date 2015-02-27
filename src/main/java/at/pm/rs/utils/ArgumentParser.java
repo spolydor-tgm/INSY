@@ -39,11 +39,11 @@ public class ArgumentParser {
 	@Option(name="--dbms", usage="the name of your dbms.  You can choose from:\tmysql", required=true)
 	private String dbms;
 	
-	@Option(name="--outputDir", usage="the directory of the output files", required=true)
+	@Option(name="--outputDir", usage="the directory of the output files", required=true) //, required=true
 	private String outputDir;
 	
-	@Option(name="--dotDir", usage="the directory of the dot executable (probably in the bin folder of Graphviz",  required=true)
-	private String dotDir;
+//	@Option(name="--dotDir", usage="the directory of the dot executable (probably in the bin folder of Graphviz",  required=true)
+//	private String dotDir;
 	
 	
 	/**
@@ -70,12 +70,12 @@ public class ArgumentParser {
 		this.outputDir = outputDir;
 	}
 
-	public String getDotDir() {
-		return dotDir;
-	}
-
-	public void setDotDir(String dotDir) {
-		this.dotDir = dotDir;
-	}
+//	public String getDotDir() {
+//		return dotDir;
+//	}
+//
+//	public void setDotDir(String dotDir) {
+//		this.dotDir = dotDir;
+//	}
 	
 }
