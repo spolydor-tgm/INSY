@@ -59,7 +59,7 @@ public class ArgumentParser {
 			parser.printUsage(System.out);
 			System.exit(1);
 		}
-		return new ConnectionArguments(hostname, username, password, dbname, dbms);
+		return new ConnectionArguments(hostname, username, password, dbname, dbms.toLowerCase());
 	}
 	
 	public String getOutputDir() {
