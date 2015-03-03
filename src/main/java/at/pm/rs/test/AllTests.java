@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 		ConnectionArgumentsTest.class,
 		ForeignKeyTest.class,
 		SetOfDataTest.class,
-		TableDataTest.class
+		TableDataTest.class,
+		ConnectorToMySQLTest.class
 		})
 
 public class AllTests {}

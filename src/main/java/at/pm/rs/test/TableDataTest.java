@@ -39,7 +39,7 @@ public class TableDataTest {
 	public void testGetSetOfData() throws Exception {
 		setOfData.setAutoincrement(false);
 		tableData.addSetOfData(setOfData);
-		assertEquals("[" + '\n' + "test: INT PK= true FK= master.slave^ nullable= true unique= true]", tableData.getSetOfData().toString());
+		assertEquals("[" + '\n' + "test: INT PK= true FK= master.slave nullable= true unique= true]", tableData.getSetOfData().toString());
 	}
 
 	@Test
