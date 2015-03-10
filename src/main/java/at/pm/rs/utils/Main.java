@@ -1,13 +1,13 @@
 package at.pm.rs.utils;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import at.pm.rs.connection.ConnectorToMySQL;
 import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.FileWriter;
 import at.pm.rs.graphics.TextWriter;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * 
@@ -52,12 +52,12 @@ public class Main {
 				te[x] = test.get(x);
 			w.print(te);
 			
-			
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Failed to connect to the DBMS!!!");
+			System.err.println("Wrong username/password/dmbs-Adress");
 		} catch (ClassNotFoundException ee) {
-			ee.printStackTrace();
+			System.err.println("Unnable to load the class");
 		}
 	}
 }

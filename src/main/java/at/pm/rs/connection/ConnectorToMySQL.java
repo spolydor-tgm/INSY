@@ -32,14 +32,6 @@ public class ConnectorToMySQL implements ConnectorTo {
 
 		this.connect();
 		md = conn.getMetaData();
-		/*
-		 * System.err.println("Failed to connect to the DBMS!!!");
-		 * System.err.println("Wrong username/password/dmbs-Adress");
-		 * System.exit(1);
-		 * 
-		 * 
-		 * System.out.println("Unnable to load the class");
-		 */
 	}
 
 	/**
