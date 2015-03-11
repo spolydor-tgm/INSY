@@ -1,34 +1,94 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'jacoco'
 
-sourceCompatibility = 1.8
+// Deploy setting
+def deployName = 'Rueckwaertssalto'
+def mainClass = 'at.pm.rs.utils.Main'
 version = '1.0'
 
-jar {
-    manifest {
-        attributes(
-        	'Implementation-Title': 'Rueckwaertssalto', 
-        	'Implementation-Version': version,
-        	'Main-Class': 'at.pm.rs.utils.Main'  	
-        )
-    }
-    
-     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
 
+// Other setting
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-
+// Repositories
 repositories {
     mavenCentral()
 }
 
-test {
-    systemProperties 'property': 'value'
+// Test coverage report
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+    reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
-dependencies{
-	compile 'args4j:args4j:2.0.25'
-	compile 'mysql:mysql-connector-java:5.1.34'
-	testCompile group: 'junit', name: 'junit', version: '4.+'
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
 }
+
+// Dependencies
+dependencies {
+    compile group: 'args4j', name: 'args4j', version: '2.0.29'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'mysql:mysql-connector-java:5.1.34'
+}
+
+// Run program
+//task runProgram(type: JavaExec, dependsOn: ['classes']) {
+//    main = mainClass
+//    classpath = sourceSets.main.runtimeClasspath
+//    args '-f', runVar1, '-o', runVar2, '--help'
+//    standardInput = System.in
+//}
+
+// Build Jar
+task buildJar(type: Jar, dependsOn: ['clean', 'javadoc', 'test']) {
+    // jar manifest
+    manifest {
+        attributes 'Implementation-Title': rootProject.name,
+                'Implementation-Version': version,
+                'Main-Class': mainClass
+    }
+    // jar base name
+    baseName = deployName
+    // pack all compile libs
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    // pack all source files
+    from sourceSets.main.allSource
+    // pack javadoc
+    from(javadoc.destinationDir) {
+        into('doc/javadoc')
+    }
+    // pack test coverage
+    from(jacocoTestReport.outputs.files) {
+        into('doc/testCoverage')
+    }
+    // pack test report
+    from(test.outputs.files) {
+        into('doc/testReport')
+    }
+    // pack all other files
+    from(projectDir) {
+        include 'doc/**'
+        exclude 'doc/*.docx'
+        exclude 'doc/*.odt'
+        exclude 'doc/*.tex'
+    }
+    // pack git folder
+    from('.git') {
+        into('.git')
+    }
+
+    with jar
+}
+
+// clean before compile
+compileJava.mustRunAfter clean
+

@@ -28,9 +28,13 @@ public class EntityConnection implements Comparable<EntityConnection> {
 	 *            the name as which the diamond (relation) gets saved and used,
 	 *            the name is not to be displayed
 	 * @param leftNode
+	 *            the name of the node to the left of the diamond
 	 * @param rightNode
+	 *            the name of the node to the right of the diamond
 	 * @param leftCard
+	 *            the cardinality to the left of the diamond
 	 * @param rightCard
+	 *            the cardinality to the right of the diamond
 	 */
 	public EntityConnection(String name, String leftNode, String rightNode, char leftCard, char rightCard) {
 		this.name = name;
@@ -41,7 +45,8 @@ public class EntityConnection implements Comparable<EntityConnection> {
 	}
 
 	/**
-	 * This toString() method returns a String that can be used for a .dot file in a graph (not digraph!) it connects the two nodes
+	 * This toString() method returns a String that can be used for a .dot file
+	 * in a graph (not digraph!) it connects the two nodes
 	 * 
 	 * @return the to dot formatted String representation
 	 */

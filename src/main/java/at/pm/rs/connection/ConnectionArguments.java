@@ -10,11 +10,11 @@ import java.util.Map;
  * 
  * The Map stores all the arguments with their obvious names as keys.
  * 
- * keys: <li>hostname</li> 
- * 	     <li>username</li> 
- *       <li>password</li>
- *       <li>dbname</li>
- *       <li>dbms</li>
+ * keys: hostname 
+ * 	     username 
+ *       password
+ *       dbname
+ *       dbms
  * 
  * @author Patrick Malik
  * @version 141226

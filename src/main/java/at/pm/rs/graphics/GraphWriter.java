@@ -22,7 +22,7 @@ import at.pm.rs.graphics.dot.Node;
 
 /**
  * This class creates a Writer object that prints the given
- * {@link rs.at.pm.connection.SetOfData} modelled to a entity-relationship-model
+ * SetOfData modelled to a entity-relationship-model
  * to a file with graphviz (.dot).
  * 
  * @author Patrick Malik

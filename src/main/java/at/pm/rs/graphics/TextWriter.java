@@ -26,7 +26,6 @@ public class TextWriter extends FileWriter {
 	/**
 	 * prints the given SetOfData as RM to a file.
 	 * 
-	 * @see Writer#print(rs.at.pm.connection.SetOfData)
 	 * @param data
 	 *            the SetOfData to be printed.
 	 */
@@ -99,7 +98,7 @@ public class TextWriter extends FileWriter {
 	 * Creates html-code in a String out of the {@link SetOfData} given as
 	 * parameter.
 	 * 
-	 * @param data
+	 * @param datasets
 	 *            the given {@link SetOfData}
 	 * @return a html representation of the RM created from the
 	 *         {@link SetOfData}
