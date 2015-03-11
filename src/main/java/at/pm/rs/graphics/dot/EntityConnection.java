@@ -13,7 +13,7 @@ public class EntityConnection implements Comparable<EntityConnection> {
 
 	String name;
 
-	// Nodes müssen specname sein!
+	// Nodes muessen specname sein!
 	String leftNode;
 	char leftCard;
 

@@ -1,7 +1,6 @@
 package at.pm.rs.utils;
 
 import at.pm.rs.connection.ConnectorToMySQL;
-import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.FileWriter;
 import at.pm.rs.graphics.GraphWriter;
