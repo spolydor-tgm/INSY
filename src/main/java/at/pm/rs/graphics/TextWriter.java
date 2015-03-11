@@ -2,8 +2,8 @@ package at.pm.rs.graphics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
@@ -33,7 +33,7 @@ public class TextWriter extends FileWriter {
 	@Override
 	public void print(TableData data[]) {
 		PrintWriter writer = null;
-		File output = new File(this.getOutputDir() + "/RM.html");
+		File output = new File(this.getOutputDir() + "\\RM.html");
 		try {
 			writer = new PrintWriter(output, "UTF-8");
 		} catch (FileNotFoundException e) {
@@ -47,13 +47,23 @@ public class TextWriter extends FileWriter {
 		// File htmlTemplate = new File("");
 		String content = "";
 
-		FileReader fileReader = null;
-		try {
-			fileReader = new FileReader("template.html");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		// FileReader fileReader = null;
+		InputStreamReader fileReader = null;
+		// try {
+		fileReader = new InputStreamReader(getClass().getResourceAsStream("/resources/template.html"));
+		System.out.println("Hallo");
+		// fileReader = new
+		// FileReader(getClass().getResourceAsStream("/resources/template.html"));
+		// fileReader = new FileReader("/resources/template.html");
+		// fileReader = new
+		// FileReader(getClass().getResource("/resources/template.html").getPath());
+		// } catch (FileNotFoundException e1) {
+		// TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// } catch (URISyntaxException e) {
+		// TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 		int i;
 

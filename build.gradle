@@ -7,11 +7,17 @@ version = '1.0'
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Rueckwaertssalto', 
-        'Implementation-Version': version,
-        'Main-Class':'Main'
+        attributes(
+        	'Implementation-Title': 'Rueckwaertssalto', 
+        	'Implementation-Version': version,
+        	'Main-Class': 'at.pm.rs.utils.Main'  	
+        )
     }
+    
+     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
+
+
 
 repositories {
     mavenCentral()

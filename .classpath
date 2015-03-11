@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
 	<classpathentry sourcepath="C:/Users/patrick/.gradle/caches/modules-2/files-2.1/args4j/args4j/2.0.25/6ec4dd018768c280771f19ea36b974b4c95eb04e/args4j-2.0.25-sources.jar" kind="lib" path="C:/Users/patrick/.gradle/caches/modules-2/files-2.1/args4j/args4j/2.0.25/60e2318d08e5387ea2ccb2a2ca8a2c442d59c0bf/args4j-2.0.25.jar" exported="true"/>
 	<classpathentry kind="lib" path="C:/Users/patrick/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.34/46deba4adbdb4967367b013cbc67b7f7373da60a/mysql-connector-java-5.1.34.jar" exported="true"/>

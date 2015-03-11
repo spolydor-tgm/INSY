@@ -4,6 +4,7 @@ import at.pm.rs.connection.ConnectorToMySQL;
 import at.pm.rs.connection.SetOfData;
 import at.pm.rs.connection.TableData;
 import at.pm.rs.graphics.FileWriter;
+import at.pm.rs.graphics.GraphWriter;
 import at.pm.rs.graphics.TextWriter;
 
 import java.sql.SQLException;
@@ -21,36 +22,23 @@ public class Main {
 	
 	public static void main(String[] args) {
 		ArgumentParser ap = new ArgumentParser();
-		//new ConnectorToMySQL(ap.parseArguments(args));
 		try {
 			ConnectorToMySQL connectorToMySQL = new ConnectorToMySQL(ap.parseArguments(args));
 			ArrayList<TableData> test = connectorToMySQL.readAllFromAllTables();
-//			for (TableData data : test) {
-//				System.out.print(data.getTableName());
-//				for (SetOfData setOfData : data.getSetOfData())
-//					System.out.print(setOfData.toString());
-//
-//				System.out.println("" + '\n');
-//			}
 
 			/*
 			 * "C:\Program Files (x86)\Graphviz2.38\bin\dot" -Tpng src\ER.DOT -o outfile.png
-			 */
-			for (TableData data : test) {
-				System.out.print(data.getTableName());
-				for (SetOfData setOfData : data.getSetOfData())
-					System.out.print(setOfData.toString());
-
-				System.out.println("" + '\n');
-			}
-			
-			FileWriter w = new TextWriter();
-			System.out.println("asdasdasd:"+ap.getOutputDir());
-			w.setOutputDir(ap.getOutputDir());
+			 */			
+			FileWriter t = new TextWriter();
+			t.setOutputDir(ap.getOutputDir());
+			FileWriter g = new GraphWriter(ap.getDotDir());
+			g.setOutputDir(ap.getOutputDir());
 			TableData[] te = new TableData[test.size()];
 			for (int x = 0; x < te.length; x++)
 				te[x] = test.get(x);
-			w.print(te);
+			g.print(te);
+			t.print(te);
+			
 			
 			connectorToMySQL.closeConnections();
 		} catch (SQLException e) {

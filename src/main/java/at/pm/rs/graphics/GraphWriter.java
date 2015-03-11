@@ -30,24 +30,33 @@ import at.pm.rs.graphics.dot.Node;
  *
  */
 public class GraphWriter extends FileWriter {
+	
+	String dotSource;
+	
+	public GraphWriter(String dotSource) {
+		this.dotSource = dotSource;
+	}
 
 	public void print(TableData[] data) {
 		PrintWriter writer = null;
-		File output = new File(this.getOutputDir() + "/ER.dot");
-		// System.out.println(output.getAbsolutePath());
+		File output = new File(this.getOutputDir() + "\\ER.dot");
+		System.out.println(output.getAbsolutePath());
 		try {
 			writer = new PrintWriter(output, "UTF-8");
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			// TODO logger error
-			writer.close();
+			return;
 		} catch (UnsupportedEncodingException e) {
 			// TODO Logger error
-			writer.close();
+			e.printStackTrace();
+			return;
 		}
 
 		writer.print(model(data));
 
 		writer.close();
+		//this.writeToImg(this.getOutputDir(), dotSource);
 	}
 
 	@Override
@@ -84,8 +93,8 @@ public class GraphWriter extends FileWriter {
 
 					if (!cur.getIsNullable())
 						n = new DOTIsNotNull(n);
-					
-					if(cur.getIsUnique())
+
+					if (cur.getIsUnique())
 						n = new DOTUnique(n);
 
 				}
@@ -194,4 +203,22 @@ public class GraphWriter extends FileWriter {
 		// System.out.println(content);
 		return content;
 	}
+
+	public void writeToImg(String outputDir, String dotSource) {
+		GraphViz gv = new GraphViz(dotSource);
+		gv.readSource(outputDir);
+		String type = ".png";
+		File out = new File(outputDir + "/ER" + type);
+		gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
+	}
+
+	public String getDotSource() {
+		return dotSource;
+	}
+
+	public void setDotSource(String dotSource) {
+		this.dotSource = dotSource;
+	}
+	
+	
 }
