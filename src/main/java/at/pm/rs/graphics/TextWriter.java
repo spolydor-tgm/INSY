@@ -34,6 +34,8 @@ public class TextWriter extends FileWriter {
 	public void print(TableData data[]) {
 		PrintWriter writer = null;
 		File output = new File(this.getOutputDir() + "\\RM.html");
+		
+		System.out.println(output.getAbsolutePath());
 		try {
 			writer = new PrintWriter(output, "UTF-8");
 		} catch (FileNotFoundException e) {
@@ -51,7 +53,6 @@ public class TextWriter extends FileWriter {
 		InputStreamReader fileReader = null;
 		// try {
 		fileReader = new InputStreamReader(getClass().getResourceAsStream("/resources/template.html"));
-		System.out.println("Hallo");
 		// fileReader = new
 		// FileReader(getClass().getResourceAsStream("/resources/template.html"));
 		// fileReader = new FileReader("/resources/template.html");
@@ -104,6 +105,8 @@ public class TextWriter extends FileWriter {
 	 *         {@link SetOfData}
 	 */
 	public String model(TableData datasets[]) {
+		if(datasets==null)
+			return "";
 
 		String tables = "";
 
@@ -126,7 +129,6 @@ public class TextWriter extends FileWriter {
 				if (cur.getIsPk())
 					attr = new HTMLPrimaryKey(attr);
 
-				System.out.println(name);
 				set += attr.getTag() + ", ";
 				set = set.replace("$tag", name);
 			}

@@ -1,0 +1,9 @@
+graph ER {
+node [shape=box];t1;
+node [shape=ellipse];{node [label="a1" decorate="true"] a10 [label=<<u>a1</u>>];}
+{node [label="a2" decorate="true"] a21 [label=<a2: is NOT NULL: is UNIQUE>];}
+node [shape=diamond, label=""];
+a10 -- t1
+a21 -- t1
+
+}

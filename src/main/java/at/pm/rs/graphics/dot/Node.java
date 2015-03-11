@@ -31,20 +31,20 @@ public class Node extends DOTNode {
 		this.specname = specname;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public SetOfData getParent() {
-		return parent;
-	}
-
-	public void setParent(SetOfData parent) {
-		this.parent = parent;
-	}
+//	public String getName() {
+//		return name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
+//
+//	public SetOfData getParent() {
+//		return parent;
+//	}
+//
+//	public void setParent(SetOfData parent) {
+//		this.parent = parent;
+//	}
 
 }

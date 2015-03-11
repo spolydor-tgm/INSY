@@ -1,4 +1,4 @@
-package at.pm.rs.test;
+package at.pm.rs.test.connection;
 
 import at.pm.rs.connection.ConnectionArguments;
 import at.pm.rs.connection.ConnectorToFactory;

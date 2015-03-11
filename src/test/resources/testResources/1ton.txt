@@ -1,0 +1,13 @@
+graph ER {
+node [shape=box];t1;t2;
+node [shape=ellipse];{node [label="a1" decorate="true"] a10 [label=<<u>a1</u>>];a12 [label=<<u>a1</u>>];}
+{node [label="a2" decorate="true"] a21 [label=<a2: is NOT NULL>];a23 [label=<a2: is NOT NULL>];}
+node [shape=diamond, label=""];3;
+a10 -- t1
+a21 -- t1
+a12 -- t2
+a23 -- t2
+
+t2 -- 3[label="n"];
+3 -- t1[label="1"];
+}

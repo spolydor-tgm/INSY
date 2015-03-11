@@ -61,6 +61,8 @@ public class GraphWriter extends FileWriter {
 
 	@Override
 	public String model(TableData[] datasets) {
+		if(datasets==null)
+			return ""; //TODO Logger ausgabe System.out.println
 		String content = "";
 		// For shaping them as entities or attributes
 		ArrayList<String> tables = new ArrayList<>();
@@ -203,7 +205,7 @@ public class GraphWriter extends FileWriter {
 		// System.out.println(content);
 		return content;
 	}
-
+/*
 	public void writeToImg(String outputDir, String dotSource) {
 		GraphViz gv = new GraphViz(dotSource);
 		gv.readSource(outputDir);
@@ -211,7 +213,7 @@ public class GraphWriter extends FileWriter {
 		File out = new File(outputDir + "/ER" + type);
 		gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
 	}
-
+*/
 	public String getDotSource() {
 		return dotSource;
 	}

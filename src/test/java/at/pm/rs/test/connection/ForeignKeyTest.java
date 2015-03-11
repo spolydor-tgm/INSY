@@ -1,4 +1,4 @@
-package at.pm.rs.test;
+package at.pm.rs.test.connection;
 
 import at.pm.rs.connection.ForeignKey;
 import org.junit.Before;
