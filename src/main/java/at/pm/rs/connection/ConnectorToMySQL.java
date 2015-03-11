@@ -25,7 +25,9 @@ public class ConnectorToMySQL implements ConnectorTo {
 	/**
 	 * Creates a new Connector for a MySQL DBMS
 	 * 
-	 * @param connectionArguments
+	 * @param connectionArguments which has all informations for the connection to the dbms
+	 * @throws java.sql.SQLException if the connection is not possible
+	 * @throws java.lang.ClassNotFoundException if the jdbc driver will not be found
 	 */
 	public ConnectorToMySQL(ConnectionArguments connectionArguments) throws SQLException, ClassNotFoundException {
 		data = connectionArguments;
@@ -36,6 +38,8 @@ public class ConnectorToMySQL implements ConnectorTo {
 
 	/**
 	 * Establishes a connection to the DBMS
+	 * @throws java.sql.SQLException if the connection is not possible
+	 * @throws java.lang.ClassNotFoundException if the jdbc driver will not be found
 	 */
 	public void connect() throws SQLException, ClassNotFoundException {
 		// Treiber laden
@@ -53,7 +57,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * SetOfData
 	 * 
 	 * @param tablename from which the Primary Keys, will be read out
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem during reading the primary keys out
 	 */
 	private void readPk(String tablename) throws SQLException {
 		//rs = md.getTables(null, null, tablename, new String[]{"TABLE"});
@@ -70,7 +74,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * Reads all the FK's from the given Table out and saves them into a
 	 * SetOfData
 	 *
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem during reading the foreign keys out
 	 */
 	private void readFk() throws SQLException {
 		for (int xx = 0; xx < tablenames.size(); xx++) {
@@ -92,7 +96,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * Reads all Extra Attributes (isNullabe, isAutoincrement, Columnname, Type)
 	 * and saves them into a SetOfData
 	 * 
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem during reading the extra Attributes out
 	 */
 	private void readExtraAttributes() throws SQLException {
 		for (int i = 1; i <= columns; i++) {
@@ -111,7 +115,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * Reads All Tablenames from the connected DB and saves them into an
 	 * String-ArrayList
 	 * 
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem during reading all the tablenames out
 	 */
 	private void readAllTablenames() throws SQLException {
 		rs = md.getTables(null, null, "%", null); // Get all Tables
@@ -125,7 +129,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	 * Reads All from All Tables
 	 * 
 	 * @return TableOfData which stores all Informations from all tables
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem during reading all Informations out of a databse
 	 */
 	public ArrayList<TableData> readAllFromAllTables() throws SQLException {
 		this.readAllTablenames();
@@ -151,7 +155,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 
 	/**
 	 *
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem during reading the unique state out
 	 */
 	private void readUnique() throws SQLException{
 		for (int xx = 0; xx < tablenames.size(); xx++) {
@@ -170,7 +174,7 @@ public class ConnectorToMySQL implements ConnectorTo {
 	/**
 	 * Closes all Connections (Resultset and Connection)
 	 * 
-	 * @throws SQLException
+	 * @throws java.sql.SQLException if there is a problem for closing the connection
 	 */
 	public void closeConnections() throws SQLException {
 		rs.close();
