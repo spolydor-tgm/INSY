@@ -1,0 +1,7 @@
+graph ER {
+node [shape=box];t1;
+node [shape=ellipse];{node [label="a1" decorate="true"] a10 [label=<<u>a1</u>>];}
+node [shape=diamond, label=""];
+a10 -- t1
+
+}
